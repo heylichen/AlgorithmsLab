@@ -1,0 +1,33 @@
+package algorithms.ch1fundamentals.impl;
+
+import algorithms.ch1fundamentals.VisualAccumulator;
+import algorithms.commons.lib.StdDraw;
+
+public class VisualAccumulatorImpl implements VisualAccumulator {
+    private double total;
+    private int N;
+
+    public VisualAccumulatorImpl(int trials, double max) {
+        StdDraw.setXscale(0, trials);
+        StdDraw.setYscale(0, max);
+        StdDraw.setPenRadius(.005);
+    }
+
+    public void addDataValue(double val) {
+        N++;
+        total += val;
+        StdDraw.setPenColor(StdDraw.DARK_GRAY);
+        StdDraw.point(N, val);
+        StdDraw.setPenColor(StdDraw.RED);
+        StdDraw.point(N, avg());
+    }
+
+    public double avg() {
+        return total / N;
+    }
+
+    public String toString() {
+        return "total :" + total + ", N:" + N + ": avg:" + avg();
+    }
+
+}

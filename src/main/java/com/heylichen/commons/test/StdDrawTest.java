@@ -1,7 +1,7 @@
 package com.heylichen.commons.test;
 
-import algorithms.StdDraw;
-import algorithms.StdRandom;
+import algorithms.commons.lib.StdDraw;
+import algorithms.commons.lib.StdRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
