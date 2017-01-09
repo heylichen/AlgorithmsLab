@@ -1,5 +1,3 @@
-package algorithms.ch1fundamentals.test;
-
 import algorithms.ch1fundamentals.Stack;
 import algorithms.ch1fundamentals.cp.ArrayRandomBag;
 import algorithms.ch1fundamentals.cp.Deque;

@@ -1,7 +1,8 @@
 package algorithms.ch1fundamentals.impl;
 
+
 import algorithms.ch1fundamentals.VisualAccumulator;
-import algorithms.commons.lib.StdDraw;
+import edu.princeton.cs.algs4.StdDraw;
 
 public class VisualAccumulatorImpl implements VisualAccumulator {
     private double total;
@@ -13,6 +14,7 @@ public class VisualAccumulatorImpl implements VisualAccumulator {
         StdDraw.setPenRadius(.005);
     }
 
+    @Override
     public void addDataValue(double val) {
         N++;
         total += val;
@@ -22,10 +24,12 @@ public class VisualAccumulatorImpl implements VisualAccumulator {
         StdDraw.point(N, avg());
     }
 
+    @Override
     public double avg() {
         return total / N;
     }
 
+    @Override
     public String toString() {
         return "total :" + total + ", N:" + N + ": avg:" + avg();
     }
