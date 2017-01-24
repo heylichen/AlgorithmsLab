@@ -161,6 +161,7 @@ public class DoubleLinkedQueue<T> implements Iterable<T> {
     pre.next = next;
     next.pre = pre;
 
+    //special case
     if (that == last) {
       last = pre;
     }

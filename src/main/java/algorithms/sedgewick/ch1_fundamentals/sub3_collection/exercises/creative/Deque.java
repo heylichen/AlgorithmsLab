@@ -65,7 +65,7 @@ public class Deque<T> {
     private void nullNodeRefFromOneSide(DoubleNode<T> node) {
         if (node != null) {
             if (node.getPrevious() != null && node.getNext() != null) {
-                throw new UnsupportedOperationException("this method should be used on node on eithe left or right side of the queue, but not in the middle!");
+                throw new UnsupportedOperationException("this method should be used on node on either left or right side of the queue, but not in the middle!");
             }
 
             if (node.getPrevious() != null) {
