@@ -1,7 +1,7 @@
 package algorithms.sedgewick.ch1_fundamentals.sub3_collection.exercises.creative;
 
 import algorithms.sedgewick.ch1_fundamentals.sub3_collection.impl.Node;
-import algorithms.sedgewick.ch1_fundamentals.sub3_collection.stack.IStack;
+import algorithms.sedgewick.ch1_fundamentals.sub3_collection.IStack;
 
 import java.util.Iterator;
 

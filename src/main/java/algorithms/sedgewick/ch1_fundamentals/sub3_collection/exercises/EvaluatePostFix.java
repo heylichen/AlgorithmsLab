@@ -1,4 +1,4 @@
-package algorithms.sedgewick.ch1_fundamentals.sub3_collection.exercises.linkedlist;
+package algorithms.sedgewick.ch1_fundamentals.sub3_collection.exercises;
 
 import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdOut;
@@ -54,6 +54,5 @@ public class EvaluatePostFix {
   public static void main(String[] args) {
     String ex = "1 2 + 3 4 - 5 6 - * *";
     StdOut.println(eval(ex));
-
   }
 }

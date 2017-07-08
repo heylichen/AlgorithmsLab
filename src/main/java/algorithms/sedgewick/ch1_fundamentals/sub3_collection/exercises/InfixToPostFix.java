@@ -1,9 +1,9 @@
-package algorithms.sedgewick.ch1_fundamentals.sub3_collection.exercises.linkedlist;
+package algorithms.sedgewick.ch1_fundamentals.sub3_collection.exercises;
 
 import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdOut;
 
-public class ArithmeticExpressionComplete {
+public class InfixToPostFix {
 
 
   public static String eval(String expression) {
@@ -34,9 +34,9 @@ public class ArithmeticExpressionComplete {
         String op = ops.pop();
         String v = expressionStack.pop();
         if (op.equals("+") || op.equals("-") || op.equals("*") || op.equals("/")) {
-          v = "( " + expressionStack.pop() + " " + op + " " + v + " )";
+          v = expressionStack.pop() + " " + v + " " + op;
         } else if (op.equals("sqrt")) {
-          v = op + "( " + v + " )";
+          v = v + " " + op;
         }
         expressionStack.push(v);
       }
