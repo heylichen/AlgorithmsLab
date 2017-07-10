@@ -15,6 +15,6 @@ public class FrequencyCounterBinarySearchTest extends FrequencyCounterTest {
 
   @Test
   public void testCount() throws Exception {
-    super.testCount("algorithms/sedgewick/ch3_search/symboltable/client/tale.txt", 2);
+    super.testCount("algorithms/sedgewick/ch3_search/symboltable/client/tale.txt", 8);
   }
 }

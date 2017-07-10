@@ -2,81 +2,97 @@ package algorithms.sedgewick.ch3_search.symboltable.client;
 
 
 import algorithms.sedgewick.ch3_search.symboltable.ST;
-import algorithms.sedgewick.ch3_search.symboltable.SequentialSearchST;
+import algorithms.sedgewick.common.utils.TimeWatch;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
 
 @Getter
 @Setter
 public class FrequencyCounter {
   private Logger logger = LoggerFactory.getLogger(FrequencyCounter.class);
-
+  public static final String WORD_SEPARATOR = "\\s";
+  public static final String TAG_COUNT_WORDS = "TAG_COUNT_WORDS";
+  public static final String TAG_FIND_MAX = "TAG_FIND_MAX";
+  public static final String TAG_OTHER = "TAG_OTHER";
   private ST<String, Integer> st;
+  private TimeWatch timeWatch;
 
   public void count(String fileClassPath, int minLength) {
-    long start = System.currentTimeMillis();
-    ClassPathResource cpr = new ClassPathResource(fileClassPath);
-    Path filePath = null;
-    Stream<String> lines = null;
-    try {
-      filePath = cpr.getFile().toPath();
-      lines = Files.lines(filePath);
-    } catch (IOException e) {
-      logger.error("read lines error!", e);
+    logger.info("start.");
+    timeWatch = new TimeWatch();
+
+    countFile(fileClassPath, minLength);
+    String maxKey = findMaxFrequencyKey(st);
+
+    logger.info("minLength={} words, st size:{}, max frequency word is: \"{}\" which occurs {} times.",
+        minLength, st.size(), maxKey, st.get(maxKey));
+    logger.info("total: {} ms, countWords: {} ms, findMax: {} ms.",
+        timeWatch.getTotalCostMs(),
+        timeWatch.getTagCostMs(TAG_COUNT_WORDS),
+        timeWatch.getTagCostMs(TAG_FIND_MAX));
+  }
+
+  private void countFile(String fileClassPath, int minLength) {
+    logger.info("countFile begin");
+    try (BufferedReader reader = newReader(fileClassPath)) {
+      timeWatch.tag(TAG_OTHER);
+      String line;
+      while ((line = reader.readLine()) != null) {
+        processLine(line, minLength);
+      }
+      timeWatch.tag(TAG_COUNT_WORDS);
+    } catch (Exception e) {
+      throw new IllegalStateException("read file error!", e);
+    }
+  }
+
+  private void processLine(final String line, final int minLength) {
+    String[] words = line.split(WORD_SEPARATOR);
+    if (words == null || words.length == 0) {
       return;
     }
-    long readFile = System.currentTimeMillis();
-
-    AtomicInteger ai = new AtomicInteger(0);
-    lines.forEach(
-        line -> {
-          String[] words = line.split("\\s");
-          if (words == null || words.length == 0) {
-            return;
-          }
-          for (String word : words) {
-            if (word.length() < minLength) {
-              continue;
-            }
-            if (!st.contains(word)) st.put(word, 1);
-            else st.put(word, st.get(word) + 1);
-          }
-        }
-    );
-    long countWords = System.currentTimeMillis();
-
-    String maxKey = findMaxFrequencyKey(st);
-    long findMax = System.currentTimeMillis();
-
-    logger.info("minLength={} words, st size:{}, max frequency word is: \"{}\" which occurs {} times.", minLength, st.size(), maxKey, st.get(maxKey));
-    logger.info("total: {} ms, readFile:{}, countWords:{}, findMax:{}.",
-        findMax - start, readFile - start, countWords - readFile, findMax - countWords);
-
+    for (String word : words) {
+      if (word.length() < minLength) {
+        continue;
+      }
+      if (!st.contains(word)) st.put(word, 1);
+      else st.put(word, st.get(word) + 1);
+    }
   }
 
   private String findMaxFrequencyKey(ST<String, Integer> st) {
+    timeWatch.tag(TAG_OTHER);
     String max = "";
-    st.put(max, 0);
+    st.put(max, -1);
     for (String word : st.keys())
-      if (st.get(word) > st.get(max))
+      if (st.get(word).intValue() > st.get(max).intValue())
         max = word;
+    timeWatch.tag(TAG_FIND_MAX);
     return max;
   }
 
+  private BufferedReader newReader(String fileClassPath) {
+    ClassPathResource cpr = new ClassPathResource(fileClassPath);
+    try {
+      return new BufferedReader(new FileReader(cpr.getFile()));
+    } catch (IOException e) {
+      throw new IllegalStateException("read file error!", e);
+    }
+  }
 
-  public static void main(String[] args) {
-    FrequencyCounter fc = new FrequencyCounter();
-    ST<String, Integer> st = new SequentialSearchST<>();
-    fc.setSt(st);
-    fc.count("algorithms/sedgewick/ch3_search/symboltable/client/tale.txt", 2);
+  public static void main(String[] args) throws InterruptedException {
+    TimeWatch timeWatch = new TimeWatch();
+    timeWatch.tag("1");
+    Thread.sleep(800);
+    timeWatch.tag("2");
+    System.out.println(timeWatch.getTagCostMs("1"));
+    System.out.println(timeWatch.getTagCostMs("2"));
   }
 }
