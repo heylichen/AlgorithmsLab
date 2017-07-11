@@ -44,27 +44,36 @@ public class FrequencyCounter {
     try (BufferedReader reader = newReader(fileClassPath)) {
       timeWatch.tag(TAG_OTHER);
       String line;
+      int totalWordCount = 0;
       while ((line = reader.readLine()) != null) {
-        processLine(line, minLength);
+        totalWordCount += processLine(line, minLength);
       }
       timeWatch.tag(TAG_COUNT_WORDS);
+      logger.info("total processed word count {}", totalWordCount);
     } catch (Exception e) {
       throw new IllegalStateException("read file error!", e);
     }
   }
 
-  private void processLine(final String line, final int minLength) {
+  private int processLine(final String line, final int minLength) {
     String[] words = line.split(WORD_SEPARATOR);
     if (words == null || words.length == 0) {
-      return;
+      return 0;
     }
+    int totalWordCount = 0;
     for (String word : words) {
       if (word.length() < minLength) {
         continue;
       }
-      if (!st.contains(word)) st.put(word, 1);
-      else st.put(word, st.get(word) + 1);
+      totalWordCount++;
+      Integer frequency = st.get(word);
+      if (frequency == null) {
+        st.put(word, 1);
+      } else {
+        st.put(word, frequency + 1);
+      }
     }
+    return totalWordCount;
   }
 
   private String findMaxFrequencyKey(ST<String, Integer> st) {

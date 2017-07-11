@@ -6,6 +6,6 @@ package algorithms.sedgewick.ch3_search.symboltable;
 public class SequentialSearchSTTest extends SearchSTTest {
   @Override
   public ST<String, String> createST() {
-    return new BinarySearchST<String, String>();
+    return new SequentialSearchST<>();
   }
 }

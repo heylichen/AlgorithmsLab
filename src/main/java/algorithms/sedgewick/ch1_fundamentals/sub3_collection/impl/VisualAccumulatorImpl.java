@@ -2,7 +2,11 @@ package algorithms.sedgewick.ch1_fundamentals.sub3_collection.impl;
 
 
 import edu.princeton.cs.algs4.StdDraw;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class VisualAccumulatorImpl implements VisualAccumulator {
     private double total;
     private int N;

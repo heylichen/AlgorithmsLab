@@ -41,21 +41,30 @@ public class SequentialSearchST<K, V> extends AbstractST<K, V> {
     if (first == null || key == null) {
       return Pair.of(null, null);
     }
-    Node found = null;
-    Node previousOfFound = null;
     Node current = first;
-    while (current != null) {
-      if (current.next != null && key.equals(current.next.key)) {
-        previousOfFound = current;
-      }
-      if (key.equals(current.key)) {
-        found = current;
-        break;
-      } else {
-        current = current.next;
-      }
+
+    if (key.equals(current.key)) {
+      addDataValue(1);
+      return Pair.of(null, current);
     }
-    return Pair.of(previousOfFound, found);
+    int compares = 1;
+    while (current.next != null && !key.equals(current.next.key)) {
+      current = current.next;
+      compares++;
+    }
+    if (current.next == null) {
+      addDataValue(compares);
+      return Pair.of(null, null);
+    } else {
+      addDataValue(compares);
+      return Pair.of(current, current.next);
+    }
+  }
+
+  protected void addDataValue(double value) {
+    if (visualAccumulator != null) {
+      visualAccumulator.addDataValue(value);
+    }
   }
 
   @Override
