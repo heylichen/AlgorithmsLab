@@ -23,5 +23,18 @@ public abstract class AbstractST<K, V> implements ST<K, V> {
     return key != null && get(key) != null;
   }
 
+  //testing purpose
 
+  protected void addDataValue(double value) {
+    if (visualAccumulator != null) {
+      visualAccumulator.addDataValue(value);
+    }
+  }
+
+  @Override
+  public void enableDraw(boolean enable) {
+    if (visualAccumulator != null) {
+      visualAccumulator.enableDraw(enable);
+    }
+  }
 }

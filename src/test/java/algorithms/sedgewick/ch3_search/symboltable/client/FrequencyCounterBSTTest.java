@@ -1,8 +1,8 @@
 package algorithms.sedgewick.ch3_search.symboltable.client;
 
 import algorithms.sedgewick.ch1_fundamentals.sub3_collection.impl.VisualAccumulatorImpl;
+import algorithms.sedgewick.ch3_search.symboltable.BST;
 import algorithms.sedgewick.ch3_search.symboltable.ST;
-import algorithms.sedgewick.ch3_search.symboltable.SequentialSearchST;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,15 +10,15 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by Chen Li on 2017/6/18.
  */
-public class FrequencyCounterSequentialTest extends FrequencyCounterTest {
-  private Logger logger = LoggerFactory.getLogger(FrequencyCounterSequentialTest.class);
+public class FrequencyCounterBSTTest extends FrequencyCounterTest {
+  private Logger logger = LoggerFactory.getLogger(FrequencyCounterBSTTest.class);
   private VisualAccumulatorImpl visualAccumulator;
 
   @Override
   protected ST<String, Integer> createST() {
-    SequentialSearchST<String, Integer> st = new SequentialSearchST<>();
+    BST<String, Integer> st = new BST<>();
     //processed words count and distinct words count
-    visualAccumulator = new VisualAccumulatorImpl(28690, 5128);
+    visualAccumulator = new VisualAccumulatorImpl(28692, 50);
     st.setVisualAccumulator(visualAccumulator);
     return st;
   }

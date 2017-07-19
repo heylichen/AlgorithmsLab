@@ -27,8 +27,9 @@ public class FrequencyCounter {
   public void count(String fileClassPath, int minLength) {
     logger.info("start.");
     timeWatch = new TimeWatch();
-
+    st.enableDraw(true);
     countFile(fileClassPath, minLength);
+    st.enableDraw(false);
     String maxKey = findMaxFrequencyKey(st);
 
     logger.info("minLength={} words, st size:{}, max frequency word is: \"{}\" which occurs {} times.",
@@ -60,12 +61,12 @@ public class FrequencyCounter {
     if (words == null || words.length == 0) {
       return 0;
     }
-    int totalWordCount = 0;
+    int processedWordCount = 0;
     for (String word : words) {
       if (word.length() < minLength) {
         continue;
       }
-      totalWordCount++;
+      processedWordCount++;
       Integer frequency = st.get(word);
       if (frequency == null) {
         st.put(word, 1);
@@ -73,18 +74,18 @@ public class FrequencyCounter {
         st.put(word, frequency + 1);
       }
     }
-    return totalWordCount;
+    return processedWordCount;
   }
 
   private String findMaxFrequencyKey(ST<String, Integer> st) {
     timeWatch.tag(TAG_OTHER);
-    String max = "";
-    st.put(max, -1);
-    for (String word : st.keys())
-      if (st.get(word).intValue() > st.get(max).intValue())
-        max = word;
+//    String max = "";
+//    st.put(max, -1);
+//    for (String word : st.keys())
+//      if (st.get(word).intValue() > st.get(max).intValue())
+//        max = word;
     timeWatch.tag(TAG_FIND_MAX);
-    return max;
+    return "1";
   }
 
   private BufferedReader newReader(String fileClassPath) {

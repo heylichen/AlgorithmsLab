@@ -61,12 +61,6 @@ public class SequentialSearchST<K, V> extends AbstractST<K, V> {
     }
   }
 
-  protected void addDataValue(double value) {
-    if (visualAccumulator != null) {
-      visualAccumulator.addDataValue(value);
-    }
-  }
-
   @Override
   public void put(K key, V value) {
     Node found = findNode(key).getRight();

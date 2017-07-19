@@ -9,4 +9,8 @@ public interface VisualAccumulator {
   double avg();
 
   String toString();
+
+  //testing purpose
+  void enableDraw(boolean enable);
+
 }

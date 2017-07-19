@@ -38,4 +38,6 @@ public interface ST<K, V> {
       };
     }
   };
+
+  void enableDraw(boolean enable);
 }

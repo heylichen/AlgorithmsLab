@@ -7,7 +7,9 @@ import java.util.Iterator;
 
 /**
  * Created by Chen Li on 2017/6/19.
- * use array as it's internal data structure
+ * use array as it's internal data structure.
+ * search using binary search.
+ * auto resizing array when needed.
  */
 public class BinarySearchST<K extends Comparable<K>, V> extends AbstractOrderedST<K, V> {
   public static final String ERR_MSG_NULL_KEY_ILLEGAL = "argument key must not be null!";
@@ -16,6 +18,8 @@ public class BinarySearchST<K extends Comparable<K>, V> extends AbstractOrderedS
   private V[] values;
   private int size;
   public static final int MIN_CAPACITY = 12;
+  private boolean doCount = false;
+  private int ops = 0;
 
   public BinarySearchST() {
     keys = (K[]) new Comparable[MIN_CAPACITY];
@@ -25,8 +29,16 @@ public class BinarySearchST<K extends Comparable<K>, V> extends AbstractOrderedS
 
   @Override
   public V get(K key) {
+    doCount = true;
+    ops = 0;
+
     rejectNullKeyArgument(key);
     int index = rank(key);
+
+    addDataValue(ops);
+    ops = 0;
+    doCount = false;
+
     if (index < size() && keys[index].compareTo(key) == 0) {
       return values[index];
     } else {
@@ -36,10 +48,14 @@ public class BinarySearchST<K extends Comparable<K>, V> extends AbstractOrderedS
 
   @Override
   public void put(K key, V value) {
+    doCount = true;
+    ops = 0;
+
     rejectNullKeyArgument(key);
     resize();
     int index = rank(key);
     if (index < size && keys[index].compareTo(key) == 0) {
+      ops++;
       values[index] = value;
     } else {
       int tail = size - 1;
@@ -47,10 +63,22 @@ public class BinarySearchST<K extends Comparable<K>, V> extends AbstractOrderedS
         keys[tail + 1] = keys[tail];
         values[tail + 1] = values[tail];
         tail--;
+        ops += 2;
       }
       keys[index] = key;
       values[index] = value;
+      ops += 2;
       size++;
+    }
+
+    addDataValue(ops);
+    ops = 0;
+    doCount = false;
+  }
+
+  protected void addDataValue(double value) {
+    if (visualAccumulator != null) {
+      visualAccumulator.addDataValue(value);
     }
   }
 
@@ -74,10 +102,11 @@ public class BinarySearchST<K extends Comparable<K>, V> extends AbstractOrderedS
   private void resize() {
     int capacity = keys.length;
     if (size < capacity / 4) {
+      ops += size;
       int shrinkSize = Math.max(capacity / 2, MIN_CAPACITY);
       resize(shrinkSize);
     } else if (size > capacity * 3 / 4) {
-      int oldCapa = capacity;
+      ops += size;
       long start = System.currentTimeMillis();
       resize(capacity * 2);
       long end = System.currentTimeMillis();
@@ -153,11 +182,13 @@ public class BinarySearchST<K extends Comparable<K>, V> extends AbstractOrderedS
   @Override
   public int rank(K key) {
     rejectNullKeyArgument(key);
+
     int left = 0;
     int right = size - 1;
     while (left <= right) {
       int middle = left + (right - left) / 2;
       int compare = key.compareTo(keys[middle]);
+      ops++;
       if (compare == 0) {
         return middle;
       } else if (compare < 0) {

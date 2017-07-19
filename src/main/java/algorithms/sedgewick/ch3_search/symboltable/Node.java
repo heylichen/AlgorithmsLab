@@ -17,4 +17,7 @@ public class Node<K extends Comparable<K>, V> {
     this.value = value;
     this.count = count;
   }
+
+  public Node() {
+  }
 }
