@@ -348,7 +348,7 @@ public class BST<K extends Comparable<K>, V> extends AbstractOrderedST<K, V> {
    * @param key
    * @param ancestorStack
    * @return Pair,
-   * left: Node if found, null if not found
+   * left: RedBlackNode if found, null if not found
    * right: the ancestor nodes of the found node.
    */
   private Pair<Node<K, V>, Stack<Node<K, V>>> findNode(Node<K, V> root, K key, Stack<Node<K, V>> ancestorStack) {
@@ -371,8 +371,10 @@ public class BST<K extends Comparable<K>, V> extends AbstractOrderedST<K, V> {
 
   private void deleteNodeWithZeroOrOneChild(Node<K, V> toDelete, Stack<Node<K, V>> ancestersStack) {
     Node<K, V> childNode = toDelete.getLeft() != null ? toDelete.getLeft() : toDelete.getRight();
-    boolean asLeft = isLeftChildOfParent(toDelete, ancestersStack.peek());
-
+    boolean asLeft = false;
+    if (!ancestersStack.isEmpty()) {
+      asLeft = isLeftChildOfParent(toDelete, ancestersStack.peek());
+    }
     setParentAndCalculateNodesCount(childNode, asLeft, ancestersStack);
   }
 

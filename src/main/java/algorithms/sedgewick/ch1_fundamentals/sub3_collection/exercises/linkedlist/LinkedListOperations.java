@@ -98,7 +98,7 @@ public class LinkedListOperations<Item extends Integer> implements Iterable<Item
   }
 
   /**
-   * 1.3.24 Write a method removeAfter() that takes a linked-list Node as argument and
+   * 1.3.24 Write a method removeAfter() that takes a linked-list RedBlackNode as argument and
    * removes the node following the given one (and does nothing if the argument or the next
    * field in the argument node is null).
    */
@@ -110,7 +110,7 @@ public class LinkedListOperations<Item extends Integer> implements Iterable<Item
   }
 
   /**
-   * 1.3.25 Write a method insertAfter() that takes two linked-list Node arguments and
+   * 1.3.25 Write a method insertAfter() that takes two linked-list RedBlackNode arguments and
    * inserts the second after the first on its list (and does nothing if either argument is null).
    */
   public void insertAfter(Node firstNode, Node secondNode) {

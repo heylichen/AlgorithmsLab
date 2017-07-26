@@ -33,9 +33,9 @@
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.0.32" level="application_server_libraries" />
     <orderEntry type="library" name="j3dcore" level="project" />
     <orderEntry type="library" name="algs4" level="project" />
-    <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.1.5" level="project" />
-    <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.1.5" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.16" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.2.3" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.2.3" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:4.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
