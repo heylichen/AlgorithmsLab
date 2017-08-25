@@ -7,5 +7,6 @@
 <h1>Hello, B tree3</h1>
 
 <a href="btreeOperate">btree operate</a>
+<a href="bPlusTreeOperate">btree operate</a>
 </body>
 </html>

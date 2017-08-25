@@ -70,6 +70,12 @@ public class BTreeTest {
   }
 
   @Test
+  public void testGuardInternalNode() throws Exception {
+
+
+  }
+
+  @Test
   public void deleteTest() throws Exception {
     BTree<Integer, Integer> btree = new BTree<>(2);
     btree.init();
