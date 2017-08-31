@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Algorithms Lab - btree</title>
+    <title>Algorithms Lab - bplustree</title>
     <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript" src="../resources/js/jquery.js"></script>
     <script type="text/javascript" src="../resources/js/d3Tree.js"></script>
@@ -38,13 +38,14 @@
     bottom <input name="bottom"/>
     <button id="showTextBtn" type="button">show text</button>
     <br>
-    t <input name="t" value="4" class="init"/>
-    node count <input name="nodeCount" value="20" class="init"/>
-    <button id="initBTreeButton" type="button">init btree</button>
+    t <input name="t" value="2" class="init"/>
+    node count <input name="nodeCount" value="10" class="init"/>
+    <button class="newTree" action="${currentPath}/new" type="button">init btree</button>
+    <button class="newTree" action="${currentPath}/random" type="button">random btree</button>
 
     key <input name="key" value="4" class="update"/>
-    <button id="addBtn" action="addKey" type="button" class="update">add key</button>
-    <button id="deleteBtn" action="deleteKey" type="button" class="update">delete key</button>
+    <button id="addBtn" action="${currentPath}/addKey" type="button" class="update">add key</button>
+    <button id="deleteBtn" action="${currentPath}/deleteKey" type="button" class="update">delete key</button>
 </div>
 
 
@@ -81,16 +82,17 @@
             console.log(chart.margins());
         }
 
-        $("#initBTreeButton").click(function () {
+        $("button.newTree").click(function () {
+            var action = $(this).attr('action');
             var form = {};
             $("input.init").each(function (d) {
                 var ele = $(this);
                 var name = ele.attr("name");
                 var value = ele.val();
                 form[name] = value;
-            })
+            });
             $("#graphContainer").html('');
-            $.get("new", form, function (data) {
+            $.get(action, form, function (data) {
                 lastTreeData = data;
                 console.log(data);
                 chart = tree();
@@ -108,7 +110,7 @@
                 "key": key
             };
 
-            $.get(action, formData, function (data) {
+            $.post(action, formData, function (data) {
                 console.log(data);
                 lastTreeData = data;
                 chart = tree();

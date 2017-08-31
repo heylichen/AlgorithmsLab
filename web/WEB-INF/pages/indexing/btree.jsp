@@ -38,14 +38,13 @@
     bottom <input name="bottom"/>
     <button id="showTextBtn" type="button">show text</button>
     <br>
-    t <input name="t" value="2" class="init"/>
-    node count <input name="nodeCount" value="10" class="init"/>
-    <button class="newTree" action="new" type="button">init btree</button>
-    <button class="newTree" action="random" type="button">random btree</button>
+    t <input name="t" value="4" class="init"/>
+    node count <input name="nodeCount" value="20" class="init"/>
+    <button id="initBTreeButton" type="button">init btree</button>
 
     key <input name="key" value="4" class="update"/>
-    <button id="addBtn" action="addKey" type="button" class="update">add key</button>
-    <button id="deleteBtn" action="deleteKey" type="button" class="update">delete key</button>
+    <button id="addBtn" action="${currentPath}/addKey" type="button" class="update">add key</button>
+    <button id="deleteBtn" action="${currentPath}/deleteKey" type="button" class="update">delete key</button>
 </div>
 
 
@@ -56,6 +55,7 @@
     $(function () {
         var chart;
         var lastTreeData;
+        var basePath = "${currentPath}";
 
         function resize(chart) {
             var chartWidth = parseInt($("[name='width']").val());
@@ -82,8 +82,7 @@
             console.log(chart.margins());
         }
 
-        $("button.newTree").click(function () {
-            var action = $(this).attr('action');
+        $("#initBTreeButton").click(function () {
             var form = {};
             $("input.init").each(function (d) {
                 var ele = $(this);
@@ -92,7 +91,7 @@
                 form[name] = value;
             })
             $("#graphContainer").html('');
-            $.get(action, form, function (data) {
+            $.get(basePath + "/new", form, function (data) {
                 lastTreeData = data;
                 console.log(data);
                 chart = tree();
@@ -110,7 +109,7 @@
                 "key": key
             };
 
-            $.post(action, formData, function (data) {
+            $.get(action, formData, function (data) {
                 console.log(data);
                 lastTreeData = data;
                 chart = tree();

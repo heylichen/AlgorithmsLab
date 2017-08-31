@@ -70,35 +70,66 @@ public class BPlusTree<K extends Comparable<K>, V> {
   }
 
   public void delete(K key) {
-    deleteFromNode(root, key);
+    Stack<Pair<BPlusTreeNode<K, V>, Integer>> ancestersStack = new Stack<>();
+    Pair<BPlusTreeNode<K, V>, Stack<Pair<BPlusTreeNode<K, V>, Integer>>> pair =
+        findTargetNode(key, ancestersStack);
+    ancestersStack = pair.getRight();
+    BPlusTreeNode<K, V> currentNode = pair.getLeft();
+    int at = currentNode.rank(key);
+    if (!currentNode.isKeyAt(key, at)) {
+      return;
+    }
+    //found node and index
+    deleteFromNode(currentNode, key, at, ancestersStack);
   }
 
-  public void deleteFromNode(BPlusTreeNode<K, V> node, K key) {
-    int rank = node.rank(key);
-    boolean inThisNode = node.isKeyAt(key, rank);
-    if (node == root && node.isLeaf()) {
-      if (inThisNode) {
-        node.deleteFromLeaf(rank);
-      }
+  public void deleteFromNode(BPlusTreeNode<K, V> node, K key, int at,
+                             Stack<Pair<BPlusTreeNode<K, V>, Integer>> ancestersStack) {
+    Pair<BPlusTreeNode<K, V>, Integer> parentAndIndex = ancestersStack.isEmpty() ? null : ancestersStack.pop();
+    if (parentAndIndex == null) {
+      //node is root
+      deleteFromRoot(node, at);
       return;
     }
 
-    int atChild = inThisNode ? rank + 1 : rank;
-    //before go to the child node, make sure it's key size is more than minimum
-    BPlusTreeNode<K, V> parentNode = node;
-    BPlusTreeNode<K, V> targetChildNode = parentNode.getChildren()[atChild];
-    while (!targetChildNode.isLeaf()) {
-      if (!targetChildNode.isMinDegree()) {
-        rank = targetChildNode.rank(key);
 
-        atChild = targetChildNode.isKeyAt(key, rank) ? rank + 1 : rank;
-        parentNode = targetChildNode;
-        targetChildNode = targetChildNode.getChildren()[atChild];
-        continue;
-      }
-      //
-    }
   }
+
+  public void deleteFromRoot(BPlusTreeNode<K, V> node, int at) {
+    int shiftFrom = at + 1;
+    if (shiftFrom < node.size()) {
+      node.shiftLeft(shiftFrom);
+    }
+    node.decreaseSize(1);
+  }
+
+
+//  public void deleteFromNode(BPlusTreeNode<K, V> node, K key) {
+//    int rank = node.rank(key);
+//    boolean inThisNode = node.isKeyAt(key, rank);
+//    if (node == root && node.isLeaf()) {
+//      if (inThisNode) {
+//        node.deleteFromLeaf(rank);
+//      }
+//      return;
+//    }
+//
+//    int atChild = inThisNode ? rank + 1 : rank;
+//    //before go to the child node, make sure it's key size is more than minimum
+//    BPlusTreeNode<K, V> parentNode = node;
+//    BPlusTreeNode<K, V> targetChildNode = parentNode.getChildren()[atChild];
+//    while (!targetChildNode.isLeaf()) {
+//      if (!targetChildNode.isMinDegree()) {
+//        rank = targetChildNode.rank(key);
+//
+//        atChild = targetChildNode.isKeyAt(key, rank) ? rank + 1 : rank;
+//        parentNode = targetChildNode;
+//        targetChildNode = targetChildNode.getChildren()[atChild];
+//        continue;
+//      }
+//      //
+//    }
+//  }
 
   public static <K extends Comparable<K>, V> void guardInternalChildNode(BPlusTreeNode<K, V> parentNode, int childIndex, BPlusTreeNode<K, V> childNode) {
     BPlusTreeNode<K, V> siblingChildNode = null;
@@ -137,7 +168,6 @@ public class BPlusTree<K extends Comparable<K>, V> {
     }
 
     //if both sibling node are at minimum degree, merge them
-
   }
 
 

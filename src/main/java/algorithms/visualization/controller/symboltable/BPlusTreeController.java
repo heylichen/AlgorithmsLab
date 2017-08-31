@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping(value = "/bplustree",method = {RequestMethod.POST, RequestMethod.GET})
+@RequestMapping(value = "/indexing/bPlusTree",method = {RequestMethod.POST, RequestMethod.GET})
 public class BPlusTreeController {
   private final Logger logger = LoggerFactory.getLogger(BPlusTreeController.class);
   @Autowired
-  private BPlusTreeService BPlusTreeService;
+  private BPlusTreeService bPlusTreeService;
 
   @RequestMapping(value = "/", method = RequestMethod.GET)
   public String index(HttpServletRequest request) {
@@ -36,14 +36,14 @@ public class BPlusTreeController {
   @RequestMapping(value = "/new", method = RequestMethod.GET)
   @ResponseBody
   public String restIndex(Integer t, Integer nodeCount) {
-    BPlusTree<Integer, Integer> BPlusTree = BPlusTreeService.init(t, nodeCount);
+    BPlusTree<Integer, Integer> BPlusTree = bPlusTreeService.init(t, nodeCount);
     return JSON.toJSONString(BPlusTree.getRoot(), SerializerFeature.DisableCircularReferenceDetect);
   }
 
   @RequestMapping(value = "/random")
   @ResponseBody
   public String random(Integer t, Integer nodeCount) {
-    BPlusTree<Integer, Integer> bPlusTree = BPlusTreeService.random(t, nodeCount);
+    BPlusTree<Integer, Integer> bPlusTree = bPlusTreeService.random(t, nodeCount);
     return JSON.toJSONString(bPlusTree.getRoot(), SerializerFeature.DisableCircularReferenceDetect);
   }
 
@@ -54,7 +54,7 @@ public class BPlusTreeController {
 
     BPlusTree<Integer, Integer> bPlusTree = new BPlusTree<>(node.getT());
     bPlusTree.setRoot(node);
-    bPlusTree = BPlusTreeService.addKey(bPlusTree, key);
+    bPlusTree = bPlusTreeService.addKey(bPlusTree, key);
     return JSON.toJSONString(bPlusTree.getRoot(), SerializerFeature.DisableCircularReferenceDetect);
   }
 
@@ -64,7 +64,7 @@ public class BPlusTreeController {
     BPlusTreeNode<Integer, Integer> node = (BPlusTreeNode<Integer, Integer>) JSON.parseObject(json, BPlusTreeNode.class);
     BPlusTree<Integer, Integer> bPlusTree = new BPlusTree<>(node.getT());
     bPlusTree.setRoot(node);
-    bPlusTree = BPlusTreeService.deleteKey(bPlusTree, key);
+    bPlusTree = bPlusTreeService.deleteKey(bPlusTree, key);
     return JSON.toJSONString(bPlusTree.getRoot(), SerializerFeature.DisableCircularReferenceDetect);
   }
 }

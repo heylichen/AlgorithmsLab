@@ -13,23 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Controller
-@RequestMapping(value = "/btree")
+@RequestMapping(value = "/indexing/btree")
 public class BtreeController {
   private final Logger logger = LoggerFactory.getLogger(BtreeController.class);
   @Autowired
   private BTreeService bTreeService;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
-  public String index(HttpServletRequest request) {
-    return "btree/index";
-  }
-
   @RequestMapping(value = "/{page}", method = RequestMethod.GET)
   public String page(@PathVariable String page) {
-    return "btree/" + page;
+    return   page;
   }
 
   @RequestMapping(value = "/new", method = RequestMethod.GET)
