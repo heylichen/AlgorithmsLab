@@ -106,7 +106,9 @@ public class BPlusTreeNode<K extends Comparable<K>, V> {
 
     shiftLeftOnePosition(keys, from, size - 1);
     shiftLeftOnePosition(values, from, size - 1);
-    shiftLeftOnePosition(children, from, size);
+    if (getChildrenSize() >= 0) {
+      shiftLeftOnePosition(children, from, size);
+    }
   }
 
   public void shiftRight(int from) {
@@ -160,6 +162,11 @@ public class BPlusTreeNode<K extends Comparable<K>, V> {
     return left;
   }
 
+  public void justDeleteOnLeaf(int at) {
+    shiftLeft(at + 1);
+    this.size--;
+  }
+
   public int getChildrenSize() {
     return this.isLeaf() ? 0 : size() + 1;
   }
@@ -170,5 +177,9 @@ public class BPlusTreeNode<K extends Comparable<K>, V> {
 
   public boolean isMinDegree() {
     return size == t - 1;
+  }
+
+  public int getSaturation() {
+    return size - (t - 1);
   }
 }

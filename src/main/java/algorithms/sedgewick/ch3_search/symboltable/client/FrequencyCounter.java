@@ -79,13 +79,13 @@ public class FrequencyCounter {
 
   private String findMaxFrequencyKey(ST<String, Integer> st) {
     timeWatch.tag(TAG_OTHER);
-//    String max = "";
-//    st.put(max, -1);
-//    for (String word : st.keys())
-//      if (st.get(word).intValue() > st.get(max).intValue())
-//        max = word;
+    String max = "";
+    st.put(max, -1);
+    for (String word : st.keys())
+      if (st.get(word).intValue() > st.get(max).intValue())
+        max = word;
     timeWatch.tag(TAG_FIND_MAX);
-    return "1";
+    return max;
   }
 
   private BufferedReader newReader(String fileClassPath) {

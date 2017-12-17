@@ -18,7 +18,7 @@ public class FrequencyCounterBSTTest extends FrequencyCounterTest {
   protected ST<String, Integer> createST() {
     BST<String, Integer> st = new BST<>();
     //processed words count and distinct words count
-    visualAccumulator = new VisualAccumulatorImpl(28692, 50);
+    //visualAccumulator = new VisualAccumulatorImpl(28692, 50);
     st.setVisualAccumulator(visualAccumulator);
     return st;
   }
@@ -26,7 +26,7 @@ public class FrequencyCounterBSTTest extends FrequencyCounterTest {
   @Test
   public void testCount() throws Exception {
     super.testCount("algorithms/sedgewick/ch3_search/symboltable/client/tale.txt", 8);
-    logger.info("trails :{}, avg {}", visualAccumulator.getN(), visualAccumulator.avg());
-    Thread.sleep(10000);
+  //  logger.info("trails :{}, avg {}", visualAccumulator.getN(), visualAccumulator.avg());
+   // Thread.sleep(10000);
   }
 }

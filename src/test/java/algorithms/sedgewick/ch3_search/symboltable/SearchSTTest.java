@@ -50,6 +50,15 @@ public abstract class SearchSTTest {
   }
 
   @Test
+  public void testDeleteOne() throws Exception {
+    ST<String,String> st = createST();
+    st.put("1", "1");
+    st.delete("1");
+
+    assertEquals("delete wrong", 0, st.size());
+  }
+
+  @Test
   public void testDeleteFirst() throws Exception {
     ST<String,String> st = createST();
     st.put("1", "1");

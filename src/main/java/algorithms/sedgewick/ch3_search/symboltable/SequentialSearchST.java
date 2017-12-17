@@ -80,10 +80,8 @@ public class SequentialSearchST<K, V> extends AbstractST<K, V> {
       return;
     }
     if (previousAndFound.getLeft() == null) {
-      if (previousAndFound.getRight() != null) {
-        throw new IllegalStateException("status error");
-      }
       first = first.next;
+      size--;
       return;
     }
     Node previousNode = previousAndFound.getLeft();
