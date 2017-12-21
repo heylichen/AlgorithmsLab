@@ -31,6 +31,14 @@ public class SeparateChainingHashST<K, V> extends AbstractST<K, V> {
     }
   }
 
+  public void init(){
+    if (this.visualAccumulator != null) {
+      for (int i = 0; i < tableSize; i++) {
+        stArray[i].setVisualAccumulator(this.visualAccumulator);
+      }
+    }
+  }
+
   private int hash(K key) {
     return (key.hashCode() & 0x7fffffff) % tableSize;
   }

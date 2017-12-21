@@ -7,8 +7,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-
 /**
  * Created by Chen Li on 2017/6/18.
  */
@@ -19,16 +17,22 @@ public class FrequencyCounterSeparateChainingTest extends FrequencyCounterTest {
 
   @Override
   protected ST<String, Integer> createST() {
-    st = new SeparateChainingHashST<>(1000);
+    visualAccumulator = new VisualAccumulatorImpl(26706, 20);
+    visualAccumulator.setDraw(true);
+    st = new SeparateChainingHashST<>(997);
+     st.setVisualAccumulator(visualAccumulator);
+    st.init();
     return st;
   }
 
   @Test
   public void testCount() throws Exception {
-    super.testCount("algorithms/sedgewick/ch3_search/symboltable/client/tale.txt", 4);
-    Map<Integer, Integer> map = st.sizeDistribute();
-    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-      System.out.println(entry.getKey() + "\t" + entry.getValue());
-    }
+    super.testCount("algorithms/sedgewick/ch3_search/symboltable/client/tale.txt", 8);
+    System.out.println(visualAccumulator.getN());
+    System.out.println("ok");
+//    Map<Integer, Integer> map = st.sizeDistribute();
+//    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+//      System.out.println(entry.getKey() + "\t" + entry.getValue());
+//    }
   }
 }
