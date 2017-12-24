@@ -1,23 +1,20 @@
 package algorithms.sedgewick.ch5_strings.sorts;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Created by Chen Li on 2017/12/21.
  */
 public class KeyIndexedCount {
-  public <I> List<IndexedEntry<I>> sort(List<IndexedEntry<I>> inputArray) {
+  public IndexedEntry[] sort(IndexedEntry[] inputArray) {
     int radix = getRadix(inputArray);
     int[] counts = countFrequency(inputArray, radix);
     counts = calculateIndices(counts);
-    List<IndexedEntry<I>> result = distribute(inputArray, counts);
-    return result;
+
+    return distribute(inputArray, counts);
   }
 
-  private <I> int getRadix(List<IndexedEntry<I>> inputArray) {
+  private int getRadix(IndexedEntry[] inputArray) {
     int max = -1;
-    for (IndexedEntry<I> entry : inputArray) {
+    for (IndexedEntry entry : inputArray) {
       if (entry.getKey() > max) {
         max = entry.getKey();
       }
@@ -25,15 +22,17 @@ public class KeyIndexedCount {
     return max;
   }
 
-  private <I> int[] countFrequency(List<IndexedEntry<I>> inputArray, int r) {
+  private int[] countFrequency(IndexedEntry[] inputArray, int r) {
     int[] counts = new int[r + 2];
     for (int i = 0; i < counts.length; i++) {
       counts[i] = 0;
     }
-    for (IndexedEntry<I> entry : inputArray) {
+
+    for (IndexedEntry entry : inputArray) {
       int key = entry.getKey();
       counts[key + 1]++;
     }
+
     return counts;
   }
 
@@ -47,10 +46,9 @@ public class KeyIndexedCount {
     return counts;
   }
 
-  private <I> List<IndexedEntry<I>> distribute(List<IndexedEntry<I>> inputArray, int[] counts) {
-
-    IndexedEntry[] arr = (IndexedEntry[]) new IndexedEntry[inputArray.size()];
-    for (IndexedEntry<I> entry : inputArray) {
+  private IndexedEntry[] distribute(IndexedEntry[] inputArray, int[] counts) {
+    IndexedEntry[] arr = new IndexedEntry[inputArray.length];
+    for (IndexedEntry entry : inputArray) {
       int key = entry.getKey();
 
       int targetIndex = counts[key];
@@ -58,6 +56,6 @@ public class KeyIndexedCount {
       counts[key]++;
     }
 
-    return Arrays.asList(arr);
+    return arr;
   }
 }

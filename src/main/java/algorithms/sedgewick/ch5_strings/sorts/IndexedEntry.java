@@ -8,7 +8,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class IndexedEntry< I> {
+public class IndexedEntry<I> {
   private int key;
   private I item;
 

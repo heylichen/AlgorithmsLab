@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -29,14 +30,15 @@ public class KeyIndexedCountTest {
     System.out.println("------------before sorting");
     reportEntries(entries);
 
-    List<IndexedEntry<String>> result = count.sort(entries);
+
+    List<IndexedEntry<String>> result = Arrays.asList(count.sort(entries.toArray(new IndexedEntry[entries.size()])));
     System.out.println("------------after sorting");
     reportEntries(result);
   }
 
-  private void reportEntries(List<IndexedEntry<String>> result){
+  private void reportEntries(List<IndexedEntry<String>> result) {
     for (IndexedEntry<String> entry : result) {
-      System.out.println(String.format("%1$-10s",entry.getItem()) + "\t" + entry.getKey());
+      System.out.println(String.format("%1$-10s", entry.getItem()) + "\t" + entry.getKey());
     }
   }
 }
