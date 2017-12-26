@@ -1,8 +1,11 @@
 package algorithms.sedgewick.sorting.elementrary;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Arrays;
 
 public abstract class SortTest {
   private Sort sort;
@@ -26,8 +29,11 @@ public abstract class SortTest {
     for (int i = 0; i < dataArr.length; i++) {
       dataArr[i] = dataArr.length - i;
     }
+    Integer[] backup = new  Integer[size];
+    System.arraycopy(dataArr, 0, backup, 0, size);
     sort.sort(dataArr);
     Assert.assertTrue(isSorted(dataArr));
+    CollectionUtils.isEqualCollection(Arrays.asList(dataArr), Arrays.asList(backup));
   }
 
   public void show(Comparable[] a) { // Print the array, on a single line.
