@@ -45,11 +45,11 @@ public class SortCompare {
       e.printStackTrace();
     }
 
-    log.info("For {} random Doubles\n {} is {} times faster than {}.  {} use {} ms, {} use {}",
-             size, sortClassA.getSimpleName(),
-             (double) t2 / (double) t1, sortClassB.getSimpleName(),
-             sortClassA.getSimpleName(), t1,
-             sortClassB.getSimpleName(), t2
+    log.info("For {} random Doubles\n {} is {} times faster than {}.  {} use {} ms, {} use {} ms.",
+        size, sortClassA.getSimpleName(),
+        (double) t2 / (double) t1, sortClassB.getSimpleName(),
+        sortClassA.getSimpleName(), t1,
+        sortClassB.getSimpleName(), t2
     );
   }
 

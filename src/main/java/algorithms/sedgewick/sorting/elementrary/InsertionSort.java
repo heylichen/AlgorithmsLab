@@ -26,7 +26,7 @@ public class InsertionSort extends AbstractSort {
     if (from > to) {
       return;
     }
-    for (int k = to; k > from; k--) {
+    for (int k = to; k >= from; k--) {
       arr[k + 1] = arr[k];
     }
   }

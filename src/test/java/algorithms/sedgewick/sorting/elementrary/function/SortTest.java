@@ -1,5 +1,6 @@
-package algorithms.sedgewick.sorting.elementrary;
+package algorithms.sedgewick.sorting.elementrary.function;
 
+import algorithms.sedgewick.sorting.elementrary.Sort;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.Assert;
 import org.junit.Before;
