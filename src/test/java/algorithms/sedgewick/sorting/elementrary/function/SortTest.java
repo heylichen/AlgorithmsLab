@@ -22,7 +22,7 @@ public abstract class SortTest {
   public void sortTest() {
     sortArrayBySize(0);
     sortArrayBySize(1);
-    sortArrayBySize(10);
+    sortArrayBySize(1000);
   }
 
   protected void sortArrayBySize(int size) {
