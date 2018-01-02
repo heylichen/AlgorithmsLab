@@ -1,13 +1,13 @@
 package algorithms.sedgewick.sorting.elementrary.function;
 
-import algorithms.sedgewick.sorting.elementrary.merge.MergeSort;
 import algorithms.sedgewick.sorting.elementrary.Sort;
+import algorithms.sedgewick.sorting.elementrary.merge.CopyOnceMergeSort;
 import org.junit.Test;
 
-public class MergeSortTest extends SortTest {
+public class CopyOnceMergeSortTest extends SortTest {
   @Override
   protected Sort newInstance() {
-    return new MergeSort();
+    return new CopyOnceMergeSort();
   }
 
   @Test

@@ -1,4 +1,6 @@
-package algorithms.sedgewick.sorting.elementrary;
+package algorithms.sedgewick.sorting.elementrary.merge;
+
+import algorithms.sedgewick.sorting.elementrary.AbstractSort;
 
 public class MergeSort extends AbstractSort {
   private Comparable[] aux;
