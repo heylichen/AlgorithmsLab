@@ -5,32 +5,60 @@ import lombok.Setter;
 
 public class LinkedListMergeSort<T extends Comparable> {
 
-
-  public void sort(Node<T> head) {
-    if (head.next == null) {
-      return;
+  public Node<T> sort(Node<T> head) {
+    if (head == null || head.next == null) {
+      return head;
     }
+    int length = 0;
+    Node<T> current = head;
+    while (current != null) {
+      length++;
+      current = current.next;
+    }
+    Node<T> newHead = head;
+    int unit = 1;
+    while (unit < length) {
+      //do merge sub arrays
+      newHead = sortSublist(newHead, unit);
+      unit += unit;
+    }
+    return newHead;
   }
 
-  protected void sortSubslist(Node<T> head, int length) {
-    Node<T> lastNode = null;
-    Node<T> left = head;
-    Node<T> right = left;
+  protected Node<T> sortSublist(Node<T> head, int length) {
+    Node<T> current = head;
+    Node<T> previous = null;
+    Node<T> left = null;
+    Node<T> right = null;
+    Node<T> newHead = null;
     while (true) {
-      for (int i = 0; i < length && right != null; i++) {
-        right = right.next;
+      left = current;
+      for (int i = 0; i < length && current != null; i++) {
+        current = current.next;
       }
-      Node<T> newHead = merge(left, right, length);
-      if (lastNode != null) {
-        lastNode.next = newHead;
+      right = current;
+      if (right == null) {
+        return newHead;
       }
-      lastNode =
+      Node<T> merged = merge(left, right, length);
+      if (previous != null) {
+        previous.next = merged;
+      } else {
+        newHead = merged;
+      }
+      //move length
+      current = merged;
+      int move = length * 2;
+      for (int i = 0; i < move && current != null; i++) {
+        previous = current;
+        current = current.next;
+      }
     }
   }
 
-  protected Node<T> merge(Node<T> preNode, Node<T> left, Node<T> right, int length) {
+  protected Node<T> merge(Node<T> left, Node<T> right, int length) {
     if (right == null) {
-      return;
+      return left;
     }
     Node<T> merged = null;
     int leftCount = 0;
@@ -64,7 +92,9 @@ public class LinkedListMergeSort<T extends Comparable> {
         left = left.next;
         leftCount++;
       }
+      current = current.next;
     }
+
     return merged;
   }
 
