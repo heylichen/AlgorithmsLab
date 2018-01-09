@@ -2,6 +2,7 @@ package algorithms.sedgewick.sorting.elementrary.merge;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class LinkedListMergeSort<T extends Comparable> {
 
@@ -40,25 +41,27 @@ public class LinkedListMergeSort<T extends Comparable> {
       if (right == null) {
         return newHead;
       }
-      Node<T> merged = merge(left, right, length);
+      Pair<Node<T>, Node<T>> headAndTail = merge(left, right, length);
+      Node<T> merged = headAndTail.getLeft();
       if (previous != null) {
         previous.next = merged;
       } else {
         newHead = merged;
       }
       //move length
-      current = merged;
-      int move = length * 2;
-      for (int i = 0; i < move && current != null; i++) {
-        previous = current;
-        current = current.next;
-      }
+      previous = headAndTail.getRight();
+      current = previous.next;
     }
   }
 
-  protected Node<T> merge(Node<T> left, Node<T> right, int length) {
+  protected Pair<Node<T>, Node<T>> merge(Node<T> left, Node<T> right, int length) {
+    Node<T> tail = null;
     if (right == null) {
-      return left;
+      tail = left;
+      while (tail.next != null) {
+        tail = tail.next;
+      }
+      return Pair.of(left, tail);
     }
     Node<T> merged = null;
     int leftCount = 0;
@@ -77,6 +80,11 @@ public class LinkedListMergeSort<T extends Comparable> {
     while (true) {
       if (leftCount >= length) {
         current.next = right;
+        tail = current;
+        while (rightCount < length && tail.next != null) {
+          tail = tail.next;
+          rightCount++;
+        }
         //stop return
         break;
       } else if (rightCount >= length || right == null) {
@@ -95,7 +103,7 @@ public class LinkedListMergeSort<T extends Comparable> {
       current = current.next;
     }
 
-    return merged;
+    return Pair.of(merged, tail);
   }
 
   @Getter
