@@ -1,12 +1,16 @@
 package algorithms.sedgewick.sorting.elementrary.quick;
 
 import algorithms.sedgewick.sorting.elementrary.AbstractSort;
+import algorithms.sedgewick.sorting.elementrary.insertion.InnerInsertionSort;
 import edu.princeton.cs.algs4.StdRandom;
 
 /**
  * Created by Chen Li on 2018/1/9.
  */
-public class QuickSort extends AbstractSort {
+public class InsertionQuickSort extends AbstractSort {
+  private InnerInsertionSort insertionSort = new InnerInsertionSort();
+  private int smallArraySize = 10;
+
   @Override
   public void sort(Comparable[] arr) {
     StdRandom.shuffle(arr);
@@ -14,13 +18,8 @@ public class QuickSort extends AbstractSort {
   }
 
   protected void sort(Comparable[] arr, int low, int high) {
-    if (low >= high) {
-      return;
-    }
-    if (low + 1 == high) {
-      if (less(arr[high], arr[low])) {
-        exchange(arr, low, high);
-      }
+    if (high - low < smallArraySize) {
+      insertionSort.sort(arr, low, high);
       return;
     }
     int partitionIndex = partition(arr, low, high);

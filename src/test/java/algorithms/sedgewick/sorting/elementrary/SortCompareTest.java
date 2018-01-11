@@ -1,9 +1,10 @@
 package algorithms.sedgewick.sorting.elementrary;
 
+import algorithms.sedgewick.sorting.elementrary.insertion.InsertionSort;
 import algorithms.sedgewick.sorting.elementrary.merge.CopyOnceMergeSort;
 import algorithms.sedgewick.sorting.elementrary.merge.InsertionMergeSort;
 import algorithms.sedgewick.sorting.elementrary.merge.MergeSort;
-import algorithms.sedgewick.sorting.elementrary.quick.QuickSort;
+import algorithms.sedgewick.sorting.elementrary.quick.Median3QuickSort;
 import org.junit.Test;
 
 public class SortCompareTest {
@@ -51,8 +52,11 @@ public class SortCompareTest {
 
   @Test
   public void mergeVsQuickTest() throws Exception {
-    Thread.sleep(1000);
-    sortCompare.compare(CopyOnceMergeSort.class, QuickSort.class, 200000, 10);
-    sortCompare.compare(QuickSort.class, CopyOnceMergeSort.class, 200000, 10);
+    sortCompare.compare(CopyOnceMergeSort.class, Median3QuickSort.class, 100000, 10);
+    sortCompare.compare(Median3QuickSort.class, CopyOnceMergeSort.class, 100000, 10);
+
+    sortCompare.compare(CopyOnceMergeSort.class, Median3QuickSort.class, 400000, 10);
+    sortCompare.compare(Median3QuickSort.class, CopyOnceMergeSort.class, 400000, 10);
   }
+
 }

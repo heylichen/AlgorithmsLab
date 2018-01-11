@@ -1,17 +1,29 @@
-package algorithms.sedgewick.sorting.elementrary;
+package algorithms.sedgewick.sorting.elementrary.insertion;
 
-public class InsertionSort extends AbstractSort {
+import algorithms.sedgewick.sorting.elementrary.AbstractSort;
+
+/**
+ * Created by Chen Li on 2018/1/10.
+ */
+public class InnerInsertionSort extends AbstractSort {
   @Override
   public void sort(Comparable[] arr) {
-    if (arr == null || arr.length == 1) {
+    if (arr == null) {
       return;
     }
-    for (int i = 1; i < arr.length; i++) {
+    sort(arr, 0, arr.length - 1);
+  }
+
+  public void sort(Comparable[] arr, int low, int high) {
+    if (low >= high) {
+      return;
+    }
+    for (int i = low + 1; i <= high; i++) {
       Comparable t = arr[i];
       //find j so that a[i] >= a[j], a[i] should be put in index j+1
       //all elements from index j+1 to i-1 should be shift right
       int j = i - 1;
-      for (; j >= 0; j--) {
+      for (; j >= low; j--) {
         if (!less(t, arr[j])) {
           break;
         }
