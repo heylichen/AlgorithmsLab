@@ -1,7 +1,6 @@
 package algorithms.sedgewick.sorting.quick;
 
 import algorithms.sedgewick.sorting.AbstractSort;
-import edu.princeton.cs.algs4.StdRandom;
 
 /**
  * Created by Chen Li on 2018/1/10.
@@ -10,7 +9,7 @@ public class Median3QuickSort extends AbstractSort {
 
   @Override
   public void sort(Comparable[] arr) {
-    StdRandom.shuffle(arr);
+    //StdRandom.shuffle(arr);
     sort(arr, 0, arr.length - 1);
   }
 
@@ -30,7 +29,7 @@ public class Median3QuickSort extends AbstractSort {
   }
 
   protected int partition(Comparable[] arr, int low, int high) {
-    //midian of three rearrange, so that arr[low] is middle value, arr[high] is max value
+    //median ofe three rearrange, so that arr[low] is middle value, arr[high] is max value
     int middle = (low + high) / 2;
     if (less(arr[high], arr[low])) {
       exchange(arr, low, high);

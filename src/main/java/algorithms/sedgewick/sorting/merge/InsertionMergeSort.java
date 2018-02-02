@@ -5,24 +5,24 @@ import algorithms.sedgewick.sorting.insertion.InnerInsertionSort;
 import lombok.Getter;
 import lombok.Setter;
 
-public class InsertionMergeSort extends AbstractSort {
+public class InsertionMergeSort<T extends Comparable<T>> extends AbstractSort<T> {
 
-  private Comparable[] aux;
+  private T[] aux;
   @Getter
   @Setter
   private int smallSize = 16;
   private InnerInsertionSort insertionSort = new InnerInsertionSort();
 
   @Override
-  public void sort(Comparable[] arr) {
+  public void sort(T[] arr) {
     if (arr == null || arr.length <= 1) {
       return;
     }
-    aux = new Comparable[arr.length];
+    aux =  (T[]) new Comparable[arr.length];
     sort(arr, 0, arr.length - 1);
   }
 
-  protected void sort(Comparable[] arr, int low, int high) {
+  protected void sort(T[] arr, int low, int high) {
     if (low >= high) {
       return;
     }
@@ -45,7 +45,7 @@ public class InsertionMergeSort extends AbstractSort {
   }
 
 
-  protected void merge(Comparable[] arr, int low, int middle, int high) {
+  protected void merge(T[] arr, int low, int middle, int high) {
     System.arraycopy(arr, low, aux, low, high - low + 1);
     int i = low;
     int j = middle + 1;

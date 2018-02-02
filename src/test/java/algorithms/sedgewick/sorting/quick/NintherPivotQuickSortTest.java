@@ -5,13 +5,13 @@ import algorithms.sedgewick.sorting.function.SortTest;
 import org.junit.Test;
 
 /**
- * Created by Chen Li on 2018/1/11.
+ * Created by Chen Li on 2018/2/1.
  */
-public class Median3QuickSortTest extends SortTest {
+public class NintherPivotQuickSortTest extends SortTest {
   @Override
   protected Sort newInstance() {
     QuickSortFactory factory = new QuickSortFactory();
-    return factory.media3QuickSort();
+    return factory.nintherQuickSort();
   }
 
   @Test

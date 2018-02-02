@@ -2,21 +2,21 @@ package algorithms.sedgewick.sorting.merge;
 
 import algorithms.sedgewick.sorting.AbstractSort;
 
-public class CopyOnceMergeSort extends AbstractSort {
+public class CopyOnceMergeSort<T extends Comparable<T>> extends AbstractSort<T> {
 
   @Override
-  public void sort(Comparable[] arr) {
+  public void sort(T[] arr) {
     if (arr == null || arr.length <= 1) {
       return;
     }
-    Comparable[] aux = new Comparable[arr.length];
+    T[] aux = (T[]) new Comparable[arr.length];
     // int start = getMiddle(0, arr.length - 1);
     int start = 0;
     System.arraycopy(arr, start, aux, start, arr.length - start);
     sort(arr, aux, 0, arr.length - 1);
   }
 
-  protected void sort(Comparable[] arr, Comparable[] aux, int low, int high) {
+  protected void sort(T[] arr, T[] aux, int low, int high) {
     if (low >= high) {
       return;
     }
@@ -35,7 +35,7 @@ public class CopyOnceMergeSort extends AbstractSort {
   }
 
 
-  protected void merge(Comparable[] arr, Comparable[] aux, int low, int middle, int high) {
+  protected void merge(T[] arr, T[] aux, int low, int middle, int high) {
     int i = low;
     int j = middle + 1;
     int k = low;

@@ -1,15 +1,16 @@
 package algorithms.sedgewick.sorting.quick;
 
+import java.util.Random;
+
 import algorithms.sedgewick.sorting.Sort;
 import algorithms.sedgewick.sorting.SortCompare;
 import org.junit.Test;
-
-import java.util.Random;
 
 /**
  * Created by Chen Li on 2018/1/10.
  */
 public class QuickSortCompareTest {
+
   private SortCompare sortCompare = new SortCompare();
   private Random rand = new Random();
 
@@ -31,12 +32,43 @@ public class QuickSortCompareTest {
     sortCompare.compare(QuickSort.class, Median3QuickSort.class, 400000, 5);
   }
 
+  @Test
+  public void nintherQuickTest() throws Exception {
+    sortCompare.compare(NintherPivotQuickSort.class, QuickSort.class, 100000, 5);
+    sortCompare.compare(QuickSort.class, NintherPivotQuickSort.class, 100000, 5);
+
+    sortCompare.compare(NintherPivotQuickSort.class, QuickSort.class, 400000, 5);
+    sortCompare.compare(QuickSort.class, NintherPivotQuickSort.class, 400000, 5);
+  }
+
+  @Test
+  public void pivotQuickTest() throws Exception {
+    QuickSortFactory factory = new QuickSortFactory();
+    Sort basic = factory.basicQuickSort();
+    Sort median3 = factory.media3QuickSort();
+    Sort ninther = factory.nintherQuickSort();
+
+    sortCompare.compare(basic, median3, 10000, 5);
+    sortCompare.compare(ninther, median3, 10000, 5);
+    System.out.println("---------------");
+
+    sortCompare.compare(basic, median3, 100000, 5);
+    sortCompare.compare(median3, basic, 100000, 5);
+
+    sortCompare.compare(basic, ninther, 400000, 5);
+    sortCompare.compare(ninther, basic, 400000, 5);
+    System.out.println("---------------");
+    sortCompare.compare(median3, ninther, 400000, 5);
+    sortCompare.compare(median3, ninther, 400000, 5);
+    sortCompare.compare(ninther, median3, 400000, 5);
+    sortCompare.compare(ninther, median3, 400000, 5);
+  }
+
   /**
    * distinct values sort, Fast3WayPartitionQuickSort performs better than ThreeWayPartitionQuickSort
    * QuickSort > ThreeWayPartitionQuickSort
    * Fast3WayPartitionQuickSort > ThreeWayPartitionQuickSor
    * FastThreeWayPartitionQuickSorta lmost the same as   QuickSort
-   * @throws Exception
    */
   @Test
   public void entropyOptimalPerfTest() throws Exception {

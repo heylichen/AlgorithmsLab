@@ -1,5 +1,7 @@
 package algorithms.sedgewick.sorting.quick;
 
+import java.util.Random;
+
 import algorithms.sedgewick.sorting.AbstractSort;
 import edu.princeton.cs.algs4.StdRandom;
 
@@ -7,6 +9,8 @@ import edu.princeton.cs.algs4.StdRandom;
  * Created by Chen Li on 2018/1/9.
  */
 public class QuickSort extends AbstractSort {
+
+  private Random random = new Random();
   @Override
   public void sort(Comparable[] arr) {
     StdRandom.shuffle(arr);
@@ -29,14 +33,21 @@ public class QuickSort extends AbstractSort {
   }
 
   protected int partition(Comparable[] arr, int low, int high) {
+//    int pivotIndex = random.nextInt(high - low + 1);
+//    exchange(arr, low, pivotIndex);
+
     Comparable v = arr[low];
     int i = low;
     int j = high + 1;
     while (true) {
-      while (less(arr[++i], v)) if (i == high) {
-        break;
+      while (less(arr[++i], v)) {
+        if (i == high) {
+          break;
+        }
       }
-      while (less(v, arr[--j])) ;
+      while (less(v, arr[--j])) {
+        ;
+      }
       if (i < j) {
         exchange(arr, i, j);
       } else {

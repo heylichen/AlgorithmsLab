@@ -5,21 +5,21 @@ import algorithms.sedgewick.sorting.AbstractSort;
 /**
  * Created by Chen Li on 2018/1/10.
  */
-public class InnerInsertionSort extends AbstractSort {
+public class InnerInsertionSort<T extends Comparable<T>> extends AbstractSort<T> {
   @Override
-  public void sort(Comparable[] arr) {
+  public void sort(T[] arr) {
     if (arr == null) {
       return;
     }
     sort(arr, 0, arr.length - 1);
   }
 
-  public void sort(Comparable[] arr, int low, int high) {
+  public void sort(T[] arr, int low, int high) {
     if (low >= high) {
       return;
     }
     for (int i = low + 1; i <= high; i++) {
-      Comparable t = arr[i];
+      T t = arr[i];
       //find j so that a[i] >= a[j], a[i] should be put in index j+1
       //all elements from index j+1 to i-1 should be shift right
       int j = i - 1;
@@ -34,7 +34,7 @@ public class InnerInsertionSort extends AbstractSort {
     }
   }
 
-  protected void shiftRight(Comparable[] arr, int from, int to) {
+  protected void shiftRight(T[] arr, int from, int to) {
     if (from > to) {
       return;
     }

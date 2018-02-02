@@ -1,9 +1,9 @@
 package algorithms.sedgewick.sorting;
 
-public class ShellSort extends AbstractSort {
+public class ShellSort<T extends Comparable<T>> extends AbstractSort<T> {
 
   @Override
-  public void sort(Comparable[] arr) {
+  public void sort(T[] arr) {
     if (arr == null || arr.length <= 1) {
       return;
     }
@@ -14,11 +14,11 @@ public class ShellSort extends AbstractSort {
     }
   }
 
-  protected void partialSort(Comparable[] arr, int h) {
+  protected void partialSort(T[] arr, int h) {
     for (int i = h; i < arr.length; i++) {
 
       int j = i - h;
-      Comparable currentValue = arr[i];
+      T currentValue = arr[i];
       while (j >= 0 && less(currentValue, arr[j])) {
         j = j - h;
       }
@@ -28,7 +28,7 @@ public class ShellSort extends AbstractSort {
     }
   }
 
-  protected void shiftRight(Comparable[] arr, int from, int to, int step) {
+  protected void shiftRight(T[] arr, int from, int to, int step) {
     if (from > to) {
       return;
     }

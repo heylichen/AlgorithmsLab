@@ -2,14 +2,15 @@ package algorithms.sedgewick.sorting.insertion;
 
 import algorithms.sedgewick.sorting.AbstractSort;
 
-public class InsertionSort extends AbstractSort {
+public class InsertionSort<T extends Comparable<T>> extends AbstractSort<T> {
+
   @Override
-  public void sort(Comparable[] arr) {
+  public void sort(T[] arr) {
     if (arr == null || arr.length == 1) {
       return;
     }
     for (int i = 1; i < arr.length; i++) {
-      Comparable t = arr[i];
+      T t = arr[i];
       //find j so that a[i] >= a[j], a[i] should be put in index j+1
       //all elements from index j+1 to i-1 should be shift right
       int j = i - 1;
@@ -24,7 +25,7 @@ public class InsertionSort extends AbstractSort {
     }
   }
 
-  protected void shiftRight(Comparable[] arr, int from, int to) {
+  protected void shiftRight(T[] arr, int from, int to) {
     if (from > to) {
       return;
     }

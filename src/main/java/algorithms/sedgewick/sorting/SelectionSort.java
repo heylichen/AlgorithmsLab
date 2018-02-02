@@ -1,8 +1,8 @@
 package algorithms.sedgewick.sorting;
 
-public class SelectionSort extends AbstractSort {
+public class SelectionSort<T extends Comparable<T>> extends AbstractSort<T> {
   @Override
-  public void sort(Comparable[] arr) {
+  public void sort(T[] arr) {
     for (int i = 0; i < arr.length; i++) {
       int min = i;
       for (int j = i + 1; j < arr.length; j++) {
