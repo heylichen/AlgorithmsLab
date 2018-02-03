@@ -10,7 +10,7 @@ import org.junit.Test;
 public class InsertionQuickSortTest extends SortTest {
   @Override
   protected Sort newInstance() {
-    return new InsertionQuickSort();
+    return null;
   }
 
   @Test

@@ -1,4 +1,4 @@
-package algorithms.sedgewick.sorting.quick;
+package algorithms.sedgewick.sorting;
 
 /**
  * Created by Chen Li on 2018/2/1.

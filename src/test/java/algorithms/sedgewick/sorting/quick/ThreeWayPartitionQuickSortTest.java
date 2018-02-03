@@ -8,9 +8,12 @@ import org.junit.Test;
  * Created by Chen Li on 2018/1/11.
  */
 public class ThreeWayPartitionQuickSortTest extends SortTest {
+
   @Override
   protected Sort newInstance() {
-    return new ThreeWayPartitionQuickSort();
+    QuickSortFactory factory = new QuickSortFactory();
+    return factory.threeWayPartitionQuickSort();
+//    return new ThreeWayPartitionQuickSort();
   }
 
   @Test

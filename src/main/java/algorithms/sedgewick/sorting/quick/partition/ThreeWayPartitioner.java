@@ -1,6 +1,6 @@
 package algorithms.sedgewick.sorting.quick.partition;
 
-import algorithms.sedgewick.sorting.quick.AbstractComparableOperator;
+import algorithms.sedgewick.sorting.AbstractComparableOperator;
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
@@ -25,6 +25,6 @@ public class ThreeWayPartitioner<T extends Comparable<T>> extends AbstractCompar
       }
     }
     exchange(arr, low, i - 1);
-    return Pair.of(i - 1, j);
+    return Pair.of(i - 2, j);
   }
 }

@@ -13,6 +13,6 @@ public class ShellSortPerTest extends SortScalePerformanceTest {
 
   @Test
   public void scaleTest() throws InstantiationException, IllegalAccessException {
-    sortCompare.scaleSortPerformance(sort.getClass(), 1000, 320000, 10);
+    sortCompare.scaleSortPerformance(sort, 1000, 320000, 10);
   }
 }

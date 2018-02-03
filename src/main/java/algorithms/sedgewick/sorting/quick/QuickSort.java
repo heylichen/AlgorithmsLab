@@ -7,6 +7,7 @@ import edu.princeton.cs.algs4.StdRandom;
 
 /**
  * Created by Chen Li on 2018/1/9.
+ * basic quick sort implementation
  */
 public class QuickSort extends AbstractSort {
 
@@ -33,8 +34,6 @@ public class QuickSort extends AbstractSort {
   }
 
   protected int partition(Comparable[] arr, int low, int high) {
-//    int pivotIndex = random.nextInt(high - low + 1);
-//    exchange(arr, low, pivotIndex);
 
     Comparable v = arr[low];
     int i = low;

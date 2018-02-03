@@ -10,7 +10,8 @@ import org.junit.Test;
 public class FastThreeWayPartitionQuickSortTest extends SortTest {
   @Override
   protected Sort newInstance() {
-    return new Fast3WayPartitionQuickSort();
+    QuickSortFactory factory = new QuickSortFactory();
+    return factory.fast3WayPartitionQuickSort();
   }
 
   @Test

@@ -11,7 +11,7 @@ public class Median3QuickSortTest extends SortTest {
   @Override
   protected Sort newInstance() {
     QuickSortFactory factory = new QuickSortFactory();
-    return factory.media3QuickSort();
+    return factory.median3QuickSort();
   }
 
   @Test

@@ -1,16 +1,16 @@
 package algorithms.sedgewick.sorting.function;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import algorithms.sedgewick.sorting.Sort;
-import algorithms.sedgewick.sorting.SortCompare;
+import algorithms.sedgewick.sorting.compare.RandomArraySortCompare;
 import algorithms.sedgewick.sorting.merge.InsertionMergeSort;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Slf4j
 public class InsertionMergeSortTest extends SortTest {
@@ -30,12 +30,12 @@ public class InsertionMergeSortTest extends SortTest {
 
 
   public void findBestThreshold() {
-    SortCompare sortCompare = new SortCompare();
+    RandomArraySortCompare sortCompare = new RandomArraySortCompare();
     InsertionMergeSort sort = new InsertionMergeSort();
     List<Pair<Long, Integer>> logs = new ArrayList<>();
     for (int i = 4; i < 100; i = i + 10) {
       sort.setSmallSize(i);
-      long duration = sortCompare.timeRandomInput(sort, 400000, 10);
+      long duration = sortCompare.timeOf(sort, 400000, 10);
       logs.add(Pair.of(duration, i));
     }
     Collections.sort(logs, (p1, p2) -> p1.getLeft().compareTo(p2.getLeft()));
