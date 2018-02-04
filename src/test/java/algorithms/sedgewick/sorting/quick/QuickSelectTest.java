@@ -7,7 +7,7 @@ import org.junit.Test;
  */
 public class QuickSelectTest {
   @Test
-  public void name() {
+  public void test() {
     int size = 1000;
     Integer[] arr = new Integer[size];
     for (int i = 0; i < size; i++) {

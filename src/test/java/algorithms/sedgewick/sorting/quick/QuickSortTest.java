@@ -1,7 +1,7 @@
 package algorithms.sedgewick.sorting.quick;
 
 import algorithms.sedgewick.sorting.Sort;
-import algorithms.sedgewick.sorting.function.SortTest;
+import algorithms.sedgewick.sorting.SortTest;
 import org.junit.Test;
 
 /**

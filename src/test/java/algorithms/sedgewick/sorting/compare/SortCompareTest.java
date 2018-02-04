@@ -1,8 +1,10 @@
-package algorithms.sedgewick.sorting;
+package algorithms.sedgewick.sorting.compare;
 
 import java.util.Arrays;
 import java.util.List;
 
+import algorithms.sedgewick.sorting.SelectionSort;
+import algorithms.sedgewick.sorting.ShellSort;
 import algorithms.sedgewick.sorting.insertion.InsertionSort;
 import algorithms.sedgewick.sorting.merge.CopyOnceMergeSort;
 import algorithms.sedgewick.sorting.merge.InsertionMergeSort;

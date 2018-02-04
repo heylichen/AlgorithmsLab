@@ -1,8 +1,9 @@
-package algorithms.sedgewick.sorting;
+package algorithms.sedgewick.sorting.compare;
 
 import java.util.Arrays;
 import java.util.List;
 
+import algorithms.sedgewick.sorting.Sort;
 import algorithms.sedgewick.sorting.compare.RandomArraySortCompare;
 import algorithms.sedgewick.sorting.compare.SortCompare;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.apache.commons.lang3.tuple.Pair;
  */
 @Slf4j
 public abstract class AbstractSortCompareTest {
+
   private SortCompare sortCompare = new RandomArraySortCompare();
   private static final String LOG_HEAD_FORMAT = "%30s %30s %7s %7s %5s";
   private static final String LOG_FORMAT = "%30d %30d %7.3f %7d %5d";
@@ -36,6 +38,9 @@ public abstract class AbstractSortCompareTest {
   );
 
   protected void sortCompare(Sort sort1, Sort sort2, List<Pair<Integer, Integer>> sizeAndTimesList) throws Exception {
+    //warming up
+    Pair<Integer, Integer> startPair = sizeAndTimesList.get(0);
+    twoRoundSortCompare(sort1, sort2, startPair.getLeft(), startPair.getRight(), sortCompare, false);
     sortCompare(sort1, sort2, sizeAndTimesList, sortCompare);
   }
 
@@ -47,15 +52,18 @@ public abstract class AbstractSortCompareTest {
     for (Pair<Integer, Integer> pair : sizeAndTimesList) {
       int size = pair.getLeft();
       int times = pair.getRight();
-      twoRoundSortCompare(sort1, sort2, size, times, sortCompare);
+      twoRoundSortCompare(sort1, sort2, size, times, sortCompare, true);
     }
   }
 
-  protected void twoRoundSortCompare(Sort sort1, Sort sort2, int size, int times, SortCompare sortCompare) {
+  protected void twoRoundSortCompare(Sort sort1, Sort sort2, int size, int times, SortCompare sortCompare,
+                                     boolean log) {
     Pair<Long, Long> pair1 = sortCompare.compare(sort1, sort2, size, times);
     Pair<Long, Long> pair2 = sortCompare.compare(sort2, sort1, size, times);
-    doLog(pair1.getLeft(), pair1.getRight(), size, times);
-    doLog(pair2.getRight(), pair2.getLeft(), size, times);
+    if (log) {
+      doLog(pair1.getLeft(), pair1.getRight(), size, times);
+      doLog(pair2.getRight(), pair2.getLeft(), size, times);
+    }
   }
 
   protected void doLog(Long elapsed1, Long elapsed2, int size, int times) {

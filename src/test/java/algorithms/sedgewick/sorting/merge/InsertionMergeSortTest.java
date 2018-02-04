@@ -1,4 +1,4 @@
-package algorithms.sedgewick.sorting.function;
+package algorithms.sedgewick.sorting.merge;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,7 +6,7 @@ import java.util.List;
 
 import algorithms.sedgewick.sorting.Sort;
 import algorithms.sedgewick.sorting.compare.RandomArraySortCompare;
-import algorithms.sedgewick.sorting.merge.InsertionMergeSort;
+import algorithms.sedgewick.sorting.SortTest;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;

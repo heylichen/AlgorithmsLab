@@ -1,7 +1,7 @@
 package algorithms.sedgewick.sorting.quick;
 
 import algorithms.sedgewick.sorting.Sort;
-import algorithms.sedgewick.sorting.function.SortTest;
+import algorithms.sedgewick.sorting.SortTest;
 import org.junit.Test;
 
 /**
@@ -13,7 +13,6 @@ public class ThreeWayPartitionQuickSortTest extends SortTest {
   protected Sort newInstance() {
     QuickSortFactory factory = new QuickSortFactory();
     return factory.threeWayPartitionQuickSort();
-//    return new ThreeWayPartitionQuickSort();
   }
 
   @Test

@@ -1,14 +1,15 @@
-package algorithms.sedgewick.sorting.quick;
+package algorithms.sedgewick.sorting.compare;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import algorithms.sedgewick.sorting.AbstractSortCompareTest;
+import algorithms.sedgewick.sorting.compare.AbstractSortCompareTest;
 import algorithms.sedgewick.sorting.Sort;
 import algorithms.sedgewick.sorting.compare.EntropyOptimalSortCompare;
 import algorithms.sedgewick.sorting.compare.RandomArraySortCompare;
 import algorithms.sedgewick.sorting.compare.SortCompare;
+import algorithms.sedgewick.sorting.quick.QuickSortFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
@@ -43,6 +44,14 @@ public class QuickSortCompareTest extends AbstractSortCompareTest {
     sortCompare(median3, ninther, fastSizeAndTimesList);
   }
 
+  @Test
+  public void randomPivotQuickTest() throws Exception {
+    QuickSortFactory factory = new QuickSortFactory();
+    Sort median3 = factory.median3QuickSort();
+    Sort randomMedian3 = factory.randomMedian3QuickSort();
+
+    sortCompare(randomMedian3, median3, fastSizeAndTimesList);
+  }
 
   /**
    * distinct values sort, Fast3WayPartitionQuickSort performs better than ThreeWayPartitionQuickSort

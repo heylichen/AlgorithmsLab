@@ -1,4 +1,4 @@
-package algorithms.sedgewick.sorting.function;
+package algorithms.sedgewick.sorting.merge;
 
 import algorithms.sedgewick.sorting.merge.LinkedListMergeSort;
 import org.junit.Assert;

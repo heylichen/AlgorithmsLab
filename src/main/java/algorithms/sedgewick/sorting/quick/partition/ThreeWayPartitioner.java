@@ -15,7 +15,7 @@ public class ThreeWayPartitioner<T extends Comparable<T>> extends AbstractCompar
     int j = i;
     int n = high;
     while (j <= n) {
-      int compared = arr[i].compareTo(v);
+      int compared = arr[j].compareTo(v);
       if (compared == 0) {
         j++;
       } else if (compared < 0) {

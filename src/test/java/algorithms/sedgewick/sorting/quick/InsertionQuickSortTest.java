@@ -1,7 +1,7 @@
 package algorithms.sedgewick.sorting.quick;
 
 import algorithms.sedgewick.sorting.Sort;
-import algorithms.sedgewick.sorting.function.SortTest;
+import algorithms.sedgewick.sorting.SortTest;
 import org.junit.Test;
 
 /**
@@ -10,7 +10,8 @@ import org.junit.Test;
 public class InsertionQuickSortTest extends SortTest {
   @Override
   protected Sort newInstance() {
-    return null;
+    QuickSortFactory factory = new QuickSortFactory();
+    return factory.cutoffQuickSort();
   }
 
   @Test

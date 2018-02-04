@@ -1,4 +1,4 @@
-package algorithms.sedgewick.sorting.function;
+package algorithms.sedgewick.sorting;
 
 import algorithms.sedgewick.sorting.Sort;
 import org.apache.commons.collections4.CollectionUtils;

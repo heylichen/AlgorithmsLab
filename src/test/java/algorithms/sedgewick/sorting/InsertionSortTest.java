@@ -1,7 +1,6 @@
-package algorithms.sedgewick.sorting.function;
+package algorithms.sedgewick.sorting;
 
 import algorithms.sedgewick.sorting.insertion.InsertionSort;
-import algorithms.sedgewick.sorting.Sort;
 
 public class InsertionSortTest extends SortTest {
   @Override

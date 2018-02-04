@@ -11,6 +11,7 @@ import algorithms.sedgewick.sorting.quick.partition.ThreeWayPartitioner;
 import algorithms.sedgewick.sorting.quick.pivot.Median3PivotSelector;
 import algorithms.sedgewick.sorting.quick.pivot.NintherPivotSelector;
 import algorithms.sedgewick.sorting.quick.pivot.PivotSelector;
+import algorithms.sedgewick.sorting.quick.pivot.RandomMedian3PivotSelector;
 import algorithms.sedgewick.sorting.quick.pivot.RandomPivotSelector;
 
 /**
@@ -37,6 +38,16 @@ public class QuickSortFactory {
 
   public Sort cutoffQuickSort() {
     return cutoffQuickSortSkeleton("cutoffQuickSort", true, new CutoffInsertionSort());
+  }
+
+  public Sort randomMedian3QuickSort() {
+    QuickSortSkeleton skeleton = basicQuickSortSkeleton("randomMedian3QuickSort", false);
+
+    PivotSelector pivotSelector = new RandomMedian3PivotSelector();
+    CutoffSort cutoffSort = new CutoffInsertionSort();
+    skeleton.setPivotSelector(pivotSelector);
+    skeleton.setCutoffSort(cutoffSort);
+    return skeleton;
   }
 
   public Sort median3QuickSort() {
