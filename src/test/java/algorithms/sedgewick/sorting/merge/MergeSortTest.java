@@ -1,7 +1,7 @@
 package algorithms.sedgewick.sorting.merge;
 
 import algorithms.sedgewick.sorting.Sort;
-import algorithms.sedgewick.sorting.merge.MergeSort;
+import algorithms.sedgewick.sorting.SortTest;
 import org.junit.Test;
 
 public class MergeSortTest extends SortTest {
