@@ -1,11 +1,11 @@
 package algorithms.sedgewick.sorting.merge;
 
-import algorithms.sedgewick.sorting.AbstractSort;
+import algorithms.sedgewick.sorting.AbstractComparableSort;
 import algorithms.sedgewick.sorting.insertion.InnerInsertionSort;
 import lombok.Getter;
 import lombok.Setter;
 
-public class InsertionMergeSort<T extends Comparable<T>> extends AbstractSort<T> {
+public class InsertionMergeSort<T extends Comparable<T>> extends AbstractComparableSort<T> {
 
   private T[] aux;
   @Getter

@@ -10,7 +10,7 @@ public class MaxPQTest {
   @Test
   public void insertTest() {
     MaxPQ pq = new MaxPQ(100);
-    int size = 10;
+    int size = 100;
     for (int i = 0; i < size; i++) {
       pq.insert(size - i);
     }

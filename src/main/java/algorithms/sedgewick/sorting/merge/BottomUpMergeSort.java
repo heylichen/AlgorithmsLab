@@ -1,8 +1,8 @@
 package algorithms.sedgewick.sorting.merge;
 
-import algorithms.sedgewick.sorting.AbstractSort;
+import algorithms.sedgewick.sorting.AbstractComparableSort;
 
-public class BottomUpMergeSort<T extends Comparable<T>> extends AbstractSort<T> {
+public class BottomUpMergeSort<T extends Comparable<T>> extends AbstractComparableSort<T> {
 
   private T[] aux;
 

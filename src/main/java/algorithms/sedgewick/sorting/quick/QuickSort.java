@@ -2,14 +2,14 @@ package algorithms.sedgewick.sorting.quick;
 
 import java.util.Random;
 
-import algorithms.sedgewick.sorting.AbstractSort;
+import algorithms.sedgewick.sorting.AbstractComparableSort;
 import edu.princeton.cs.algs4.StdRandom;
 
 /**
  * Created by Chen Li on 2018/1/9.
  * basic quick sort implementation
  */
-public class QuickSort extends AbstractSort {
+public class QuickSort extends AbstractComparableSort {
 
   private Random random = new Random();
   @Override

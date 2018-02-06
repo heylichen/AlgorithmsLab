@@ -1,8 +1,8 @@
 package algorithms.sedgewick.sorting.merge;
 
-import algorithms.sedgewick.sorting.AbstractSort;
+import algorithms.sedgewick.sorting.AbstractComparableSort;
 
-public class CopyOnceMergeSort<T extends Comparable<T>> extends AbstractSort<T> {
+public class CopyOnceMergeSort<T extends Comparable<T>> extends AbstractComparableSort<T> {
 
   @Override
   public void sort(T[] arr) {

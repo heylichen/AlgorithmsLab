@@ -1,11 +1,13 @@
 package algorithms.sedgewick.sorting.quick.cutoff;
 
-import algorithms.sedgewick.sorting.AbstractComparableOperator;
+import algorithms.sedgewick.sorting.ComparableOperations;
 
 /**
  * Created by Chen Li on 2018/2/2.
  */
-public class Cutoff2Sort<T extends Comparable<T>> extends AbstractComparableOperator<T> implements CutoffSort<T> {
+public class Cutoff2Sort<T extends Comparable<T>> implements CutoffSort<T> {
+
+  private ComparableOperations comparableOperations = new ComparableOperations();
 
   @Override
   public boolean cutoff(T[] arr, int low, int high) {
@@ -13,8 +15,8 @@ public class Cutoff2Sort<T extends Comparable<T>> extends AbstractComparableOper
       return true;
     }
     if (low + 1 == high) {
-      if (less(arr[high], arr[low])) {
-        exchange(arr, low, high);
+      if (comparableOperations.less(arr[high], arr[low])) {
+        comparableOperations.exchange(arr, low, high);
       }
       return true;
     }

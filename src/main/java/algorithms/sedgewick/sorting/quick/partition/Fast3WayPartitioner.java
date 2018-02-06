@@ -1,12 +1,14 @@
 package algorithms.sedgewick.sorting.quick.partition;
 
-import algorithms.sedgewick.sorting.AbstractComparableOperator;
+import algorithms.sedgewick.sorting.ComparableOperations;
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Created by Chen Li on 2018/2/2.
  */
-public class Fast3WayPartitioner<T extends Comparable<T>> extends AbstractComparableOperator implements Partitioner<T> {
+public class Fast3WayPartitioner<T extends Comparable<T>> implements Partitioner<T> {
+
+  private ComparableOperations comparableOperations = new ComparableOperations();
 
   @Override
   public Pair<Integer, Integer> partition(T[] arr, int low, int high) {
@@ -20,7 +22,7 @@ public class Fast3WayPartitioner<T extends Comparable<T>> extends AbstractCompar
       while (i <= j) {
         int compared = arr[i].compareTo(v);
         if (compared == 0) {
-          exchange(arr, i, p);
+          comparableOperations.exchange(arr, i, p);
           p++;
           i++;
           continue;
@@ -35,7 +37,7 @@ public class Fast3WayPartitioner<T extends Comparable<T>> extends AbstractCompar
       while (i <= j) {
         int compared = arr[j].compareTo(v);
         if (compared == 0) {
-          exchange(arr, j, q);
+          comparableOperations.exchange(arr, j, q);
           q--;
           j--;
         } else if (compared > 0) {
@@ -45,7 +47,7 @@ public class Fast3WayPartitioner<T extends Comparable<T>> extends AbstractCompar
         }
       }
       if (i <= j) {
-        exchange(arr, i, j);
+        comparableOperations.exchange(arr, i, j);
         i++;
         j--;
       }
@@ -76,12 +78,12 @@ public class Fast3WayPartitioner<T extends Comparable<T>> extends AbstractCompar
     if (leftSize <= halfSize) {
       //from left sub array
       for (int i = low; i <= middle; i++) {
-        exchange(arr, i, i + rightSize);
+        comparableOperations.exchange(arr, i, i + rightSize);
       }
     } else {
       //from right sub array
       for (int i = middle + 1; i <= high; i++) {
-        exchange(arr, i, i - leftSize);
+        comparableOperations.exchange(arr, i, i - leftSize);
       }
     }
   }

@@ -1,15 +1,15 @@
 package algorithms.sedgewick.sorting.heap;
 
-import algorithms.sedgewick.sorting.AbstractComparableOperator;
 import algorithms.sedgewick.sorting.PriorityQueue;
 
 /**
  * Created by Chen Li on 2018/2/5.
  */
-public class MaxPQ<K extends Comparable<K>> extends AbstractComparableOperator<K> implements PriorityQueue<K> {
+public class MaxPQ<K extends Comparable<K>> implements PriorityQueue<K> {
 
   private K[] keys;
   private int size = 0;
+  private BinaryHeapOperations operation = new BinaryHeapOperations();
 
   public MaxPQ(K[] keys) {
     this.keys = (K[]) new Object[keys.length + 1];
@@ -25,13 +25,7 @@ public class MaxPQ<K extends Comparable<K>> extends AbstractComparableOperator<K
     int index = size + 1;
     keys[index] = key;
     //swim
-
-    int parentIndex = index / 2;
-    while (parentIndex >= 1 && keys[parentIndex].compareTo(keys[index]) < 0) {
-      exchange(keys, parentIndex, index);
-      index = parentIndex;
-      parentIndex = parentIndex / 2;
-    }
+    operation.swim(keys,index,1);
     size++;
   }
 
@@ -46,23 +40,7 @@ public class MaxPQ<K extends Comparable<K>> extends AbstractComparableOperator<K
     keys[1] = keys[size];
     size--;
     //sink
-    int index = 1;
-    int childIndex = index * 2;
-    while (childIndex <=size) {
-      int largerChildIndex = -1;
-      if (less(keys[childIndex], keys[childIndex + 1]) && childIndex + 1 <= size) {
-        largerChildIndex = childIndex + 1;
-      } else {
-        largerChildIndex = childIndex;
-      }
-      if (less(keys[index], keys[largerChildIndex])) {
-        exchange(keys, index, largerChildIndex);
-        index = largerChildIndex;
-        childIndex = index * 2;
-      } else {
-        break;
-      }
-    }
+    operation.sink(keys,1,size);
     return v;
   }
 

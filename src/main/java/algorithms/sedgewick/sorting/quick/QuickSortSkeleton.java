@@ -1,6 +1,6 @@
 package algorithms.sedgewick.sorting.quick;
 
-import algorithms.sedgewick.sorting.AbstractSort;
+import algorithms.sedgewick.sorting.AbstractComparableSort;
 import algorithms.sedgewick.sorting.quick.cutoff.CutoffSort;
 import algorithms.sedgewick.sorting.quick.partition.Partitioner;
 import algorithms.sedgewick.sorting.quick.pivot.PivotSelector;
@@ -12,7 +12,7 @@ import org.apache.commons.lang3.tuple.Pair;
  * Created by Chen Li on 2018/2/2.
  * a skeleton to implement quick sort variants
  */
-public class QuickSortSkeleton<T extends Comparable<T>> extends AbstractSort<T> {
+public class QuickSortSkeleton<T extends Comparable<T>> extends AbstractComparableSort<T> {
 
   @Setter
   private Partitioner<T> partitioner;

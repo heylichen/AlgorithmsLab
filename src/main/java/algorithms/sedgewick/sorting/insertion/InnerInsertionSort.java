@@ -1,11 +1,11 @@
 package algorithms.sedgewick.sorting.insertion;
 
-import algorithms.sedgewick.sorting.AbstractSort;
+import algorithms.sedgewick.sorting.AbstractComparableSort;
 
 /**
  * Created by Chen Li on 2018/1/10.
  */
-public class InnerInsertionSort<T extends Comparable<T>> extends AbstractSort<T> {
+public class InnerInsertionSort<T extends Comparable<T>> extends AbstractComparableSort<T> {
   @Override
   public void sort(T[] arr) {
     if (arr == null) {

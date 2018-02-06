@@ -1,6 +1,6 @@
 package algorithms.sedgewick.sorting;
 
-public class ShellSort<T extends Comparable<T>> extends AbstractSort<T> {
+public class ShellSort<T extends Comparable<T>> extends AbstractComparableSort<T> {
 
   @Override
   public void sort(T[] arr) {

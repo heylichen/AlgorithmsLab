@@ -1,12 +1,9 @@
 package algorithms.sedgewick.sorting.quick.pivot;
 
-import algorithms.sedgewick.sorting.AbstractComparableOperator;
-
 /**
  * Created by Chen Li on 2018/2/2.
  */
-public class Median3PivotSelector<T extends Comparable<T>> extends AbstractComparableOperator<T>
-    implements PivotSelector<T> {
+public class Median3PivotSelector<T extends Comparable<T>> implements PivotSelector<T> {
 
   @Override
   public int pivot(T[] arr, int low, int high) {

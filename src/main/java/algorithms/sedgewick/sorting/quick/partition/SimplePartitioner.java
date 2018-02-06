@@ -1,12 +1,14 @@
 package algorithms.sedgewick.sorting.quick.partition;
 
-import algorithms.sedgewick.sorting.AbstractComparableOperator;
+import algorithms.sedgewick.sorting.ComparableOperations;
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Created by Chen Li on 2018/2/1.
  */
-public class SimplePartitioner<T extends Comparable<T>> extends AbstractComparableOperator implements Partitioner<T> {
+public class SimplePartitioner<T extends Comparable<T>> implements Partitioner<T> {
+
+  private ComparableOperations comparableOperations = new ComparableOperations();
 
   @Override
   public Pair<Integer, Integer> partition(T[] arr, int low, int high) {
@@ -14,21 +16,21 @@ public class SimplePartitioner<T extends Comparable<T>> extends AbstractComparab
     int i = low;
     int j = high + 1;
     while (true) {
-      while (less(arr[++i], v)) {
+      while (comparableOperations.less(arr[++i], v)) {
         if (i == high) {
           break;
         }
       }
-      while (less(v, arr[--j])) {
+      while (comparableOperations.less(v, arr[--j])) {
         ;
       }
       if (i < j) {
-        exchange(arr, i, j);
+        comparableOperations.exchange(arr, i, j);
       } else {
         break;
       }
     }
-    exchange(arr, low, j);
+    comparableOperations.exchange(arr, low, j);
     return Pair.of(j - 1, j + 1);
   }
 }
