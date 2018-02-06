@@ -24,7 +24,7 @@ public class BinaryHeapOperations<K extends Comparable<K>> {
     int childIndex = index * 2;
     while (childIndex <= to) {
       int largerChildIndex = -1;
-      if (comparableOperations.less(keys[childIndex], keys[childIndex + 1]) && childIndex + 1 <= to) {
+      if (childIndex + 1 <= to && comparableOperations.less(keys[childIndex], keys[childIndex + 1])) {
         largerChildIndex = childIndex + 1;
       } else {
         largerChildIndex = childIndex;
