@@ -174,20 +174,29 @@ public class IndexMinPQ<K extends Comparable<K>> implements Iterable<Integer> {
 
   @Override
   public Iterator<Integer> iterator() {
+    return new HeapIterator();
+  }
 
-    return new Iterator<Integer>() {
-      int i = 1;
+  private class HeapIterator implements Iterator<Integer> {
 
-      @Override
-      public boolean hasNext() {
-        return i <= size;
+    private IndexMinPQ copy;
+
+    public HeapIterator() {
+      copy = new IndexMinPQ(capacity);
+      for (int i = 1; i <= size; i++) {
+        copy.insert(pq[i], keys[pq[i]]);
       }
+    }
 
-      @Override
-      public Integer next() {
-        return qp[i++];
-      }
-    };
+    @Override
+    public boolean hasNext() {
+      return !copy.isEmpty();
+    }
+
+    @Override
+    public Integer next() {
+      return copy.delMin();
+    }
   }
 
   public static void main(String[] args) {
@@ -215,9 +224,9 @@ public class IndexMinPQ<K extends Comparable<K>> implements Iterable<Integer> {
       int i = pq.delMin();
       StdOut.println(i + " " + strings[i]);
     }
-    if (1 == 1) {
-      return;
-    }
+//    if (1 == 1) {
+//      return;
+//    }
 
     // reinsert the same strings
     for (int i = 0; i < strings.length; i++) {
