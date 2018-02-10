@@ -1,12 +1,11 @@
 package algorithms.sedgewick.sorting;
 
-import algorithms.sedgewick.sorting.Sort;
+import java.util.Arrays;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 public abstract class SortTest {
   private Sort sort;
@@ -22,6 +21,7 @@ public abstract class SortTest {
   public void sortTest() {
     sortArrayBySize(0);
     sortArrayBySize(1);
+    sortArrayBySize(10);
     sortArrayBySize(1000);
   }
 

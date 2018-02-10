@@ -1,14 +1,16 @@
 package algorithms.sedgewick.sorting.heap;
 
-import algorithms.sedgewick.sorting.AbstractComparableSort;
 import algorithms.sedgewick.sorting.ComparableOperations;
+import algorithms.sedgewick.sorting.Sort;
+import lombok.Setter;
 
 /**
  * Created by Chen Li on 2018/2/6.
  */
-public class HeapSort<K extends Comparable<K>> extends AbstractComparableSort<K> {
-
-  private BinaryHeapOperations heapOperations = new BinaryHeapOperations();
+public class HeapSort<K extends Comparable<K>> implements Sort<K> {
+  @Setter
+  private MaxHeapOperations<K> heapOperations;
+  @Setter
   private ComparableOperations comparableOperations = new ComparableOperations();
 
   @Override
@@ -21,7 +23,7 @@ public class HeapSort<K extends Comparable<K>> extends AbstractComparableSort<K>
     K minValue = arr[0];
     for (int i = 1; i < arr.length; i++) {
       if (comparableOperations.less(arr[i], minValue)) {
-        minIndex= i;
+        minIndex = i;
         minValue = arr[i];
       }
     }
@@ -38,5 +40,10 @@ public class HeapSort<K extends Comparable<K>> extends AbstractComparableSort<K>
       comparableOperations.exchange(arr, 1, k--);
       heapOperations.sink(arr, 1, k);
     }
+  }
+
+  @Override
+  public String toString() {
+    return this.getClass().getSimpleName();
   }
 }

@@ -8,7 +8,7 @@ import edu.princeton.cs.algs4.StdOut;
 /**
  * Created by Chen Li on 2018/2/8.
  */
-public class IndexMinPQ<K extends Comparable<K>> implements Iterable<Integer> {
+public class IndexMinPQ<K extends Comparable<K>>  implements Iterable<Integer> {
 
   private int capacity;
   private K[] keys;
