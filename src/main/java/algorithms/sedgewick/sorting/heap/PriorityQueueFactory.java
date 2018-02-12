@@ -20,4 +20,11 @@ public class PriorityQueueFactory {
     pq.setHeapOperations(operations);
     return pq;
   }
+
+  public PriorityQueue lessExchMaxPQ(int capacity) {
+    DefaultPriorityQueue pq = new DefaultPriorityQueue(capacity);
+    HeapOperations operations = new LessExchHeapOperations();
+    pq.setHeapOperations(operations);
+    return pq;
+  }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import algorithms.sedgewick.sorting.SelectionSort;
 import algorithms.sedgewick.sorting.ShellSort;
-import algorithms.sedgewick.sorting.heap.HeapSort;
+import algorithms.sedgewick.sorting.heap.HeapSortFactory;
 import algorithms.sedgewick.sorting.insertion.InsertionSort;
 import algorithms.sedgewick.sorting.merge.CopyOnceMergeSort;
 import algorithms.sedgewick.sorting.merge.InsertionMergeSort;
@@ -61,10 +61,11 @@ public class SortCompareTest extends AbstractSortCompareTest {
 
   @Test
   public void mergeVsHeapSortTest() throws Exception {
+    HeapSortFactory factory = new HeapSortFactory();
     List<Pair<Integer, Integer>> sizeAndTimesList = Arrays.asList(
         Pair.of(200000, 10)
     );
-    sortCompare(new CopyOnceMergeSort(), new HeapSort(), sizeAndTimesList);
+    sortCompare(new CopyOnceMergeSort(), factory.bestHeapSort(), sizeAndTimesList);
     Thread.sleep(1000);
   }
 

@@ -10,6 +10,6 @@ public class HeapSortTest extends SortTest {
 
   @Override
   protected Sort newInstance() {
-    return new HeapSortFactory().defaultHepSort();
+    return new HeapSortFactory().defaultHeapSort();
   }
 }
