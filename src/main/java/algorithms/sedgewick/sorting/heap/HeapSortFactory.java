@@ -27,4 +27,11 @@ public class HeapSortFactory {
     heapSort.setComparableOperations(new ComparableOperations());
     return heapSort;
   }
+
+  public HeapSort multiwayHeapSort(int ways) {
+    HeapSort heapSort = new HeapSort("noExchangeHeapSort");
+    heapSort.setHeapOperations(operationsFactory.multiwayMaxHeapOperations(ways));
+    heapSort.setComparableOperations(new ComparableOperations());
+    return heapSort;
+  }
 }

@@ -48,7 +48,9 @@ public class NoExchangeHeapOperations<K extends Comparable<K>> extends AbstractH
         break;
       }
     }
-    keys[index] = currentV;
+    if (index != from) {
+      keys[index] = currentV;
+    }
   }
 
   @Override

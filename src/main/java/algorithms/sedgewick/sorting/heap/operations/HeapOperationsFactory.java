@@ -26,11 +26,23 @@ public class HeapOperationsFactory<K extends Comparable<K>> {
     return createNoExchangeHeapOperations(NORMAL_COMPARATOR);
   }
 
+  public HeapOperations multiwayMinHeapOperations(int ways) {
+    return createMultiwayHeapOperations(INVERSE_COMPARATOR, ways);
+  }
+
+  public HeapOperations multiwayMaxHeapOperations(int ways) {
+    return createMultiwayHeapOperations(NORMAL_COMPARATOR, ways);
+  }
+
   private HeapOperations createBasicHeapOperations(Comparator<K> comparator) {
     return new BasicHeapOperations(comparator);
   }
 
   private HeapOperations createNoExchangeHeapOperations(Comparator<K> comparator) {
     return new NoExchangeHeapOperations(comparator);
+  }
+
+  private HeapOperations createMultiwayHeapOperations(Comparator<K> comparator, int ways) {
+    return new MultiwayHeapOperations(comparator, ways);
   }
 }
