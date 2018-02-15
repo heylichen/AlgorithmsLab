@@ -2,6 +2,7 @@ package algorithms.sedgewick.sorting.heap;
 
 import algorithms.sedgewick.sorting.ComparableOperations;
 import algorithms.sedgewick.sorting.Sort;
+import algorithms.sedgewick.sorting.heap.operations.HeapOperations;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ import lombok.Setter;
 public class HeapSort<K extends Comparable<K>> implements Sort<K> {
 
   @Setter
-  private MaxHeapOperations<K> heapOperations;
+  private HeapOperations<K> heapOperations;//must be max heap operations
   @Setter
   private ComparableOperations comparableOperations = new ComparableOperations();
   @Getter

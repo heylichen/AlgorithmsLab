@@ -6,10 +6,10 @@ import algorithms.sedgewick.sorting.SortTest;
 /**
  * Created by Chen Li on 2018/2/11.
  */
-public class LessExchHeapSortTest extends SortTest {
+public class NoExchangeHeapSortTest extends SortTest {
 
   @Override
   protected Sort newInstance() {
-    return new HeapSortFactory().lessExchHeapSort();
+    return new HeapSortFactory().noExchangeHeapSort();
   }
 }

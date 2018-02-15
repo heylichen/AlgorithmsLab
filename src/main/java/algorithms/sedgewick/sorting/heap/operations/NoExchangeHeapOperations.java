@@ -1,9 +1,18 @@
-package algorithms.sedgewick.sorting.heap;
+package algorithms.sedgewick.sorting.heap.operations;
+
+import java.util.Comparator;
 
 /**
  * Created by Chen Li on 2018/2/11.
  */
-public class LessExchHeapOperations<K extends Comparable<K>> implements MaxHeapOperations<K> {
+public class NoExchangeHeapOperations<K extends Comparable<K>> extends AbstractHeapOperations<K>
+    implements HeapOperations<K> {
+
+  private Comparator<K> comparator;
+
+  public NoExchangeHeapOperations(Comparator<K> comparator) {
+    this.comparator = comparator;
+  }
 
   @Override
   public void swim(K[] keys, int from, int to) {
@@ -42,7 +51,8 @@ public class LessExchHeapOperations<K extends Comparable<K>> implements MaxHeapO
     keys[index] = currentV;
   }
 
+  @Override
   protected boolean isHigherPriority(K key1, K key2) {
-    return key1.compareTo(key2) > 0;
+    return comparator.compare(key1, key2) > 0;
   }
 }

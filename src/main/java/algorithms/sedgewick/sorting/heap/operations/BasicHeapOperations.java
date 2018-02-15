@@ -1,9 +1,17 @@
-package algorithms.sedgewick.sorting.heap;
+package algorithms.sedgewick.sorting.heap.operations;
+
+import java.util.Comparator;
 
 /**
- * Created by Chen Li on 2018/2/10.
+ * Created by Chen Li on 2018/2/15.
  */
-public abstract class AbstractHeapOperations<K extends Comparable<K>> implements HeapOperations<K> {
+public class BasicHeapOperations<K extends Comparable<K>> extends AbstractHeapOperations<K> {
+
+  private Comparator<K> comparator;
+
+  public BasicHeapOperations(Comparator<K> comparator) {
+    this.comparator = comparator;
+  }
 
   public void swim(K[] keys, int from, int to) {
     int index = from;
@@ -44,6 +52,8 @@ public abstract class AbstractHeapOperations<K extends Comparable<K>> implements
     arr[j] = t;
   }
 
-
-  protected abstract boolean isHigherPriority(K key1, K key2);
+  @Override
+  protected boolean isHigherPriority(K key1, K key2) {
+    return comparator.compare(key1, key2) > 0;
+  }
 }

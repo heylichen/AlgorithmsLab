@@ -1,4 +1,4 @@
-package algorithms.sedgewick.sorting.heap;
+package algorithms.sedgewick.sorting.heap.operations;
 
 /**
  * Created by Chen Li on 2018/2/10.

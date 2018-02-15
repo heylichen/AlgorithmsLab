@@ -13,7 +13,7 @@ public class HeapSortCompareTest extends AbstractSortCompareTest {
   @Test
   public void lessExchHeapSortTest() throws Exception {
     Sort cutoffQuickSort = factory.defaultHeapSort();
-    Sort quick = factory.lessExchHeapSort();
+    Sort quick = factory.noExchangeHeapSort();
     sortCompare(cutoffQuickSort, quick, middleSizeAndTimesList);
   }
 
