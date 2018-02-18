@@ -5,7 +5,7 @@ import java.util.Comparator;
 /**
  * Created by Chen Li on 2018/2/15.
  */
-public class BasicHeapOperations<K extends Comparable<K>> extends AbstractHeapOperations<K> {
+public class BasicHeapOperations<K extends Comparable<K>> extends AbstractBinaryHeapOperations<K> {
 
   private Comparator<K> comparator;
 
@@ -15,28 +15,22 @@ public class BasicHeapOperations<K extends Comparable<K>> extends AbstractHeapOp
 
   public void swim(K[] keys, int from, int to) {
     int index = from;
-    int parentIndex = index / 2;
+    int parentIndex = getParent(index);
     while (parentIndex >= to && isHigherPriority(keys[index], keys[parentIndex])) {
       exchange(keys, parentIndex, index);
       index = parentIndex;
-      parentIndex = parentIndex / 2;
+      parentIndex = getParent(parentIndex);
     }
   }
 
   public void sink(K[] keys, int from, int to) {
     int index = from;
-    int childIndex = index * 2;
-    while (childIndex <= to) {
-      int largerChildIndex = -1;
-      if (childIndex + 1 <= to && isHigherPriority(keys[childIndex + 1], keys[childIndex])) {
-        largerChildIndex = childIndex + 1;
-      } else {
-        largerChildIndex = childIndex;
-      }
-      if (isHigherPriority(keys[largerChildIndex], keys[index])) {
-        exchange(keys, index, largerChildIndex);
-        index = largerChildIndex;
-        childIndex = index * 2;
+    int childIndex = getMaxPriorityChildOf(keys, from, to);
+    while (childIndex != -1) {
+      if (isHigherPriority(keys[childIndex], keys[index])) {
+        exchange(keys, index, childIndex);
+        index = childIndex;
+        childIndex = getMaxPriorityChildOf(keys, childIndex, to);
       } else {
         break;
       }

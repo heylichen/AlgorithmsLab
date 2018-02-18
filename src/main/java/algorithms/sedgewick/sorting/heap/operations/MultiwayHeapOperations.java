@@ -23,7 +23,6 @@ public class MultiwayHeapOperations<K extends Comparable<K>> extends AbstractHea
   public void swim(K[] keys, int from, int to) {
     int index = from;
     int parentIndex = getParent(index);
-    int end = from;
     K currentV = keys[from];
     while (parentIndex >= to && isHigherPriority(currentV, keys[parentIndex])) {
       keys[index] = keys[parentIndex];
@@ -60,12 +59,12 @@ public class MultiwayHeapOperations<K extends Comparable<K>> extends AbstractHea
     return comparator.compare(key1, key2) > 0;
   }
 
-  protected int getParent(int child) {
+  public int getParent(int child) {
     return (child + ways - 2) / ways;
   }
 
 
-  protected int getMaxPriorityChildOf(K[] keys, int index, int rightBound) {
+  public int getMaxPriorityChildOf(K[] keys, int index, int rightBound) {
     int from = index * ways - (ways - 2);
     if (from > rightBound) {
       return -1;

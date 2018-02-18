@@ -5,8 +5,7 @@ import java.util.Comparator;
 /**
  * Created by Chen Li on 2018/2/11.
  */
-public class NoExchangeHeapOperations<K extends Comparable<K>> extends AbstractHeapOperations<K>
-    implements HeapOperations<K> {
+public class NoExchangeHeapOperations<K extends Comparable<K>> extends AbstractBinaryHeapOperations<K> {
 
   private Comparator<K> comparator;
 
@@ -17,33 +16,29 @@ public class NoExchangeHeapOperations<K extends Comparable<K>> extends AbstractH
   @Override
   public void swim(K[] keys, int from, int to) {
     int index = from;
-    int parentIndex = index / 2;
-    int end = from;
+    int parentIndex = getParent(index);
     K currentV = keys[from];
     while (parentIndex >= to && isHigherPriority(currentV, keys[parentIndex])) {
       keys[index] = keys[parentIndex];
       index = parentIndex;
-      parentIndex = parentIndex / 2;
+      parentIndex = getParent(parentIndex);
     }
     keys[index] = currentV;
   }
 
   @Override
   public void sink(K[] keys, int from, int to) {
+    int childIndex = getMaxPriorityChildOf(keys, from, to);
+    if (childIndex == -1) {
+      return;
+    }
     int index = from;
-    int childIndex = index * 2;
     K currentV = keys[from];
-    while (childIndex <= to) {
-      int largerChildIndex = -1;
-      if (childIndex + 1 <= to && isHigherPriority(keys[childIndex + 1], keys[childIndex])) {
-        largerChildIndex = childIndex + 1;
-      } else {
-        largerChildIndex = childIndex;
-      }
-      if (isHigherPriority(keys[largerChildIndex], currentV)) {
-        keys[index] = keys[largerChildIndex];
-        index = largerChildIndex;
-        childIndex = index * 2;
+    while (childIndex != -1) {
+      if (isHigherPriority(keys[childIndex], currentV)) {
+        keys[index] = keys[childIndex];
+        index = childIndex;
+        childIndex = getMaxPriorityChildOf(keys, index, to);
       } else {
         break;
       }
@@ -55,6 +50,7 @@ public class NoExchangeHeapOperations<K extends Comparable<K>> extends AbstractH
 
   @Override
   protected boolean isHigherPriority(K key1, K key2) {
+    compares++;
     return comparator.compare(key1, key2) > 0;
   }
 }

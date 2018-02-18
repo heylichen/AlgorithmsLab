@@ -1,6 +1,5 @@
 package algorithms.sedgewick.sorting.heap;
 
-import algorithms.sedgewick.sorting.ComparableOperations;
 import algorithms.sedgewick.sorting.heap.operations.HeapOperationsFactory;
 
 /**
@@ -17,28 +16,24 @@ public class HeapSortFactory {
   public HeapSort defaultHeapSort() {
     HeapSort heapSort = new HeapSort("defaultHeapSort");
     heapSort.setHeapOperations(operationsFactory.basicMaxHeapOperations());
-    heapSort.setComparableOperations(new ComparableOperations());
     return heapSort;
   }
 
   public HeapSort noExchangeHeapSort() {
     HeapSort heapSort = new HeapSort("noExchangeHeapSort");
     heapSort.setHeapOperations(operationsFactory.noExchangeMaxHeapOperations());
-    heapSort.setComparableOperations(new ComparableOperations());
     return heapSort;
   }
 
   public HeapSort multiwayHeapSort(int ways) {
     HeapSort heapSort = new HeapSort("multiwayHeapSort:" + ways);
     heapSort.setHeapOperations(operationsFactory.multiwayMaxHeapOperations(ways));
-    heapSort.setComparableOperations(new ComparableOperations());
     return heapSort;
   }
 
-  public HeapSort lessCompareHeapSort() {
-    HeapSort heapSort = new HeapSort("lessCompare");
+  public LessCompareHeapSort lessCompareHeapSort() {
+    LessCompareHeapSort heapSort = new LessCompareHeapSort("lessCompare");
     heapSort.setHeapOperations(operationsFactory.noExchangeMaxHeapOperations());
-    heapSort.setComparableOperations(new ComparableOperations());
     return heapSort;
   }
 }

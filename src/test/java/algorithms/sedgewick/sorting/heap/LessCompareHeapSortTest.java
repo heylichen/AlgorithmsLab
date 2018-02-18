@@ -10,6 +10,6 @@ public class LessCompareHeapSortTest extends SortTest {
 
   @Override
   protected Sort newInstance() {
-    return new HeapSortFactory().lessCompareHeapSort( );
+    return new HeapSortFactory().lessCompareHeapSort();
   }
 }
