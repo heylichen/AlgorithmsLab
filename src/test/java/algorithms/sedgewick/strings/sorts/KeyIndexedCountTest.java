@@ -1,13 +1,13 @@
-package algorithms.sedgewick.ch5_strings.sorts;
+package algorithms.sedgewick.strings.sorts;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import com.google.common.base.Splitter;
 import com.heylichen.commons.resource.FileUtils;
 import org.junit.Test;
 import org.springframework.util.CollectionUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Chen Li on 2017/12/21.
@@ -16,7 +16,7 @@ public class KeyIndexedCountTest {
   @Test
   public void testCount() throws Exception {
     KeyIndexedCount count = new KeyIndexedCount();
-    List<String> lines = FileUtils.readLines("algorithms/sedgewick/ch5_strings/sorts/keyIndexedCountingIn");
+    List<String> lines = FileUtils.readLines("algorithms/sedgewick/strings/sorts/keyIndexedCountingIn");
     Splitter splitter = Splitter.on(" ");
     List<IndexedEntry<String>> entries = new ArrayList<>();
     for (String line : lines) {

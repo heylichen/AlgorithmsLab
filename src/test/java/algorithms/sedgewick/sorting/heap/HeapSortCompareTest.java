@@ -38,10 +38,12 @@ public class HeapSortCompareTest extends AbstractSortCompareTest {
   @Test
   public void comparesTest() throws Exception {
     List<Pair<Integer, Integer>> middleSizeAndTimesList = Arrays.asList(
-        Pair.of(400000, 10)
+        Pair.of(400000, 5)
     );
     HeapSort noExchangeHeapSort = factory.noExchangeHeapSort();
     LessCompareHeapSort lessCompareHeapSort = factory.lessCompareHeapSort();
     sortCompare(lessCompareHeapSort, noExchangeHeapSort, middleSizeAndTimesList);
+    System.out.println(lessCompareHeapSort.getCompares());
+    System.out.println(noExchangeHeapSort.getCompares());
   }
 }

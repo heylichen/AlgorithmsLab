@@ -1,9 +1,10 @@
-package algorithms.sedgewick.ch5_strings.sorts;
+package algorithms.sedgewick.strings.sorts;
 
 /**
  * Created by Chen Li on 2017/12/21.
  */
 public class KeyIndexedCount {
+
   public IndexedEntry[] sort(IndexedEntry[] inputArray) {
     int radix = getRadix(inputArray);
     int[] counts = countFrequency(inputArray, radix);
@@ -19,11 +20,11 @@ public class KeyIndexedCount {
         max = entry.getKey();
       }
     }
-    return max;
+    return max + 1;
   }
 
   private int[] countFrequency(IndexedEntry[] inputArray, int r) {
-    int[] counts = new int[r + 2];
+    int[] counts = new int[r + 1];
     for (int i = 0; i < counts.length; i++) {
       counts[i] = 0;
     }

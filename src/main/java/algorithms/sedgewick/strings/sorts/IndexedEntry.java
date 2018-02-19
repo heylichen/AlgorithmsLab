@@ -1,4 +1,4 @@
-package algorithms.sedgewick.ch5_strings.sorts;
+package algorithms.sedgewick.strings.sorts;
 
 import lombok.Getter;
 import lombok.Setter;
