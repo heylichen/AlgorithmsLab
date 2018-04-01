@@ -1,21 +1,16 @@
-package algorithms.sedgewick.sorting.compare;
+package algorithms.sedgewick.sorting.compare.datagen;
 
 import java.util.Random;
 
 /**
- * Created by Chen Li on 2018/2/3.
+ * Created by Chen Li on 2018/4/1.
  */
-public class EntropyOptimalSortCompare extends AbstractSortCompare<Integer> {
+public class EntropyOptimalDoubleGenetator implements DataGenerator<Integer> {
 
   private Random rand = new Random();
 
-  /**
-   * Arrays with large numbers of duplicate keys performance compare
-   * @param size
-   * @return
-   */
   @Override
-  protected Integer[] createArray(int size) {
+  public Integer[] generate(int size) {
     Integer[] dataArr = new Integer[size * 2];
     int a = rand.nextInt();
     int b = rand.nextInt();

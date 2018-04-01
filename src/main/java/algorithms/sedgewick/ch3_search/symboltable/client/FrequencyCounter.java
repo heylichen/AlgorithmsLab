@@ -2,7 +2,7 @@ package algorithms.sedgewick.ch3_search.symboltable.client;
 
 
 import algorithms.sedgewick.ch3_search.symboltable.ST;
-import algorithms.sedgewick.common.utils.TimeWatch;
+import algorithms.sedgewick.utils.TimeWatch;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;

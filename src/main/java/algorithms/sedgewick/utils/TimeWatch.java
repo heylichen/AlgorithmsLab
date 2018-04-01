@@ -1,4 +1,4 @@
-package algorithms.sedgewick.common.utils;
+package algorithms.sedgewick.utils;
 
 import com.google.common.base.Stopwatch;
 

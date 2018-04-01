@@ -23,7 +23,11 @@
             <artifactId>logback-classic</artifactId>
             <version>1.2.3</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>24.1-jre</version>
+        </dependency>
         <!--spring-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -58,13 +62,12 @@
             <version>3.1.0</version>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>22.0</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
         </dependency>
-
         <!-- Jackson JSON Mapper -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

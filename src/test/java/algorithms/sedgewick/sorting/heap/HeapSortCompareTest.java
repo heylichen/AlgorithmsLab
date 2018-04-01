@@ -5,44 +5,67 @@ import java.util.List;
 
 import algorithms.sedgewick.sorting.Sort;
 import algorithms.sedgewick.sorting.compare.AbstractSortCompareTest;
-import org.apache.commons.lang3.tuple.Pair;
+import algorithms.sedgewick.sorting.compare.SortCompareContext;
+import algorithms.sedgewick.sorting.compare.SortSizeConfig;
+import algorithms.sedgewick.sorting.compare.SortSizeConfigs;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by Chen Li on 2018/2/11.
  */
 public class HeapSortCompareTest extends AbstractSortCompareTest {
 
+  @Autowired
+  private SortCompareContext randomSortCompareContext;
   private HeapSortFactory factory = new HeapSortFactory();
 
   @Test
   public void lessExchHeapSortTest() throws Exception {
     Sort defaultHeapSort = factory.defaultHeapSort();
     Sort noExchangeHeapSort = factory.noExchangeHeapSort();
-    sortCompare(defaultHeapSort, noExchangeHeapSort, middleSizeAndTimesList);
+
+    SortCompareContext context = randomSortCompareContext.load(defaultHeapSort, noExchangeHeapSort,
+                                                               SortSizeConfigs.middleSizeAndTimesList
+    );
+    compareTest(context);
   }
 
   @Test
   public void multiwayHeapSortTest() throws Exception {
     Sort defaultHeapSort = factory.defaultHeapSort();
     Sort threeWayHeapSort = factory.multiwayHeapSort(3);
-    sortCompare(threeWayHeapSort, defaultHeapSort, fastSizeAndTimesList);
+    SortCompareContext context = randomSortCompareContext.load(defaultHeapSort, threeWayHeapSort,
+                                                               SortSizeConfigs.middleSizeAndTimesList
+    );
+    compareTest(context);
 
     Sort fourWayHeapSort = factory.multiwayHeapSort(4);
-    sortCompare(fourWayHeapSort, defaultHeapSort, fastSizeAndTimesList);
+    context = randomSortCompareContext.load(defaultHeapSort, fourWayHeapSort,
+                                            SortSizeConfigs.middleSizeAndTimesList
+    );
+    compareTest(context);
 
     Sort eightWayHeapSort = factory.multiwayHeapSort(8);
-    sortCompare(eightWayHeapSort, defaultHeapSort, fastSizeAndTimesList);
+    context = randomSortCompareContext.load(defaultHeapSort, eightWayHeapSort,
+                                            SortSizeConfigs.middleSizeAndTimesList
+    );
+    compareTest(context);
   }
 
   @Test
   public void comparesTest() throws Exception {
-    List<Pair<Integer, Integer>> middleSizeAndTimesList = Arrays.asList(
-        Pair.of(400000, 5)
+    List<SortSizeConfig> middleSizeAndTimesList = Arrays.asList(
+        new SortSizeConfig(400000, 5)
     );
+
     HeapSort noExchangeHeapSort = factory.noExchangeHeapSort();
     LessCompareHeapSort lessCompareHeapSort = factory.lessCompareHeapSort();
-    sortCompare(lessCompareHeapSort, noExchangeHeapSort, middleSizeAndTimesList);
+    SortCompareContext context = randomSortCompareContext.load(noExchangeHeapSort, lessCompareHeapSort,
+                                                               SortSizeConfigs.middleSizeAndTimesList
+    );
+    compareTest(context);
+
     System.out.println(lessCompareHeapSort.getCompares());
     System.out.println(noExchangeHeapSort.getCompares());
   }

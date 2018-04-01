@@ -1,4 +1,4 @@
-package algorithms.sedgewick.strings.sorts;
+package algorithms.sedgewick.sorting.compare.datagen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,8 +7,10 @@ import java.util.Random;
 /**
  * Created by Chen Li on 2018/3/6.
  * non thread safe
+ * 加州车牌号模拟生成
+ * 7位随机字符，固定长度
  */
-public class CAPlatesGenerator {
+public class CAPlatesGenerator implements DataGenerator<String> {
 
   public static String[] characters;
   public static String[] numbers;
@@ -51,6 +53,12 @@ public class CAPlatesGenerator {
       result.add(randomPlate());
     }
     return result;
+  }
+
+  @Override
+  public String[] generate(int size) {
+    List<String> list = randomPlate(size);
+    return list.toArray(new String[size]);
   }
 
   public static void main(String[] args) {

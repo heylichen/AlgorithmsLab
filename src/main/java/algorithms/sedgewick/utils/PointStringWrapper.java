@@ -1,4 +1,4 @@
-package algorithms.sedgewick.common.utils;
+package algorithms.sedgewick.utils;
 
 import edu.princeton.cs.algs4.Interval1D;
 

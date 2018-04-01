@@ -2,6 +2,7 @@ package algorithms.sedgewick.strings.sorts;
 
 import java.util.List;
 
+import algorithms.sedgewick.sorting.compare.datagen.CAPlatesGenerator;
 import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 

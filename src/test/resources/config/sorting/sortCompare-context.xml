@@ -1,0 +1,28 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="simpleTimerSortTester" class="algorithms.sedgewick.sorting.compare.SimpleTimerSortRunner"></bean>
+    <bean id="randomDoubleGenerator" class="algorithms.sedgewick.sorting.compare.datagen.RandomDoubleGenerator"/>
+    <bean id="abstractSortCompareContext" class="algorithms.sedgewick.sorting.compare.SortCompareContext" abstract="true" scope="prototype">
+        <property name="sortTester" ref="simpleTimerSortTester"/>
+    </bean>
+
+    <bean id="randomSortCompareContext" class="algorithms.sedgewick.sorting.compare.SortCompareContext" parent="abstractSortCompareContext">
+        <property name="dataGenerator" ref="randomDoubleGenerator"/>
+    </bean>
+
+    <bean id="caPlatesGenerator" class="algorithms.sedgewick.sorting.compare.datagen.CAPlatesGenerator"/>
+    <bean id="platesSortCompareContext" class="algorithms.sedgewick.sorting.compare.SortCompareContext" parent="abstractSortCompareContext">
+        <property name="dataGenerator" ref="caPlatesGenerator"/>
+    </bean>
+
+    <bean id="entropyOptimalDoubleGenerator" class="algorithms.sedgewick.sorting.compare.datagen.EntropyOptimalDoubleGenetator"/>
+    <bean id="entropyOptimalSortCompareContext" class="algorithms.sedgewick.sorting.compare.SortCompareContext" parent="abstractSortCompareContext">
+        <property name="dataGenerator" ref="entropyOptimalDoubleGenerator"/>
+    </bean>
+
+    <bean id="defaultSortCompare" class="algorithms.sedgewick.sorting.compare.DefaultSortComparator"></bean>
+    <bean id="defaultSortProfilesReport" class="algorithms.sedgewick.sorting.compare.SortProfilesLogReport"></bean>
+</beans>

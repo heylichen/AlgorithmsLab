@@ -1,9 +1,10 @@
 package algorithms.sedgewick.strings.sorts;
 
+import algorithms.sedgewick.sorting.Sort;
 import lombok.Getter;
 import lombok.Setter;
 
-public class MSDSort {
+public class MSDSort implements Sort<String> {
 
   @Getter
   @Setter
@@ -55,5 +56,10 @@ public class MSDSort {
     for (int r = 0; r < radix; r++) {
       sort(a, lo + count[r], lo + count[r + 1] - 1, d + 1);
     }
+  }
+
+  @Override
+  public String toString() {
+    return this.getClass().getSimpleName();
   }
 }

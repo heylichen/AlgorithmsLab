@@ -1,35 +1,32 @@
 package algorithms.sedgewick.sorting.compare;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
-import algorithms.sedgewick.sorting.compare.AbstractSortCompareTest;
 import algorithms.sedgewick.sorting.Sort;
-import algorithms.sedgewick.sorting.compare.EntropyOptimalSortCompare;
-import algorithms.sedgewick.sorting.compare.RandomArraySortCompare;
-import algorithms.sedgewick.sorting.compare.SortCompare;
 import algorithms.sedgewick.sorting.quick.QuickSortFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * Created by Chen Li on 2018/1/10.
+ * Created by Chen Li on 2018/4/1.
  */
 @Slf4j
 public class QuickSortCompareTest extends AbstractSortCompareTest {
 
   private QuickSortFactory factory = new QuickSortFactory();
-  private Random rand = new Random();
-  private RandomArraySortCompare randomArraySortCompare = new RandomArraySortCompare();
-  private SortCompare entropyOptimalSortCompare = new EntropyOptimalSortCompare();
+  @Autowired
+  private SortCompareContext randomSortCompareContext;
+  @Autowired
+  private SortCompareContext entropyOptimalSortCompareContext;
 
   @Test
   public void insertionQuickTest() throws Exception {
     Sort cutoffQuickSort = factory.cutoffQuickSort();
     Sort quick = factory.basicQuickSort();
-    sortCompare(cutoffQuickSort, quick, slowSizeAndTimesList);
+
+    SortCompareContext context = randomSortCompareContext.load(cutoffQuickSort, quick,
+                                                               SortSizeConfigs.slow2SizeAndTimesList
+    );
+    compareTest(context);
   }
 
   @Test
@@ -39,9 +36,14 @@ public class QuickSortCompareTest extends AbstractSortCompareTest {
     Sort median3 = factory.median3QuickSort();
     Sort ninther = factory.nintherQuickSort();
 
-    sortCompare(median3, basic, slowSizeAndTimesList);
-    sortCompare(ninther, basic, slowSizeAndTimesList);
-    sortCompare(median3, ninther, fastSizeAndTimesList);
+    SortCompareContext context = randomSortCompareContext.load(median3, basic, SortSizeConfigs.slow1SizeAndTimesList);
+    compareTest(context);
+
+    context = randomSortCompareContext.load(ninther, basic, SortSizeConfigs.slow1SizeAndTimesList);
+    compareTest(context);
+
+    context = randomSortCompareContext.load(median3, ninther, SortSizeConfigs.slow1SizeAndTimesList);
+    compareTest(context);
   }
 
   @Test
@@ -50,7 +52,9 @@ public class QuickSortCompareTest extends AbstractSortCompareTest {
     Sort median3 = factory.median3QuickSort();
     Sort randomMedian3 = factory.randomMedian3QuickSort();
 
-    sortCompare(randomMedian3, median3, fastSizeAndTimesList);
+    SortCompareContext context =
+        randomSortCompareContext.load(median3, randomMedian3, SortSizeConfigs.slow1SizeAndTimesList);
+    compareTest(context);
   }
 
   /**
@@ -62,31 +66,51 @@ public class QuickSortCompareTest extends AbstractSortCompareTest {
   @Test
   public void entropyOptimalTest() throws Exception {
     QuickSortFactory factory = new QuickSortFactory();
-    List<Pair<Integer, Integer>> tinySizeAndTimesList = Arrays.asList(
-        Pair.of(100000, 10),
-        Pair.of(200000, 10),
-        Pair.of(400000, 5)
-    );
     log.info("----------------entropy optimal array, three way partition performs better.");
-    sortCompare(factory.threeWayPartitionQuickSort(), factory.basicQuickSort(),
-                tinySizeAndTimesList, entropyOptimalSortCompare);
-    sortCompare(factory.fast3WayPartitionQuickSort(), factory.basicQuickSort(),
-                tinySizeAndTimesList, entropyOptimalSortCompare);
-    log.info("----------------random array, fast three way partition performs better.");
-    sortCompare(factory.basicQuickSort(), factory.threeWayPartitionQuickSort(),
-                tinySizeAndTimesList, randomArraySortCompare);
-    sortCompare(factory.basicQuickSort(), factory.fast3WayPartitionQuickSort(),
-                tinySizeAndTimesList, randomArraySortCompare);
-    sortCompare(factory.fast3WayPartitionQuickSort(), factory.threeWayPartitionQuickSort(),
-                tinySizeAndTimesList, randomArraySortCompare);
-  }
 
+    SortCompareContext context = entropyOptimalSortCompareContext.load(
+        factory.threeWayPartitionQuickSort(), factory.basicQuickSort(),
+        SortSizeConfigs.slow1SizeAndTimesList
+    );
+    compareTest(context);
+
+    context = entropyOptimalSortCompareContext.load(
+        factory.fast3WayPartitionQuickSort(), factory.basicQuickSort(),
+        SortSizeConfigs.slow1SizeAndTimesList
+    );
+    compareTest(context);
+    log.info("----------------random array, fast three way partition performs better.");
+
+    context = randomSortCompareContext.load(
+        factory.basicQuickSort(), factory.threeWayPartitionQuickSort(),
+        SortSizeConfigs.slow1SizeAndTimesList
+    );
+    compareTest(context);
+
+    context = randomSortCompareContext.load(
+        factory.basicQuickSort(), factory.fast3WayPartitionQuickSort(),
+        SortSizeConfigs.slow1SizeAndTimesList
+    );
+    compareTest(context);
+    context = randomSortCompareContext.load(
+        factory.fast3WayPartitionQuickSort(), factory.threeWayPartitionQuickSort(),
+        SortSizeConfigs.slow1SizeAndTimesList
+    );
+    compareTest(context);
+  }
 
   @Test
   public void bestQuickSortTest() throws Exception {
     log.info("-------------random distinct data array");
-    sortCompare(factory.bestQuickSort(), factory.median3QuickSort(), fastSizeAndTimesList);
+    SortCompareContext context = randomSortCompareContext.load(factory.bestQuickSort(), factory.median3QuickSort(),
+                                                               SortSizeConfigs.slow1SizeAndTimesList
+    );
+    compareTest(context);
+
     log.info("-------------entropy optimal array");
-    sortCompare(factory.bestQuickSort(), factory.median3QuickSort(), fastSizeAndTimesList, entropyOptimalSortCompare);
+    context = entropyOptimalSortCompareContext.load(factory.bestQuickSort(), factory.median3QuickSort(),
+                                                    SortSizeConfigs.slow1SizeAndTimesList
+    );
+    compareTest(context);
   }
 }
