@@ -18,6 +18,11 @@
         <property name="dataGenerator" ref="caPlatesGenerator"/>
     </bean>
 
+    <bean id="equalStringGenerator" class="algorithms.sedgewick.sorting.compare.datagen.EqualStringGenerator"/>
+    <bean id="equalStringSortCompareContext" class="algorithms.sedgewick.sorting.compare.SortCompareContext" parent="abstractSortCompareContext">
+        <property name="dataGenerator" ref="equalStringGenerator"/>
+    </bean>
+
     <bean id="entropyOptimalDoubleGenerator" class="algorithms.sedgewick.sorting.compare.datagen.EntropyOptimalDoubleGenetator"/>
     <bean id="entropyOptimalSortCompareContext" class="algorithms.sedgewick.sorting.compare.SortCompareContext" parent="abstractSortCompareContext">
         <property name="dataGenerator" ref="entropyOptimalDoubleGenerator"/>
@@ -25,4 +30,12 @@
 
     <bean id="defaultSortCompare" class="algorithms.sedgewick.sorting.compare.DefaultSortComparator"></bean>
     <bean id="defaultSortProfilesReport" class="algorithms.sedgewick.sorting.compare.SortProfilesLogReport"></bean>
+
+    <!--string sort test-->
+    <bean id="stringSortContext" class="algorithms.sedgewick.sorting.compare.SortTestContext" scope="prototype">
+        <property name="dataGenerator" ref="caPlatesGenerator"/>
+    </bean>
+    <bean id="equalStringSortContext" class="algorithms.sedgewick.sorting.compare.SortTestContext" scope="prototype">
+        <property name="dataGenerator" ref="equalStringGenerator"/>
+    </bean>
 </beans>
