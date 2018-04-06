@@ -1,6 +1,7 @@
 package algorithms.sedgewick.strings.sorts;
 
 import algorithms.sedgewick.sorting.Sort;
+import algorithms.sedgewick.strings.sorts.partition.ThreeWayStringPartitioner;
 import org.apache.commons.lang3.tuple.Pair;
 
 /**

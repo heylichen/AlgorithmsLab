@@ -1,7 +1,7 @@
-package algorithms.sedgewick.strings.sorts;
+package algorithms.sedgewick.strings.sorts.partition;
 
 import algorithms.sedgewick.sorting.ComparableOperations;
-import algorithms.sedgewick.strings.sorts.partition.StringPartitioner;
+import algorithms.sedgewick.strings.sorts.StringOperations;
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
