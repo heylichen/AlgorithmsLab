@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = "classpath:config/root-context.xml")
 public class AbstractContextSortTest<T extends Comparable<T>> {
 
-  protected void sortTest(SortTestContext<T> ... contexts) {
+  protected void sortTest(SortTestContext<T>... contexts) {
     for (SortTestContext<T> context : contexts) {
       int size = 10;
       for (int i = 1; i <= 3; i++) {
