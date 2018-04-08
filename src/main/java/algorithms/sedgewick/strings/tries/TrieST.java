@@ -64,7 +64,7 @@ public class TrieST<V> implements StringST<V> {
     return node;
   }
 
-  public int getRadix() {
+  private int getRadix() {
     return alphabet.radix();
   }
 
