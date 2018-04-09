@@ -1,5 +1,8 @@
 package algorithms.sedgewick.strings.tries;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -45,10 +48,6 @@ public class TernarySearchTrieST<V> {
     if (node == null) {
       node = new Node<>(c);
     }
-    if (d == key.length() - 1) {
-      node.setValue(value);
-      return node;
-    }
     int compare = c - node.getCharacter();
     if (compare > 0) {
       Node<V> child = node.getGreater();
@@ -58,6 +57,9 @@ public class TernarySearchTrieST<V> {
       Node<V> child = node.getLess();
       child = putNode(child, key, d, value);
       node.setLess(child);
+    } else if (d == key.length() - 1) {
+      node.setValue(value);
+      return node;
     } else {
       Node<V> child = node.getEqual();
       child = putNode(child, key, d + 1, value);
@@ -65,6 +67,107 @@ public class TernarySearchTrieST<V> {
     }
     return node;
   }
+
+  public Iterable<String> keys() {
+    return keysWithPrefix("");
+  }
+
+  public Iterable<String> keysWithPrefix(String s) {
+    Queue<String> q = new LinkedList<>();
+    if (s == null || s.length() == 0) {
+      collect(root, "", q);
+      return q;
+    }
+
+    Node<V> node = getNode(root, s, 0);
+
+    if (node == null) {
+      return q;
+    }
+    if (node.getValue() != null) {
+      q.add(s);
+    }
+    Node<V> fromNode = node.getEqual();
+    collect(fromNode, s, q);
+    return q;
+  }
+
+  private void collect(Node<V> node, String pre, Queue<String> queue) {
+    if (node == null) {
+      return;
+    }
+    if (node.getValue() != null) {
+      queue.add(pre + node.getCharacter());
+    }
+    collect(node.getLess(), pre, queue);
+    collect(node.getEqual(), pre + node.getCharacter(), queue);
+    collect(node.getGreater(), pre, queue);
+  }
+
+  public String longestPrefixOf(String s) {
+    if (s == null || s.length() == 0) {
+      return null;
+    }
+    int index = search(root, s, 0, 0);
+    return s.substring(0, index);
+  }
+
+  private int search(Node<V> node, String key, int d, int length) {
+    if (node == null) {
+      return length;
+    }
+    char c = key.charAt(d);
+    int compare = c - node.getCharacter();
+    if (compare == 0) {
+      if (node.getValue() != null) {
+        length = d + 1;
+      }
+      if (d == key.length() - 1) {
+        return length;
+      }
+      return search(node.getEqual(), key, d + 1, length);
+    } else if (compare < 0) {
+      return search(node.getLess(), key, d, length);
+    } else {
+      return search(node.getGreater(), key, d, length);
+    }
+  }
+
+
+//  public Iterable<String> keysThatMatch(String pattern) {
+//    if (pattern == null || pattern.length() == 0) {
+//      return Collections.emptyList();
+//    }
+//    Queue<String> q = new LinkedList<>();
+//    collect(root, "", pattern, q);
+//    return q;
+//  }
+//
+//  private void collect(Node<V> node, String pre, String pattern, Queue<String> queue) {
+//    if (node == null) {
+//      return;
+//    }
+//    int d = pre.length();
+//    char nextPatternChar = pattern.charAt(d);
+//    int compare = nextPatternChar - node.getCharacter();
+//    if (nextPatternChar == '.' || compare == 0) {
+//
+//      collect(node.getEqual(), pre + node.getCharacter(), pattern, queue);
+//    } else if (compare < 0) {
+//
+//    } else {
+//
+//    }
+//
+//    int compare = nextPatternChar - node.getCharacter();
+//
+//    for (int i = 0; i < node.getNext().length; i++) {
+//      char nextChar = toChar(i);
+//      if (nextChar == nextPatternChar || nextPatternChar == '.') {
+//        collect(node.next(i), pre + nextChar, pattern, queue);
+//      }
+//    }
+//  }
 
   public boolean contains(String key) {
     return get(key) != null;

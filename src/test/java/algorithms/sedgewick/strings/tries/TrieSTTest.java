@@ -47,7 +47,7 @@ public class TrieSTTest {
     for (String s : st.keys()) {
       actualSet.add(s);
     }
-    Assert.assertEquals(actualSet, map.keySet());
+    Assert.assertEquals(map.keySet(), actualSet);
   }
 
 

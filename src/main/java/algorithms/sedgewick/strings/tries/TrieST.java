@@ -124,9 +124,7 @@ public class TrieST<V> implements StringST<V> {
 
   @Override
   public Iterable<String> keys() {
-    Queue<String> q = new LinkedList<>();
-    collect(root, "", q);
-    return q;
+    return keysWithPrefix("");
   }
 
   @Override
@@ -152,7 +150,7 @@ public class TrieST<V> implements StringST<V> {
   @Override
   public Iterable<String> keysWithPrefix(String s) {
     Queue<String> q = new LinkedList<>();
-    collect(getNode(root, s, 0), s + "", q);
+    collect(getNode(root, s, 0), s, q);
     return q;
   }
 
