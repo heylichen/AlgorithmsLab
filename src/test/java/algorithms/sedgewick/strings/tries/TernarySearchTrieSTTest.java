@@ -89,10 +89,27 @@ public class TernarySearchTrieSTTest {
     Assert.assertEquals("shells", st.longestPrefixOf("shellshort"));
   }
 
+  @Test
+  public void keysThatMatchTest() {
+    Map<String, Integer> map = genData();
+
+    for (Map.Entry<String, Integer> entry : map.entrySet()) {
+      String key = entry.getKey();
+      Integer expectedV = map.get(key);
+      st.put(key, expectedV);
+    }
+
+    assertEqualKeys(st.keysThatMatch("sh."), "she");
+    assertEqualKeys(st.keysThatMatch("shell."), "shells");
+    assertEqualKeys(st.keysThatMatch("shore."), null);
+  }
+
   private void assertEqualKeys(Iterable<String> actualKeys, String... expectedKeys) {
     Set<String> expected = new HashSet<>();
-    for (String expectedKey : expectedKeys) {
-      expected.add(expectedKey);
+    if (expectedKeys != null) {
+      for (String expectedKey : expectedKeys) {
+        expected.add(expectedKey);
+      }
     }
 
     Set<String> actual = new HashSet<>();

@@ -1,5 +1,6 @@
 package algorithms.sedgewick.strings.tries;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -133,41 +134,35 @@ public class TernarySearchTrieST<V> {
     }
   }
 
+  public Iterable<String> keysThatMatch(String pattern) {
+    if (pattern == null || pattern.length() == 0) {
+      return Collections.emptyList();
+    }
+    Queue<String> q = new LinkedList<>();
+    collect(root, "", pattern, q);
+    return q;
+  }
 
-//  public Iterable<String> keysThatMatch(String pattern) {
-//    if (pattern == null || pattern.length() == 0) {
-//      return Collections.emptyList();
-//    }
-//    Queue<String> q = new LinkedList<>();
-//    collect(root, "", pattern, q);
-//    return q;
-//  }
-//
-//  private void collect(Node<V> node, String pre, String pattern, Queue<String> queue) {
-//    if (node == null) {
-//      return;
-//    }
-//    int d = pre.length();
-//    char nextPatternChar = pattern.charAt(d);
-//    int compare = nextPatternChar - node.getCharacter();
-//    if (nextPatternChar == '.' || compare == 0) {
-//
-//      collect(node.getEqual(), pre + node.getCharacter(), pattern, queue);
-//    } else if (compare < 0) {
-//
-//    } else {
-//
-//    }
-//
-//    int compare = nextPatternChar - node.getCharacter();
-//
-//    for (int i = 0; i < node.getNext().length; i++) {
-//      char nextChar = toChar(i);
-//      if (nextChar == nextPatternChar || nextPatternChar == '.') {
-//        collect(node.next(i), pre + nextChar, pattern, queue);
-//      }
-//    }
-//  }
+  private void collect(Node<V> node, String pre, String pattern, Queue<String> queue) {
+    if (node == null) {
+      return;
+    }
+    int d = pre.length();
+    char nextPatternChar = pattern.charAt(d);
+    int compare = nextPatternChar - node.getCharacter();
+    if (nextPatternChar == '.' || compare == 0) {
+      pre = pre + node.getCharacter();
+      if (pre.length() == pattern.length() && node.getValue() != null) {
+        queue.add(pre);
+        return;
+      }
+      collect(node.getEqual(), pre, pattern, queue);
+    } else if (compare < 0) {
+      collect(node.getLess(), pre, pattern, queue);
+    } else {
+      collect(node.getGreater(), pre, pattern, queue);
+    }
+  }
 
   public boolean contains(String key) {
     return get(key) != null;
