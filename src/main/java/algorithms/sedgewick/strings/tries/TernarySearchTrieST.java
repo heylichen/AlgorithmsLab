@@ -198,7 +198,11 @@ public class TernarySearchTrieST<V> implements StringST<V> {
       Node<V> child = node.getGreater();
       child = deleteNode(child, key, d);
       node.setGreater(child);
-    } else if (d == key.length() - 1) {
+    } else if (d < key.length() - 1) {
+      Node<V> child = node.getEqual();
+      child = deleteNode(child, key, d + 1);
+      node.setEqual(child);
+    } else {
       if (node.getValue() != null) {
         size--;
       }
@@ -221,10 +225,6 @@ public class TernarySearchTrieST<V> implements StringST<V> {
       } else {
         return null;
       }
-    } else {
-      Node<V> child = node.getEqual();
-      child = deleteNode(child, key, d + 1);
-      node.setEqual(child);
     }
     return checkNode(node);
   }
