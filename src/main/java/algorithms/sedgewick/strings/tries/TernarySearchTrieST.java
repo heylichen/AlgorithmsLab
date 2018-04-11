@@ -10,9 +10,10 @@ import lombok.Setter;
 /**
  * Created by Chen Li on 2018/4/8.
  */
-public class TernarySearchTrieST<V> {
+public class TernarySearchTrieST<V> implements StringST<V> {
 
   private Node<V> root;
+  private int size = 0;
 
   public V get(String key) {
     Node<V> node = getNode(root, key, 0);
@@ -46,7 +47,9 @@ public class TernarySearchTrieST<V> {
 
   private Node<V> putNode(Node<V> node, String key, int d, V value) {
     char c = key.charAt(d);
+    boolean add = false;
     if (node == null) {
+      add = true;
       node = new Node<>(c);
     }
     int compare = c - node.getCharacter();
@@ -60,6 +63,9 @@ public class TernarySearchTrieST<V> {
       node.setLess(child);
     } else if (d == key.length() - 1) {
       node.setValue(value);
+      if (add) {
+        size++;
+      }
       return node;
     } else {
       Node<V> child = node.getEqual();
@@ -161,6 +167,95 @@ public class TernarySearchTrieST<V> {
       collect(node.getLess(), pre, pattern, queue);
     } else {
       collect(node.getGreater(), pre, pattern, queue);
+    }
+  }
+
+  @Override
+  public boolean isEmpty() {
+    return size() == 0;
+  }
+
+  @Override
+  public int size() {
+    return size;
+  }
+
+  public void delete(String key) {
+    root = deleteNode(root, key, 0);
+  }
+
+  private Node<V> deleteNode(Node<V> node, String key, int d) {
+    if (node == null) {
+      return null;
+    }
+    int compare = key.charAt(d) - node.getCharacter();
+
+    if (compare < 0) {
+      Node<V> child = node.getLess();
+      child = deleteNode(child, key, d);
+      node.setLess(child);
+    } else if (compare > 0) {
+      Node<V> child = node.getGreater();
+      child = deleteNode(child, key, d);
+      node.setGreater(child);
+    } else if (d == key.length() - 1) {
+      if (node.getValue() != null) {
+        size--;
+      }
+      node.setValue(null);
+      if (node.getEqual() != null) {
+        return node;
+      }
+      boolean hasLess = node.getLess() != null;
+      boolean hasGreater = node.getGreater() != null;
+
+      if (hasLess && hasGreater) {
+        Node<V> less = node.getLess();
+        Node<V> great = node.getGreater();
+        reorganize(less, great);
+        return less;
+      } else if (hasLess) {
+        return node.getLess();
+      } else if (hasGreater) {
+        return node.getGreater();
+      } else {
+        return null;
+      }
+    } else {
+      Node<V> child = node.getEqual();
+      child = deleteNode(child, key, d + 1);
+      node.setEqual(child);
+    }
+    return checkNode(node);
+  }
+
+  private void reorganize(Node<V> less, Node<V> great) {
+    char greatChar = great.getCharacter();
+    Node<V> current = less;
+    while (true) {
+      if (greatChar > current.getCharacter()) {
+        if (current.getGreater() == null) {
+          current.setGreater(great);
+          break;
+        }
+        current = current.getGreater();
+      } else if (greatChar < current.getCharacter()) {
+        if (current.getLess() == null) {
+          current.setLess(great);
+          break;
+        }
+        current = current.getLess();
+      } else {
+        throw new IllegalStateException("illegal");
+      }
+    }
+  }
+
+  private Node<V> checkNode(Node<V> node) {
+    if (node.getValue() != null || node.getLess() != null || node.getGreater() != null || node.getEqual() != null) {
+      return node;
+    } else {
+      return null;
     }
   }
 
