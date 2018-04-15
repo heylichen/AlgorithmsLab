@@ -11,6 +11,18 @@ public abstract class SubstringSearcherTest {
   protected abstract SubstringSearcher createInstance();
 
   @Test
+  public void smallSearchHitTest() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("findinahaystackneedleina");
+
+    String pattern = "needle";
+    SubstringSearcher searcher = createInstance();
+    searcher.compile(pattern);
+    int position = searcher.search(sb.toString());
+    Assert.assertEquals(15, position);
+  }
+
+  @Test
   public void searchHitTest() {
     StringBuilder sb = new StringBuilder();
 

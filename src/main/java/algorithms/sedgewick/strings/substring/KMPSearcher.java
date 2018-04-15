@@ -6,13 +6,13 @@ import algorithms.sedgewick.strings.Alphabet;
  * Created by Chen Li on 2018/4/12.
  * Knuth-Morris-Pratt algorithm for substring search
  */
-public class KMPSubstringSearcher implements SubstringSearcher {
+public class KMPSearcher implements SubstringSearcher {
 
   private Alphabet alphabet;
   private String pattern;
   private int[][] dfa;
 
-  public KMPSubstringSearcher(Alphabet alphabet) {
+  public KMPSearcher(Alphabet alphabet) {
     this.alphabet = alphabet;
   }
 
