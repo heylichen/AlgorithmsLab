@@ -5,8 +5,15 @@ package algorithms.sedgewick.strings.substring;
  */
 public class BruteForceSubstringSearcher implements SubstringSearcher {
 
+  private String pattern;
+
   @Override
-  public int search(String pattern, String text) {
+  public void compile(String pattern) {
+    this.pattern = pattern;
+  }
+
+  @Override
+  public int search(String text) {
     int textLength = text.length();
     int patternLength = pattern.length();
 

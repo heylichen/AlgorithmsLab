@@ -1,15 +1,29 @@
 package algorithms.sedgewick.strings.substring;
 
+import algorithms.sedgewick.strings.Alphabet;
+
 /**
  * Created by Chen Li on 2018/4/12.
  * Knuth-Morris-Pratt algorithm for substring search
  */
 public class KMPSubstringSearcher implements SubstringSearcher {
 
-  private int radix = 26;
+  private Alphabet alphabet;
+  private String pattern;
+  private int[][] dfa;
 
-  public int search(String pattern, String text) {
-    int[][] dfa = constructDFA(pattern);
+  public KMPSubstringSearcher(Alphabet alphabet) {
+    this.alphabet = alphabet;
+  }
+
+  @Override
+  public void compile(String pattern) {
+    this.pattern = pattern;
+    this.dfa = constructDFA(pattern);
+  }
+
+  @Override
+  public int search(String text) {
     int j = 0;
     int patternLength = pattern.length();
     for (int i = 0; i < text.length(); i++) {
@@ -27,6 +41,7 @@ public class KMPSubstringSearcher implements SubstringSearcher {
    */
   int[][] constructDFA(String pattern) {
     int patternLength = pattern.length();
+    int radix = getRadix();
     int[][] dfa = new int[radix][patternLength];
     int x = 0;
     dfa[toIndex(pattern.charAt(0))][0] = 1;
@@ -47,13 +62,14 @@ public class KMPSubstringSearcher implements SubstringSearcher {
   }
 
   char toChar(int index) {
-    if (index < 0 || index >= radix) {
-      throw new IllegalArgumentException("index out of bound!");
-    }
-    return (char) ('a' + index);
+    return alphabet.toChar(index);
   }
 
   int toIndex(char ch) {
-    return ch - 'a';
+    return alphabet.toIndex(ch);
+  }
+
+  int getRadix() {
+    return alphabet.radix();
   }
 }

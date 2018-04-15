@@ -5,5 +5,7 @@ package algorithms.sedgewick.strings.substring;
  */
 public interface SubstringSearcher {
 
-  int search(String pattern, String text);
+  void compile(String pattern);
+
+  int search(String text);
 }

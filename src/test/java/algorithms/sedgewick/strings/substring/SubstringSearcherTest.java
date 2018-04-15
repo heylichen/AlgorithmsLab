@@ -19,10 +19,10 @@ public abstract class SubstringSearcherTest {
     }
     sb.append("aac");
 
-
     String pattern = "aac";
     SubstringSearcher searcher = createInstance();
-    int position = searcher.search(pattern, sb.toString());
+    searcher.compile(pattern);
+    int position = searcher.search(sb.toString());
     Assert.assertEquals(3000, position);
   }
 
@@ -35,10 +35,10 @@ public abstract class SubstringSearcherTest {
     }
     sb.append("aac");
 
-
     String pattern = "aad";
     SubstringSearcher searcher = createInstance();
-    int position = searcher.search(pattern, sb.toString());
+    searcher.compile(pattern);
+    int position = searcher.search(sb.toString());
     Assert.assertEquals(-1, position);
   }
 }
