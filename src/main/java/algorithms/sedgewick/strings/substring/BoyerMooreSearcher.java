@@ -1,24 +1,28 @@
 package algorithms.sedgewick.strings.substring;
 
 import algorithms.sedgewick.strings.Alphabet;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by Chen Li on 2018/4/15.
  */
+@Slf4j
 public class BoyerMooreSearcher implements SubstringSearcher {
 
-  private Alphabet alphabet;
   private String pattern;
-  private int[] right;
+  private GoodSuffixHeuristic goodSuffixHeuristic;
+  private BadCharacterHeuristic badCharacterHeuristic;
 
   public BoyerMooreSearcher(Alphabet alphabet) {
-    this.alphabet = alphabet;
+    this.goodSuffixHeuristic = new GoodSuffixHeuristic();
+    this.badCharacterHeuristic = new BadCharacterHeuristic(alphabet);
   }
 
   @Override
   public void compile(String pattern) {
     this.pattern = pattern;
-    this.right = constructRight(pattern, alphabet);
+    badCharacterHeuristic.compile(pattern);
+    goodSuffixHeuristic.compile(pattern);
   }
 
   @Override
@@ -33,13 +37,7 @@ public class BoyerMooreSearcher implements SubstringSearcher {
         if (textChar == patternChar) {
           j--;
         } else {
-          int textCharIndex = alphabet.toIndex(textChar);
-          int rightMostMatched = right[textCharIndex];
-          if (j - rightMostMatched <= 0) {
-            i = i + 1;
-          } else {
-            i = i + j - rightMostMatched;
-          }
+          i += shift(j, textChar);
           break;
         }
       }
@@ -50,17 +48,16 @@ public class BoyerMooreSearcher implements SubstringSearcher {
     return -1;
   }
 
-  private int[] constructRight(String pattern, Alphabet alphabet) {
-    int radix = alphabet.radix();
-    int[] right = new int[radix];
-    for (int i = 0; i < radix; i++) {
-      right[i] = -1;
+  private int shift(int j, char textChar) {
+    int shiftByGoodSuffixHeuristic = goodSuffixHeuristic.getShift(j);
+    int shiftByBadCharacterHeuristic = badCharacterHeuristic.getShift(j, textChar);
+
+    if (shiftByGoodSuffixHeuristic > shiftByBadCharacterHeuristic) {
+      log.debug("good shift {} bad character shift {} , j={}",
+               shiftByGoodSuffixHeuristic, shiftByBadCharacterHeuristic, j);
+      return shiftByGoodSuffixHeuristic;
+    } else {
+      return shiftByBadCharacterHeuristic;
     }
-    for (int i = 0; i < pattern.length(); i++) {
-      char ch = pattern.charAt(i);
-      int index = alphabet.toIndex(ch);
-      right[index] = i;
-    }
-    return right;
   }
 }
