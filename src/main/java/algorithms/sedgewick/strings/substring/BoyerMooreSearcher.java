@@ -54,7 +54,7 @@ public class BoyerMooreSearcher implements SubstringSearcher {
 
     if (shiftByGoodSuffixHeuristic > shiftByBadCharacterHeuristic) {
       log.debug("good shift {} bad character shift {} , j={}",
-               shiftByGoodSuffixHeuristic, shiftByBadCharacterHeuristic, j);
+                shiftByGoodSuffixHeuristic, shiftByBadCharacterHeuristic, j);
       return shiftByGoodSuffixHeuristic;
     } else {
       return shiftByBadCharacterHeuristic;

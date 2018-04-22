@@ -9,7 +9,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-  class BadCharacterHeuristic {
+class BadCharacterHeuristic {
 
   private Alphabet alphabet;
   private int[] right;
@@ -24,15 +24,13 @@ import lombok.Setter;
 
   public int getShift(int indexInPattern, char textChar) {
     int textCharIndex = alphabet.toIndex(textChar);
-
     int rightMostMatched = right[textCharIndex];
-    int shift = 0;
+
     if (indexInPattern - rightMostMatched <= 0) {
-      shift = 1;
+      return 1;
     } else {
-      shift = indexInPattern - rightMostMatched;
+      return indexInPattern - rightMostMatched;
     }
-    return shift;
   }
 
   private int[] constructRight(String pattern, Alphabet alphabet) {
