@@ -1,9 +1,9 @@
 package algorithms;
 
-import algorithms.sedgewick.ch1_fundamentals.sub2_dataabs.exercises.FastIntersectedInterval1Ds;
-import algorithms.sedgewick.ch1_fundamentals.sub2_dataabs.exercises.IntersectedIntervals1DScanner;
-import algorithms.sedgewick.ch1_fundamentals.sub2_dataabs.exercises.SimpleIntersectedIntervals1DScanner;
-import algorithms.sedgewick.ch1_fundamentals.sub2_dataabs.exercises.SimpleIntersectedIntervals1DScanner2;
+import algorithms.fundamentals.sub2_dataabs.exercises.FastIntersectedInterval1Ds;
+import algorithms.fundamentals.sub2_dataabs.exercises.IntersectedIntervals1DScanner;
+import algorithms.fundamentals.sub2_dataabs.exercises.SimpleIntersectedIntervals1DScanner;
+import algorithms.fundamentals.sub2_dataabs.exercises.SimpleIntersectedIntervals1DScanner2;
 import edu.princeton.cs.algs4.Interval1D;
 import edu.princeton.cs.algs4.StdRandom;
 import org.apache.commons.lang3.tuple.Pair;
@@ -11,7 +11,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-import static algorithms.sedgewick.ch1_fundamentals.sub2_dataabs.exercises.IntersectedIntervals1DScanner.reportIntersected;
+import static algorithms.fundamentals.sub2_dataabs.exercises.IntersectedIntervals1DScanner.reportIntersected;
 
 /**
  * Created by Chen Li on 2017/1/8.

@@ -1,7 +1,7 @@
 package algorithms.visualization.controller.symboltable;
 
-import algorithms.sedgewick.ch3_search.symboltable.BTree;
-import algorithms.sedgewick.ch3_search.symboltable.BTreeNode;
+import algorithms.sedgewick.search.symboltable.BTree;
+import algorithms.sedgewick.search.symboltable.BTreeNode;
 import algorithms.visualization.service.BTreeService;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;

@@ -1,5 +1,5 @@
-import algorithms.sedgewick.ch1_fundamentals.sub3_collection.impl.VisualAccumulator;
-import algorithms.sedgewick.ch1_fundamentals.sub3_collection.impl.VisualAccumulatorImpl;
+import algorithms.fundamentals.sub3_collection.impl.VisualAccumulator;
+import algorithms.fundamentals.sub3_collection.impl.VisualAccumulatorImpl;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 

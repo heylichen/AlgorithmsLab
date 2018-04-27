@@ -1,7 +1,7 @@
 package algorithms.visualization.controller.symboltable;
 
-import algorithms.sedgewick.ch3_search.symboltable.BPlusTree;
-import algorithms.sedgewick.ch3_search.symboltable.BPlusTreeNode;
+import algorithms.sedgewick.search.symboltable.BPlusTree;
+import algorithms.sedgewick.search.symboltable.BPlusTreeNode;
 import algorithms.visualization.service.BPlusTreeService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
