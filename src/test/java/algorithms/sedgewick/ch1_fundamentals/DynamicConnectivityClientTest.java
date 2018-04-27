@@ -1,17 +1,23 @@
 package algorithms.sedgewick.ch1_fundamentals;
 
-import java.util.NoSuchElementException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-import edu.princeton.cs.algs4.In;
+import algorithms.sedgewick.utils.FileLinesBatchIterable;
+import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
 
 /**
  * Created by Chen Li on 2018/4/26.
  */
 @Slf4j
 public class DynamicConnectivityClientTest {
+
+  private String unFilePath = "algorithms/sedgewick/uf/mediumUF.txt";
+  private int bufferBytes = 1024 * 1024 * 8;//8MB
 
   @Test
   public void solveByQuickFind() throws Exception {
@@ -29,27 +35,44 @@ public class DynamicConnectivityClientTest {
   }
 
   private void solveDynamicConnectivity(UnionFind unionFindImpl) throws Exception {
-    ClassPathResource cpr = new ClassPathResource("algorithms/sedgewick/uf/largeUF.txt");
-    In input = new In(cpr.getFile());
-    int count = input.readInt();
+    FileLinesBatchIterable linesBatchIterable = new FileLinesBatchIterable(unFilePath, 1000, bufferBytes);
+    Iterator<List<String>> iterator = linesBatchIterable.iterator();
+    if (!iterator.hasNext()) {
+      return;
+    }
+    List<String> lines = iterator.next();
+    if (lines.size() < 2) {
+      return;
+    }
+    int count = Integer.valueOf(StringUtils.trim(lines.get(0)));
     unionFindImpl.init(count);
-
     DynamicConnectivityClient client = new DynamicConnectivityClient();
-    long start = System.currentTimeMillis();
-    doTest(client, unionFindImpl, input);
-    long end = System.currentTimeMillis();
-    log.info("using {} ms", end - start);
+
+    Stopwatch stopwatch = Stopwatch.createStarted();
+    solveLines(client, unionFindImpl, lines.subList(1, lines.size()));
+    stopwatch.stop();
+    //
+    while (iterator.hasNext()) {
+      lines = iterator.next();
+      stopwatch.start();
+      solveLines(client, unionFindImpl, lines.subList(1, lines.size()));
+      stopwatch.stop();
+    }
+    long elapsedMs = TimeUnit.MILLISECONDS.convert(stopwatch.elapsed().toNanos(), TimeUnit.NANOSECONDS);
+    log.info("using {} ms", elapsedMs);
   }
 
-  private void doTest(DynamicConnectivityClient client, UnionFind unionFind, In input) {
-    while (!input.isEmpty()) {
-      try {
-        int p = input.readInt();
-        int q = input.readInt();
-        client.solve(unionFind, p, q);
-      } catch (NoSuchElementException e) {
-        break;
+  private void solveLines(DynamicConnectivityClient client, UnionFind unionFindImpl, List<String> lines) {
+    for (String line : lines) {
+      line = StringUtils.trim(line);
+      int emptyIndex = line.indexOf(" ");
+      int lastEmptyIndex = line.lastIndexOf(" ");
+      if (emptyIndex == -1) {
+        throw new IllegalArgumentException("illegal no blank " + line);
       }
+      int p = Integer.parseInt(line.substring(0, emptyIndex));
+      int q = Integer.parseInt(line.substring(lastEmptyIndex + 1));
+      client.silentSolve(unionFindImpl, p, q);
     }
   }
 }

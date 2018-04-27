@@ -25,4 +25,10 @@ public class DynamicConnectivityClient {
       log.info("{} {}", p, q);
     }
   }
+
+  public  void silentSolve(UnionFind unionFind, int p, int q) {
+    if (!unionFind.connected(p, q)) {
+      unionFind.union(p, q);
+    }
+  }
 }
