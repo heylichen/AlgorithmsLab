@@ -16,7 +16,7 @@ import org.junit.Test;
 @Slf4j
 public class DynamicConnectivityClientTest {
 
-  private String unFilePath = "algorithms/sedgewick/uf/mediumUF.txt";
+  private String unFilePath = "algorithms/sedgewick/uf/tinyUF.txt";
   private int bufferBytes = 1024 * 1024 * 8;//8MB
 
   @Test
@@ -72,7 +72,7 @@ public class DynamicConnectivityClientTest {
       }
       int p = Integer.parseInt(line.substring(0, emptyIndex));
       int q = Integer.parseInt(line.substring(lastEmptyIndex + 1));
-      client.silentSolve(unionFindImpl, p, q);
+      client.solve(unionFindImpl, p, q);//call silent solve to disable log for dramatic performance improvement
     }
   }
 }

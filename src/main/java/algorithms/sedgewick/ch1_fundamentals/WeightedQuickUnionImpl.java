@@ -23,10 +23,18 @@ public class WeightedQuickUnionImpl implements UnionFind {
 
   @Override
   public int find(int p) {
+    int initialP = p;//for path compress
     int t = data[p];
     while (t != p) {
       p = t;
       t = data[p];
+    }
+    //do path compress, make all nodes encountered point to root
+    t = data[initialP];
+    while (initialP != t) {
+      data[initialP] =p;
+      initialP = t;
+      t = data[initialP];
     }
     return p;
   }
