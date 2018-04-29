@@ -1,4 +1,4 @@
-package algorithms.strings;
+package algorithms.strings.alphabet;
 
 /**
  * Created by Chen Li on 2018/4/7.

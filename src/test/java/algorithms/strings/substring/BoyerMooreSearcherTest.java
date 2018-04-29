@@ -1,6 +1,6 @@
 package algorithms.strings.substring;
 
-import algorithms.strings.Lowercase;
+import algorithms.strings.alphabet.Lowercase;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package algorithms.strings.substring;
 
-import algorithms.strings.Lowercase;
-import algorithms.strings.NumericAlphabet;
+import algorithms.strings.alphabet.Lowercase;
+import algorithms.strings.alphabet.NumericAlphabet;
 import org.junit.Assert;
 import org.junit.Test;
 

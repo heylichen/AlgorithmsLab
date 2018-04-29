@@ -3,8 +3,8 @@ package algorithms.strings.tries;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import algorithms.strings.Alphabet;
-import algorithms.strings.Lowercase;
+import algorithms.strings.alphabet.Alphabet;
+import algorithms.strings.alphabet.Lowercase;
 import lombok.Getter;
 import lombok.Setter;
 

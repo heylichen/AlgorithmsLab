@@ -1,6 +1,6 @@
 package algorithms.strings.substring;
 
-import algorithms.strings.Alphabet;
+import algorithms.strings.alphabet.Alphabet;
 
 /**
  * Created by Chen Li on 2018/4/17.
