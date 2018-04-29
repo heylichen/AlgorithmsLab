@@ -1,6 +1,6 @@
 package algorithms.visualization.service;
 
-import algorithms.sedgewick.search.symboltable.BTree;
+import algorithms.search.symboltable.BTree;
 import org.springframework.stereotype.Service;
 
 /**

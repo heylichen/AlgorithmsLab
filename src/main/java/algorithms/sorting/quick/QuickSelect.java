@@ -1,7 +1,5 @@
 package algorithms.sorting.quick;
 
-import algorithms.sedgewick.sorting.quick.pivot.PivotSelector;
-import algorithms.sedgewick.sorting.quick.pivot.RandomPivotSelector;
 import algorithms.sorting.quick.pivot.PivotSelector;
 import algorithms.sorting.quick.pivot.RandomPivotSelector;
 import lombok.Data;

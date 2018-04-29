@@ -3,12 +3,10 @@ package algorithms.sorting.heap;
 import java.util.Arrays;
 import java.util.List;
 
-import algorithms.sedgewick.sorting.Sort;
-import algorithms.sedgewick.sorting.compare.AbstractSortCompareTest;
-import algorithms.sedgewick.sorting.compare.SortCompareContext;
-import algorithms.sedgewick.sorting.compare.SortSizeConfig;
-import algorithms.sedgewick.sorting.compare.SortSizeConfigs;
+import algorithms.sorting.Sort;
 import algorithms.sorting.compare.AbstractSortCompareTest;
+import algorithms.sorting.compare.SortCompareContext;
+import algorithms.sorting.compare.SortSizeConfig;
 import algorithms.sorting.compare.SortSizeConfigs;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,10 @@
 package algorithms.search.symboltable;
 
+import java.util.Iterator;
+
+import algorithms.search.AbstractOrderedST;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Iterator;
 
 /**
  * Created by Chen Li on 2017/6/19.

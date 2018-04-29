@@ -3,7 +3,7 @@ package algorithms.sorting.compare;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-import algorithms.sedgewick.sorting.Sort;
+import algorithms.sorting.Sort;
 import com.google.common.base.Stopwatch;
 
 /**

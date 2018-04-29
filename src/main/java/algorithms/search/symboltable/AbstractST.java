@@ -1,6 +1,7 @@
 package algorithms.search.symboltable;
 
 import algorithms.fundamentals.sub3_collection.impl.VisualAccumulator;
+import algorithms.search.ST;
 import lombok.Getter;
 import lombok.Setter;
 

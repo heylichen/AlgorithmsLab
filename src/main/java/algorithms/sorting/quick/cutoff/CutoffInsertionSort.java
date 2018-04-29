@@ -1,6 +1,5 @@
 package algorithms.sorting.quick.cutoff;
 
-import algorithms.sedgewick.sorting.insertion.InnerInsertionSort;
 import algorithms.sorting.insertion.InnerInsertionSort;
 
 /**

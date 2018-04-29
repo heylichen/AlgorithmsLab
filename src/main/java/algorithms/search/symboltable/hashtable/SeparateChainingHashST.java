@@ -1,13 +1,13 @@
 package algorithms.search.symboltable.hashtable;
 
-import algorithms.sedgewick.search.symboltable.AbstractST;
-import algorithms.sedgewick.search.symboltable.SequentialSearchST;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import algorithms.search.symboltable.AbstractST;
+import algorithms.search.symboltable.SequentialSearchST;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by Chen Li on 2017/10/30.

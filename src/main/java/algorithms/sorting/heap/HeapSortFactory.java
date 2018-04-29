@@ -1,6 +1,5 @@
 package algorithms.sorting.heap;
 
-import algorithms.sedgewick.sorting.heap.operations.HeapOperationsFactory;
 import algorithms.sorting.heap.operations.HeapOperationsFactory;
 
 /**

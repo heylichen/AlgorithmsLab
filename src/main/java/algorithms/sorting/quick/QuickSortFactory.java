@@ -1,18 +1,6 @@
 package algorithms.sorting.quick;
 
-import algorithms.sedgewick.sorting.Sort;
-import algorithms.sedgewick.sorting.quick.cutoff.Cutoff1Sort;
-import algorithms.sedgewick.sorting.quick.cutoff.CutoffInsertionSort;
-import algorithms.sedgewick.sorting.quick.cutoff.CutoffSort;
-import algorithms.sedgewick.sorting.quick.partition.Fast3WayPartitioner;
-import algorithms.sedgewick.sorting.quick.partition.Partitioner;
-import algorithms.sedgewick.sorting.quick.partition.SimplePartitioner;
-import algorithms.sedgewick.sorting.quick.partition.ThreeWayPartitioner;
-import algorithms.sedgewick.sorting.quick.pivot.Median3PivotSelector;
-import algorithms.sedgewick.sorting.quick.pivot.NintherPivotSelector;
-import algorithms.sedgewick.sorting.quick.pivot.PivotSelector;
-import algorithms.sedgewick.sorting.quick.pivot.RandomMedian3PivotSelector;
-import algorithms.sedgewick.sorting.quick.pivot.RandomPivotSelector;
+import algorithms.sorting.Sort;
 import algorithms.sorting.quick.cutoff.Cutoff1Sort;
 import algorithms.sorting.quick.cutoff.CutoffInsertionSort;
 import algorithms.sorting.quick.cutoff.CutoffSort;

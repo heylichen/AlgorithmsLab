@@ -1,6 +1,6 @@
 package algorithms.sorting;
 
-import algorithms.sedgewick.sorting.compare.SortTestContext;
+import algorithms.sorting.compare.SortTestContext;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

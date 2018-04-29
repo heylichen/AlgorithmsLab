@@ -1,6 +1,6 @@
 package algorithms.strings.sorts;
 
-import algorithms.sedgewick.sorting.Sort;
+import algorithms.sorting.Sort;
 import lombok.Getter;
 import lombok.Setter;
 

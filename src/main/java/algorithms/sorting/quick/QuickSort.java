@@ -2,7 +2,7 @@ package algorithms.sorting.quick;
 
 import java.util.Random;
 
-import algorithms.sedgewick.sorting.AbstractComparableSort;
+import algorithms.sorting.AbstractComparableSort;
 import edu.princeton.cs.algs4.StdRandom;
 
 /**

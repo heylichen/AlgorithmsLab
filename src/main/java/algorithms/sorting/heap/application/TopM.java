@@ -2,8 +2,8 @@ package algorithms.sorting.heap.application;
 
 import java.util.Stack;
 
-import algorithms.sedgewick.sorting.PriorityQueue;
-import algorithms.sedgewick.sorting.heap.PriorityQueueFactory;
+import algorithms.sorting.PriorityQueue;
+import algorithms.sorting.heap.PriorityQueueFactory;
 import edu.princeton.cs.algs4.In;
 
 /**

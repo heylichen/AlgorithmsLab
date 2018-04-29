@@ -1,6 +1,6 @@
 package algorithms.sorting.quick.partition;
 
-import algorithms.sedgewick.sorting.ComparableOperations;
+import algorithms.sorting.ComparableOperations;
 import org.apache.commons.lang3.tuple.Pair;
 
 /**

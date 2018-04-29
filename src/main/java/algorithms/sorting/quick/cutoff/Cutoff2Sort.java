@@ -1,6 +1,6 @@
 package algorithms.sorting.quick.cutoff;
 
-import algorithms.sedgewick.sorting.ComparableOperations;
+import algorithms.sorting.ComparableOperations;
 
 /**
  * Created by Chen Li on 2018/2/2.

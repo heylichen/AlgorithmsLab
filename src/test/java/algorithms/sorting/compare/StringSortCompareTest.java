@@ -1,8 +1,8 @@
 package algorithms.sorting.compare;
 
-import algorithms.sedgewick.sorting.merge.CopyOnceMergeSort;
-import algorithms.sedgewick.strings.sorts.MSDSort;
-import algorithms.sedgewick.strings.sorts.ThreeWayStringQuickSort;
+import algorithms.sorting.merge.CopyOnceMergeSort;
+import algorithms.strings.sorts.MSDSort;
+import algorithms.strings.sorts.ThreeWayStringQuickSort;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

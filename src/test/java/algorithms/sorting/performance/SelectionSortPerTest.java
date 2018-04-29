@@ -1,7 +1,7 @@
 package algorithms.sorting.performance;
 
-import algorithms.sedgewick.sorting.SelectionSort;
-import algorithms.sedgewick.sorting.Sort;
+import algorithms.sorting.SelectionSort;
+import algorithms.sorting.Sort;
 
 public class SelectionSortPerTest extends SortScalePerformanceTest {
 

@@ -1,8 +1,9 @@
 package algorithms.search.symboltable;
 
-import org.junit.Test;
-
 import java.util.Iterator;
+
+import algorithms.search.ST;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,8 +1,8 @@
 package algorithms.sorting.heap;
 
-import algorithms.sedgewick.sorting.ComparableOperations;
-import algorithms.sedgewick.sorting.Sort;
-import algorithms.sedgewick.sorting.heap.operations.HeapOperations;
+
+import algorithms.sorting.ComparableOperations;
+import algorithms.sorting.Sort;
 import algorithms.sorting.heap.operations.HeapOperations;
 import lombok.Getter;
 import lombok.Setter;

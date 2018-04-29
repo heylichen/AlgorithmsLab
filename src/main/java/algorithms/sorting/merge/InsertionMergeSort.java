@@ -1,7 +1,6 @@
 package algorithms.sorting.merge;
 
-import algorithms.sedgewick.sorting.AbstractComparableSort;
-import algorithms.sedgewick.sorting.insertion.InnerInsertionSort;
+import algorithms.sorting.AbstractComparableSort;
 import algorithms.sorting.insertion.InnerInsertionSort;
 import lombok.Getter;
 import lombok.Setter;

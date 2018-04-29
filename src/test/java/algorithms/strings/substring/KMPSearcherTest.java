@@ -1,6 +1,6 @@
 package algorithms.strings.substring;
 
-import algorithms.sedgewick.strings.Lowercase;
+import algorithms.strings.Lowercase;
 import org.junit.Test;
 
 /**

@@ -1,6 +1,6 @@
 package algorithms.sorting.merge;
 
-import algorithms.sedgewick.sorting.AbstractComparableSort;
+import algorithms.sorting.AbstractComparableSort;
 
 public class MergeSort<T extends Comparable<T>> extends AbstractComparableSort<T> {
 

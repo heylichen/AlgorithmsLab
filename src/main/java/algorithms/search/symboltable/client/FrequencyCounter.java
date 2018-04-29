@@ -1,17 +1,17 @@
 package algorithms.search.symboltable.client;
 
 
-import algorithms.sedgewick.ch3_search.symboltable.ST;
-import algorithms.sedgewick.utils.TimeWatch;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+import algorithms.search.ST;
+import algorithms.utils.TimeWatch;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 
 @Getter
 @Setter

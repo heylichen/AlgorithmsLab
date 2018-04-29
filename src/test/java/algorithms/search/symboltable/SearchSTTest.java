@@ -1,11 +1,12 @@
 package algorithms.search.symboltable;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import algorithms.search.ST;
+import org.apache.commons.collections4.CollectionUtils;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,7 +1,6 @@
 package algorithms.sorting.compare;
 
-import algorithms.sedgewick.sorting.Sort;
-import algorithms.sedgewick.sorting.compare.datagen.DataGenerator;
+import algorithms.sorting.Sort;
 import algorithms.sorting.compare.datagen.DataGenerator;
 import lombok.Getter;
 import lombok.Setter;

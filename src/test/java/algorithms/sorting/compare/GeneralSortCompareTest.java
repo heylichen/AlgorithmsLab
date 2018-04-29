@@ -1,13 +1,13 @@
 package algorithms.sorting.compare;
 
-import algorithms.sedgewick.sorting.SelectionSort;
-import algorithms.sedgewick.sorting.ShellSort;
-import algorithms.sedgewick.sorting.heap.HeapSortFactory;
-import algorithms.sedgewick.sorting.insertion.InsertionSort;
-import algorithms.sedgewick.sorting.merge.CopyOnceMergeSort;
-import algorithms.sedgewick.sorting.merge.InsertionMergeSort;
-import algorithms.sedgewick.sorting.merge.MergeSort;
-import algorithms.sedgewick.sorting.quick.QuickSortFactory;
+import algorithms.sorting.SelectionSort;
+import algorithms.sorting.ShellSort;
+import algorithms.sorting.heap.HeapSortFactory;
+import algorithms.sorting.insertion.InsertionSort;
+import algorithms.sorting.merge.CopyOnceMergeSort;
+import algorithms.sorting.merge.InsertionMergeSort;
+import algorithms.sorting.merge.MergeSort;
+import algorithms.sorting.quick.QuickSortFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

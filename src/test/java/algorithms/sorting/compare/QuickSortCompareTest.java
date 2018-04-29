@@ -1,7 +1,7 @@
 package algorithms.sorting.compare;
 
-import algorithms.sedgewick.sorting.Sort;
-import algorithms.sedgewick.sorting.quick.QuickSortFactory;
+import algorithms.sorting.Sort;
+import algorithms.sorting.quick.QuickSortFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

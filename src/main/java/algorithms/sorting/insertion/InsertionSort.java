@@ -1,6 +1,6 @@
 package algorithms.sorting.insertion;
 
-import algorithms.sedgewick.sorting.AbstractComparableSort;
+import algorithms.sorting.AbstractComparableSort;
 
 public class InsertionSort<T extends Comparable<T>> extends AbstractComparableSort<T> {
 

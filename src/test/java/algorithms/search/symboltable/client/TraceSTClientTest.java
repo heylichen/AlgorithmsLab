@@ -1,6 +1,6 @@
 package algorithms.search.symboltable.client;
 
-import algorithms.sedgewick.ch3_search.symboltable.ST;
+import algorithms.search.ST;
 import org.junit.Test;
 
 /**

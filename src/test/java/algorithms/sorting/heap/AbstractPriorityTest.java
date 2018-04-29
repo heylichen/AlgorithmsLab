@@ -3,7 +3,7 @@ package algorithms.sorting.heap;
 import java.util.ArrayList;
 import java.util.List;
 
-import algorithms.sedgewick.sorting.PriorityQueue;
+import algorithms.sorting.PriorityQueue;
 import edu.princeton.cs.algs4.StdRandom;
 import org.junit.Assert;
 import org.junit.Test;

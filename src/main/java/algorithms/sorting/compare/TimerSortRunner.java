@@ -1,6 +1,7 @@
 package algorithms.sorting.compare;
 
-import algorithms.sedgewick.sorting.Sort;
+
+import algorithms.sorting.Sort;
 
 /**
  * Created by Chen Li on 2018/3/18.

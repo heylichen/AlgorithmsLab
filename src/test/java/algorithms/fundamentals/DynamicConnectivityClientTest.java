@@ -4,12 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import algorithms.fundamentals.DynamicConnectivityClient;
-import algorithms.fundamentals.QuickFindImpl;
-import algorithms.fundamentals.QuickUnionImpl;
-import algorithms.fundamentals.UnionFind;
-import algorithms.fundamentals.WeightedQuickUnionImpl;
-import algorithms.sedgewick.utils.FileLinesBatchIterable;
+import algorithms.utils.FileLinesBatchIterable;
 import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

@@ -1,10 +1,10 @@
 package algorithms.search.symboltable.client;
 
-import algorithms.sedgewick.ch3_search.symboltable.ST;
+import java.util.Random;
+
+import algorithms.search.ST;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Random;
 
 /**
  * Created by Chen Li on 2017/7/9.

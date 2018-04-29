@@ -1,6 +1,6 @@
 package algorithms.strings.substring;
 
-import algorithms.sedgewick.strings.Alphabet;
+import algorithms.strings.Alphabet;
 import lombok.extern.slf4j.Slf4j;
 
 /**

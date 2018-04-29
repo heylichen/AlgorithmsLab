@@ -3,10 +3,10 @@ package algorithms.sorting.performance;
 import java.util.ArrayList;
 import java.util.List;
 
-import algorithms.sedgewick.sorting.ShellSort;
-import algorithms.sedgewick.sorting.Sort;
-import algorithms.sedgewick.sorting.compare.SortCompareContext;
-import algorithms.sedgewick.sorting.compare.SortSizeConfig;
+import algorithms.sorting.ShellSort;
+import algorithms.sorting.Sort;
+import algorithms.sorting.compare.SortCompareContext;
+import algorithms.sorting.compare.SortSizeConfig;
 import org.junit.Test;
 
 public class ShellSortPerTest extends SortScalePerformanceTest {

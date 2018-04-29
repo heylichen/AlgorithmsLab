@@ -1,7 +1,7 @@
 package algorithms.search.symboltable.client;
 
-import algorithms.sedgewick.ch3_search.symboltable.ST;
-import algorithms.sedgewick.search.symboltable.SequentialSearchST;
+import algorithms.search.ST;
+import algorithms.search.symboltable.SequentialSearchST;
 
 /**
  * Created by Chen Li on 2017/7/9.

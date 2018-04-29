@@ -1,7 +1,6 @@
 package algorithms.sorting.heap;
 
-import algorithms.sedgewick.sorting.PriorityQueue;
-import algorithms.sedgewick.sorting.heap.operations.HeapOperations;
+import algorithms.sorting.PriorityQueue;
 import algorithms.sorting.heap.operations.HeapOperations;
 import lombok.Setter;
 

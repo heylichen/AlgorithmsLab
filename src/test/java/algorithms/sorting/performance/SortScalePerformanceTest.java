@@ -3,11 +3,11 @@ package algorithms.sorting.performance;
 import java.util.ArrayList;
 import java.util.List;
 
-import algorithms.sedgewick.utils.SizeDoubleIterable;
-import algorithms.sedgewick.sorting.Sort;
-import algorithms.sedgewick.sorting.compare.AbstractSortCompareTest;
-import algorithms.sedgewick.sorting.compare.SortCompareContext;
-import algorithms.sedgewick.sorting.compare.SortSizeConfig;
+import algorithms.sorting.Sort;
+import algorithms.sorting.compare.AbstractSortCompareTest;
+import algorithms.sorting.compare.SortCompareContext;
+import algorithms.sorting.compare.SortSizeConfig;
+import algorithms.utils.SizeDoubleIterable;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

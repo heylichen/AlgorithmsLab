@@ -1,6 +1,6 @@
 package algorithms.strings.substring;
 
-import algorithms.sedgewick.strings.Alphabet;
+import algorithms.strings.Alphabet;
 
 /**
  * Created by Chen Li on 2018/4/12.

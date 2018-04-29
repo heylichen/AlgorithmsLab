@@ -1,8 +1,8 @@
 package algorithms.search.symboltable.client;
 
 import algorithms.fundamentals.sub3_collection.impl.VisualAccumulatorImpl;
-import algorithms.sedgewick.ch3_search.symboltable.ST;
-import algorithms.sedgewick.search.symboltable.SequentialSearchST;
+import algorithms.search.ST;
+import algorithms.search.symboltable.SequentialSearchST;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

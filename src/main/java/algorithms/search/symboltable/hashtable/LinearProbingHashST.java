@@ -1,8 +1,8 @@
 package algorithms.search.symboltable.hashtable;
 
-import algorithms.sedgewick.search.symboltable.AbstractST;
-
 import java.util.Iterator;
+
+import algorithms.search.symboltable.AbstractST;
 
 /**
  * Created by Chen Li on 2017/12/17.

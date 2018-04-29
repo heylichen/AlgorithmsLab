@@ -1,6 +1,7 @@
 package algorithms.sorting.insertion;
 
-import algorithms.sedgewick.sorting.AbstractComparableSort;
+
+import algorithms.sorting.AbstractComparableSort;
 
 /**
  * Created by Chen Li on 2018/1/10.

@@ -1,9 +1,13 @@
 package algorithms.search;
 
+import algorithms.search.symboltable.AbstractST;
+import algorithms.search.symboltable.OrderedST;
+
 /**
  * Created by Chen Li on 2017/6/13.
  */
-public abstract class AbstractOrderedST<K extends Comparable<K>, V> extends AbstractST<K, V> implements OrderedST<K, V> {
+public abstract class AbstractOrderedST<K extends Comparable<K>, V> extends AbstractST<K, V> implements
+                                                                                             OrderedST<K, V> {
 
   @Override
   public void deleteMin() {

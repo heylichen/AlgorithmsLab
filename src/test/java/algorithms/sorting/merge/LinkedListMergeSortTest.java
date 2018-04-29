@@ -1,6 +1,5 @@
 package algorithms.sorting.merge;
 
-import algorithms.sedgewick.sorting.merge.LinkedListMergeSort;
 import org.junit.Assert;
 import org.junit.Test;
 

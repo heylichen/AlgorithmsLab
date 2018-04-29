@@ -1,9 +1,6 @@
 package algorithms.sorting.quick;
 
-import algorithms.sedgewick.sorting.AbstractComparableSort;
-import algorithms.sedgewick.sorting.quick.cutoff.CutoffSort;
-import algorithms.sedgewick.sorting.quick.partition.Partitioner;
-import algorithms.sedgewick.sorting.quick.pivot.PivotSelector;
+import algorithms.sorting.AbstractComparableSort;
 import algorithms.sorting.quick.cutoff.CutoffSort;
 import algorithms.sorting.quick.partition.Partitioner;
 import algorithms.sorting.quick.pivot.PivotSelector;

@@ -1,7 +1,7 @@
 package algorithms.search.symboltable.hashtable;
 
-import algorithms.sedgewick.ch3_search.symboltable.ST;
-import algorithms.sedgewick.search.symboltable.SearchSTTest;
+import algorithms.search.ST;
+import algorithms.search.symboltable.SearchSTTest;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

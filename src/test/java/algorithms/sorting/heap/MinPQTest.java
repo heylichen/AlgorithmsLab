@@ -1,6 +1,6 @@
 package algorithms.sorting.heap;
 
-import algorithms.sedgewick.sorting.PriorityQueue;
+import algorithms.sorting.PriorityQueue;
 
 /**
  * Created by Chen Li on 2018/2/5.

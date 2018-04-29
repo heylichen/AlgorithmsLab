@@ -1,7 +1,7 @@
 package algorithms.strings.sorts;
 
-import algorithms.sedgewick.sorting.AbstractContextSortTest;
-import algorithms.sedgewick.sorting.compare.SortTestContext;
+import algorithms.sorting.AbstractContextSortTest;
+import algorithms.sorting.compare.SortTestContext;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
