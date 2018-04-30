@@ -1,6 +1,8 @@
 package com.heylichen.commons.resource;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
@@ -14,7 +16,6 @@ import org.springframework.core.io.ClassPathResource;
  */
 @Slf4j
 public class FileUtils {
-
 
 
   public static File getFile(String classpath) {
@@ -41,6 +42,16 @@ public class FileUtils {
     } catch (IOException e) {
       log.error("loading file error, path={}", classpath, e);
       return Collections.emptyList();
+    }
+  }
+
+  public static BufferedReader bufferedReader(String classpath, int bufferBytes) {
+    ClassPathResource cpr = new ClassPathResource(classpath);
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(cpr.getFile()), bufferBytes);
+      return reader;
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
   }
 }

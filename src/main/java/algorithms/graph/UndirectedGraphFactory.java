@@ -1,9 +1,8 @@
 package algorithms.graph;
 
-import java.util.Iterator;
 import java.util.List;
 
-import algorithms.utils.FileLinesBatchIterable;
+import algorithms.utils.FileHeadLinesBatchIterable;
 import com.google.common.base.Splitter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,23 +14,14 @@ public class UndirectedGraphFactory {
   private Splitter splitter = Splitter.on(" ").omitEmptyStrings().trimResults();
 
   public Graph loadEdges(String edgesFilePath) {
+    FileHeadLinesBatchIterable linesBatchIterable =
+        new FileHeadLinesBatchIterable(edgesFilePath, 1000, 2, 1024 * 1024 * 4);
 
-    FileLinesBatchIterable linesBatchIterable =
-        new FileLinesBatchIterable(edgesFilePath, 1000, 1024 * 1024 * 4);
-    Iterator<List<String>> iterator = linesBatchIterable.iterator();
-    if (!iterator.hasNext()) {
-      throw new IllegalArgumentException("config illegal");
-    }
-    List<String> lines = iterator.next();
-    if (lines.size() < 3) {
-      throw new IllegalArgumentException("config illegal");
-    }
-    int verticesCount = Integer.parseInt(StringUtils.trim(lines.get(0)));
+    int verticesCount = Integer.parseInt(StringUtils.trim(linesBatchIterable.getHeadline(0)));
     Graph impl = new UndirectedGraphImpl(verticesCount);
-    int edgesCount = Integer.parseInt(StringUtils.trim(lines.get(1)));
-    addEdges(impl, lines.subList(2, lines.size()));
-    while (iterator.hasNext()) {
-      addEdges(impl, iterator.next());
+    int edgesCount = Integer.parseInt(StringUtils.trim(linesBatchIterable.getHeadline(1)));
+    for (List<String> lines : linesBatchIterable) {
+      addEdges(impl, lines);
     }
     return impl;
   }

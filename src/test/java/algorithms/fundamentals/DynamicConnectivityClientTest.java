@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import algorithms.utils.FileLinesBatchIterable;
+import algorithms.utils.FileHeadLinesBatchIterable;
 import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -21,43 +21,44 @@ public class DynamicConnectivityClientTest {
 
   @Test
   public void solveByQuickFind() throws Exception {
-    solveDynamicConnectivity(new QuickFindImpl());
+    try (FileHeadLinesBatchIterable linesBatchIterable =
+             new FileHeadLinesBatchIterable(unFilePath, 1000, 1, bufferBytes)) {
+      solveDynamicConnectivity(new QuickFindImpl(), linesBatchIterable);
+    }
   }
 
   @Test
   public void solveByQuickUnion() throws Exception {
-    solveDynamicConnectivity(new QuickUnionImpl());
+    try (FileHeadLinesBatchIterable linesBatchIterable =
+             new FileHeadLinesBatchIterable(unFilePath, 1000, 1, bufferBytes)) {
+      solveDynamicConnectivity(new QuickUnionImpl(), linesBatchIterable);
+    }
   }
 
   @Test
   public void solveByWeightedQuickUnion() throws Exception {
-    solveDynamicConnectivity(new WeightedQuickUnionImpl());
+    try (FileHeadLinesBatchIterable linesBatchIterable =
+             new FileHeadLinesBatchIterable(unFilePath, 1000, 1, bufferBytes)) {
+      solveDynamicConnectivity(new WeightedQuickUnionImpl(), linesBatchIterable);
+    }
   }
 
-  private void solveDynamicConnectivity(UnionFind unionFindImpl) throws Exception {
-    FileLinesBatchIterable linesBatchIterable = new FileLinesBatchIterable(unFilePath, 1000, bufferBytes);
+  private void solveDynamicConnectivity(UnionFind unionFindImpl, FileHeadLinesBatchIterable linesBatchIterable) {
     Iterator<List<String>> iterator = linesBatchIterable.iterator();
     if (!iterator.hasNext()) {
       return;
     }
-    List<String> lines = iterator.next();
-    if (lines.size() < 2) {
-      return;
-    }
-    int count = Integer.valueOf(StringUtils.trim(lines.get(0)));
+    int count = Integer.valueOf(StringUtils.trim(linesBatchIterable.getHeadline(0)));
     unionFindImpl.init(count);
     DynamicConnectivityClient client = new DynamicConnectivityClient();
 
-    Stopwatch stopwatch = Stopwatch.createStarted();
-    solveLines(client, unionFindImpl, lines.subList(1, lines.size()));
-    stopwatch.stop();
-    //
-    while (iterator.hasNext()) {
-      lines = iterator.next();
+    Stopwatch stopwatch = Stopwatch.createUnstarted();
+    for (List<String> lines : linesBatchIterable) {
       stopwatch.start();
-      solveLines(client, unionFindImpl, lines.subList(1, lines.size()));
+      solveLines(client, unionFindImpl, lines);
       stopwatch.stop();
     }
+    //
     long elapsedMs = TimeUnit.MILLISECONDS.convert(stopwatch.elapsed().toNanos(), TimeUnit.NANOSECONDS);
     log.info("using {} ms", elapsedMs);
   }
@@ -65,14 +66,18 @@ public class DynamicConnectivityClientTest {
   private void solveLines(DynamicConnectivityClient client, UnionFind unionFindImpl, List<String> lines) {
     for (String line : lines) {
       line = StringUtils.trim(line);
-      int emptyIndex = line.indexOf(" ");
-      int lastEmptyIndex = line.lastIndexOf(" ");
-      if (emptyIndex == -1) {
-        throw new IllegalArgumentException("illegal no blank " + line);
-      }
-      int p = Integer.parseInt(line.substring(0, emptyIndex));
-      int q = Integer.parseInt(line.substring(lastEmptyIndex + 1));
-      client.solve(unionFindImpl, p, q);//call silent solve to disable log for dramatic performance improvement
+      solveLine(client, unionFindImpl, line);
     }
+  }
+
+  private void solveLine(DynamicConnectivityClient client, UnionFind unionFindImpl, String line) {
+    int emptyIndex = line.indexOf(" ");
+    int lastEmptyIndex = line.lastIndexOf(" ");
+    if (emptyIndex == -1) {
+      throw new IllegalArgumentException("illegal no blank " + line);
+    }
+    int p = Integer.parseInt(line.substring(0, emptyIndex));
+    int q = Integer.parseInt(line.substring(lastEmptyIndex + 1));
+    client.solve(unionFindImpl, p, q);//call silent solve to disable log for dramatic performance improvement
   }
 }

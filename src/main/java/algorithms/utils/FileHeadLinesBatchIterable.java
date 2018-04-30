@@ -8,24 +8,29 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 
 /**
- * Created by Chen Li on 2018/4/26.
+ * Created by Chen Li on 2018/4/30.
  */
-@Slf4j
-public class FileLinesBatchIterable implements Iterable<List<String>>, Closeable {
+public class FileHeadLinesBatchIterable implements Iterable<List<String>>, Closeable {
 
   private BufferedReader reader;
   private int batch;
+  private List<String> headlines;
 
-  public FileLinesBatchIterable(String fileClassPath, int batch, int bufferBytes) {
+  public FileHeadLinesBatchIterable(String fileClassPath, int batch, int headlines, int bufferBytes) {
     ClassPathResource cpr = new ClassPathResource(fileClassPath);
     this.batch = batch;
     try {
       BufferedReader reader = new BufferedReader(new FileReader(cpr.getFile()), bufferBytes);
       this.reader = reader;
+      this.headlines = new ArrayList<>();
+      for (int i = 0; i < headlines; i++) {
+        if (reader.ready()) {
+          this.headlines.add(reader.readLine());
+        }
+      }
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -33,7 +38,7 @@ public class FileLinesBatchIterable implements Iterable<List<String>>, Closeable
 
   @Override
   public Iterator<List<String>> iterator() {
-    return new FileLinesBatchIterator();
+    return new FileHeadLinesBatchIterable.FileLinesBatchIterator();
   }
 
   private class FileLinesBatchIterator implements Iterator<List<String>> {
@@ -64,5 +69,12 @@ public class FileLinesBatchIterable implements Iterable<List<String>>, Closeable
   @Override
   public void close() throws IOException {
     reader.close();
+  }
+
+  public String getHeadline(int i) {
+    if (this.headlines.size() <= i) {
+      throw new IllegalArgumentException("index out of bounds");
+    }
+    return this.headlines.get(i);
   }
 }

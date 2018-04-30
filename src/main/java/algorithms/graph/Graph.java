@@ -17,4 +17,6 @@ public interface Graph {
   int edgesCount();
 
   int degree(int vertex);
+
+  Collection<Integer> getVertices();
 }
