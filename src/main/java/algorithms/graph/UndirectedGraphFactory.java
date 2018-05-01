@@ -4,6 +4,8 @@ import java.util.List;
 
 import algorithms.utils.FileHeadLinesBatchIterable;
 import com.google.common.base.Splitter;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -11,9 +13,16 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class UndirectedGraphFactory {
 
+  @Getter
+  @Setter
+  private String edgesFilePath;
   private Splitter splitter = Splitter.on(" ").omitEmptyStrings().trimResults();
 
-  public Graph loadEdges(String edgesFilePath) {
+  public Graph loadGraph() {
+    return loadGraph(edgesFilePath);
+  }
+
+  private Graph loadGraph(String edgesFilePath) {
     FileHeadLinesBatchIterable linesBatchIterable =
         new FileHeadLinesBatchIterable(edgesFilePath, 1000, 2, 1024 * 1024 * 4);
 

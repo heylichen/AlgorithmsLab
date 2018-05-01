@@ -8,7 +8,7 @@ import algorithms.graph.Graph;
 /**
  * Created by Chen Li on 2018/4/30.
  */
-public class DepthFirstSearchImpl implements Search {
+public class DepthFirstSearch implements Search {
 
   private BitSet bitSet;
   private int connectedVerticesCount;

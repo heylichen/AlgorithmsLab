@@ -10,12 +10,14 @@ public class DepthFirstSearchImplTest extends SearchTest {
 
   @Override
   protected Search createInstance() {
-    return new DepthFirstSearchImpl();
+    return new DepthFirstSearch();
   }
 
   @Override
   protected Graph createGraph() {
-    return new UndirectedGraphFactory().loadEdges("algorithms/graph/tinyG.txt");
+    UndirectedGraphFactory impl = new UndirectedGraphFactory();
+    impl.setEdgesFilePath("algorithms/graph/tinyG.txt");
+    return impl.loadGraph();
   }
 
   @Override

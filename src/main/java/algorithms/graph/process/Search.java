@@ -7,7 +7,7 @@ import algorithms.graph.Graph;
  */
 public interface Search {
 
-  void init(Graph graph, int vertex);
+  void init(Graph graph, int sourceVertex);
 
   boolean marked(int vertex);
 
