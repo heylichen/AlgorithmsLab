@@ -51,4 +51,9 @@ public class UndirectedGraphContest {
     depthFirstSearch.init(tinyGraph, source0);
     return depthFirstSearch;
   }
+
+  @Bean
+  public ConnectedComponents depthFirstConnectedComponents(){
+    return new DepthFirstConnectedComponents();
+  }
 }
