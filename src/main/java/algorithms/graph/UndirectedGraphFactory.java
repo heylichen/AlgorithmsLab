@@ -18,11 +18,7 @@ public class UndirectedGraphFactory {
   private String edgesFilePath;
   private Splitter splitter = Splitter.on(" ").omitEmptyStrings().trimResults();
 
-  public Graph loadGraph() {
-    return loadGraph(edgesFilePath);
-  }
-
-  private Graph loadGraph(String edgesFilePath) {
+  public Graph loadGraph(String edgesFilePath) {
     FileHeadLinesBatchIterable linesBatchIterable =
         new FileHeadLinesBatchIterable(edgesFilePath, 1000, 2, 1024 * 1024 * 4);
 

@@ -1,5 +1,7 @@
 package algorithms.graph;
 
+import javax.annotation.Resource;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,11 +10,12 @@ import org.junit.Test;
  */
 public class UndirectedGraphImplTest {
 
+  @Resource(name = "tinyGraph")
+  private Graph graph;
   @Test
   public void createTest() {
     UndirectedGraphFactory undirectedGraphFactory = new UndirectedGraphFactory();
-    undirectedGraphFactory.setEdgesFilePath("algorithms/graph/tinyG.txt");
-    Graph graph = undirectedGraphFactory.loadGraph();
+    Graph graph = undirectedGraphFactory.loadGraph("algorithms/graph/tinyG.txt");
     Assert.assertEquals(13, graph.verticesCount());
     Assert.assertEquals(13, graph.edgesCount());
     System.out.println(graph.toString());

@@ -1,32 +1,22 @@
 package algorithms.graph.process;
 
+import javax.annotation.Resource;
+
+import algorithms.context.AbstractContextTest;
 import algorithms.graph.Graph;
-import algorithms.graph.UndirectedGraphFactory;
 import edu.princeton.cs.algs4.StdOut;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * Created by Chen Li on 2018/5/1.
  */
-public class DepthFirstPathsTest {
+public class DepthFirstPathsTest extends AbstractContextTest {
 
-  private AbstractPathsFactory factory;
-
-  @Before
-  public void setUp() throws Exception {
-    SimplePathsFactory factoryImpl = new SimplePathsFactory();
-    factoryImpl.setSourceVertex(0);
-    factoryImpl.setInstance(new DepthFirstPaths());
-    UndirectedGraphFactory graphFactory = new UndirectedGraphFactory();
-    graphFactory.setEdgesFilePath("algorithms/graph/tinyG.txt");
-    factoryImpl.setGraphFactory(graphFactory);
-    this.factory = factoryImpl;
-  }
+  @Resource(name="depthFirstPaths")
+  private Paths paths;
 
   @Test
-  public void pathToTest() {
-    Paths paths = factory.loadPaths();
+  public void doTest() {
     Graph graph = paths.getGraph();
     int source = paths.getSourceVertex();
     for (Integer vertex : graph.getVertices()) {

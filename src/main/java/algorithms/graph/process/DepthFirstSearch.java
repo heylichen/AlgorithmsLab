@@ -4,6 +4,7 @@ import java.util.BitSet;
 import java.util.Collection;
 
 import algorithms.graph.Graph;
+import lombok.Getter;
 
 /**
  * Created by Chen Li on 2018/4/30.
@@ -12,12 +13,15 @@ public class DepthFirstSearch implements Search {
 
   private BitSet bitSet;
   private int connectedVerticesCount;
+  @Getter
+  private Graph graph;
 
   @Override
   public void init(Graph graph, int vertex) {
     bitSet = new BitSet(graph.verticesCount());
     connectedVerticesCount = 0;
     doInit(graph, vertex, bitSet);
+    this.graph = graph;
   }
 
   private void doInit(Graph graph, int vertex, BitSet bitSet) {

@@ -12,4 +12,6 @@ public interface Search {
   boolean marked(int vertex);
 
   int connectedVerticesCount();
+
+  Graph getGraph();
 }

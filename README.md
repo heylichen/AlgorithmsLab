@@ -1,2 +1,2 @@
 # AlgorithmsLab
-Codes for learning Algorithms 4th edition by Robort Sedgewick.
+Codes for learning Algorithms 4th edition by Robort 
