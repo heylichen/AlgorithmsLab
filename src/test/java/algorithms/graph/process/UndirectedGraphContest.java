@@ -15,11 +15,27 @@ public class UndirectedGraphContest {
 
   @Value("${graph.undirected.data.tiny.path}")
   private String tinyGPath;
+  @Value("${graph.undirected.data.no_cycle.tiny.path}")
+  private String noCycleTinyGPath;
+  @Value("${graph.undirected.data.bipartite.tiny.path}")
+  private String tinyBipartiteGPath;
+
+
   @Autowired
   private UndirectedGraphFactory undirectedGraphFactory;
 
   @Bean
   public Graph tinyGraph() {
     return undirectedGraphFactory.loadGraph(tinyGPath);
+  }
+
+  @Bean
+  public Graph noCycleTinyGraph() {
+    return undirectedGraphFactory.loadGraph(noCycleTinyGPath);
+  }
+
+  @Bean
+  public Graph tinyBipartiteGraph() {
+    return undirectedGraphFactory.loadGraph(tinyBipartiteGPath);
   }
 }

@@ -1,2 +1,4 @@
 graph.undirected.data.tiny.path=algorithms/graph/process/tinyG.txt
+graph.undirected.data.no_cycle.tiny.path=algorithms/graph/process/noCycleTinyG.txt
+graph.undirected.data.bipartite.tiny.path=algorithms/graph/process/tinyBipartiteG.txt
 graph.undirected.source.vertex.0=0
