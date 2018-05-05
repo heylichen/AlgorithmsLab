@@ -1,26 +1,14 @@
 package algorithms.graph.process;
 
-import java.util.ArrayDeque;
 import java.util.BitSet;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Deque;
 
 import algorithms.graph.Graph;
-import lombok.Getter;
 
 /**
  * Created by Chen Li on 2018/5/1.
  */
-public class DepthFirstPaths implements Paths {
-
-  private BitSet bitSet;
-  private int connectedVerticesCount;
-  private int[] edgesTo;
-  @Getter
-  private int sourceVertex;
-  @Getter
-  private Graph graph;
+public class DepthFirstPaths extends AbstractIntPaths {
 
   @Override
   public void init(Graph graph, int vertex) {
@@ -46,25 +34,5 @@ public class DepthFirstPaths implements Paths {
         doInit(graph, adjacencyVertex, bitSet);
       }
     }
-  }
-
-  @Override
-  public boolean hasPathTo(int v) {
-    return bitSet.get(v);
-  }
-
-  @Override
-  public Iterable<Integer> pathTo(int v) {
-
-    if (!hasPathTo(v)) {
-      return Collections.emptyList();
-    }
-    Deque<Integer> stack = new ArrayDeque<>();
-    while (v != sourceVertex) {
-      stack.push(v);
-      v = edgesTo[v];
-    }
-    stack.push(v);
-    return stack;
   }
 }

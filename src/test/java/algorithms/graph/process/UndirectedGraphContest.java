@@ -37,6 +37,14 @@ public class UndirectedGraphContest {
   }
 
   @Bean
+  public Paths breadthFirstPaths() {
+    Graph tinyGraph = tinyGraph();
+    Paths paths = new BreadthFirstPaths();
+    paths.init(tinyGraph, source0);
+    return paths;
+  }
+
+  @Bean
   public Search depthFirstSearch() {
     Graph tinyGraph = tinyGraph();
     DepthFirstSearch depthFirstSearch = new DepthFirstSearch();
