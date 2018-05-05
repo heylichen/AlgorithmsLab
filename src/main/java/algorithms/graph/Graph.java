@@ -8,6 +8,8 @@ import java.util.Collection;
  */
 public interface Graph {
 
+  void init(int verticesCount);
+
   void addEdge(int from, int to);
 
   Collection<Integer> adjacentVertices(int vertex);

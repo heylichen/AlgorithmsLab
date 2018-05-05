@@ -1,5 +1,7 @@
 package algorithms.graph.process;
 
+import javax.annotation.Resource;
+
 import algorithms.graph.Graph;
 import algorithms.graph.UndirectedGraphFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,18 @@ public class UndirectedGraphContest {
   private String noCycleTinyGPath;
   @Value("${graph.undirected.data.bipartite.tiny.path}")
   private String tinyBipartiteGPath;
+  @Value("${graph.undirected.data.routes.path}")
+  private String routesPath;
+  @Value("${graph.undirected.data.routes.delimiter.path}")
+  private String delimiter;
+  //movies
+  @Value("${graph.undirected.data.movies.path}")
+  private String moviesPath;
+  @Value("${graph.undirected.data.movies.delimiter.path}")
+  private String moviesDelim;
 
+  @Resource(name = "undirectedGraphImpl")
+  private Graph undirectedGraphImpl;
 
   @Autowired
   private UndirectedGraphFactory undirectedGraphFactory;
@@ -37,5 +50,25 @@ public class UndirectedGraphContest {
   @Bean
   public Graph tinyBipartiteGraph() {
     return undirectedGraphFactory.loadGraph(tinyBipartiteGPath);
+  }
+
+  @Bean
+  public SymbolGraph routesSymbolGraph() {
+    return createMapSymbolGraph(undirectedGraphImpl, routesPath, delimiter);
+  }
+
+  @Bean
+  public SymbolGraph moviesSymbolGraph() {
+    return createMapSymbolGraph(undirectedGraphImpl, moviesPath, moviesDelim);
+  }
+
+  private SymbolGraph createMapSymbolGraph(Graph graph, String path, String delimiter) {
+    MapSymbolGraph symbolGraph = new MapSymbolGraph();
+    symbolGraph.setGraph(graph);
+    symbolGraph.setFilePath(path);
+    delimiter = delimiter.replace("\"", "");
+    symbolGraph.setDelimiter(delimiter);
+    symbolGraph.init();
+    return symbolGraph;
   }
 }

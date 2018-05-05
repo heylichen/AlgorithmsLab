@@ -25,7 +25,8 @@ public class UndirectedGraphFactory {
         new FileHeadLinesBatchIterable(edgesFilePath, 1000, 2, 1024 * 1024 * 4);
 
     int verticesCount = Integer.parseInt(StringUtils.trim(linesBatchIterable.getHeadline(0)));
-    Graph impl = new UndirectedGraphImpl(verticesCount);
+    Graph impl = new UndirectedGraphImpl();
+    impl.init(verticesCount);
     int edgesCount = Integer.parseInt(StringUtils.trim(linesBatchIterable.getHeadline(1)));
     for (List<String> lines : linesBatchIterable) {
       addEdges(impl, lines);

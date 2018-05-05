@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 /**
  * Created by Chen Li on 2018/4/29.
  */
+@Component
+@Scope(scopeName = "prototype")
 public class UndirectedGraphImpl extends AbstractUndirectedGraph {
 
   private LinkedList<Integer>[] adjacencyListOfVertices;
@@ -14,7 +19,8 @@ public class UndirectedGraphImpl extends AbstractUndirectedGraph {
   private int edgesCount;
   private Collection<Integer> vertices;
 
-  public UndirectedGraphImpl(int verticesCount) {
+  @Override
+  public void init(int verticesCount) {
     this.verticesCount = verticesCount;
     this.edgesCount = 0;
     this.vertices = new ArrayList<>();
