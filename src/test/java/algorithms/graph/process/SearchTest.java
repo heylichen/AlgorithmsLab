@@ -11,18 +11,24 @@ public abstract class SearchTest extends AbstractContextTest {
 
   protected abstract Search getSearch();
 
+  protected abstract Graph getGraph();
+
+  protected abstract int getSourceVertex();
+
   @Test
+
   public void testMarked() {
-    Search impl = getSearch();
-    Graph graph = impl.getGraph();
+    Search search = getSearch();
+    Graph graph = getGraph();
+    search.init(graph,getSourceVertex());
 
     for (Integer vertex : graph.getVertices()) {
-      if (impl.marked(vertex)) {
+      if (search.marked(vertex)) {
         System.out.print(vertex + " ");
       }
     }
     System.out.println();
-    if (impl.connectedVerticesCount() != graph.verticesCount()) {
+    if (search.connectedVerticesCount() != graph.verticesCount()) {
       System.out.print(" NOT ");
     }
     System.out.print("connected\n");

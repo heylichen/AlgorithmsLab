@@ -12,11 +12,17 @@ public abstract class PathsTest extends AbstractContextTest {
 
   abstract Paths getPaths();
 
+  abstract Graph getGraph();
+
+  abstract int getSourceVertex();
+
   @Test
   public void doTest() {
     Paths paths = getPaths();
-    Graph graph = paths.getGraph();
-    int source = paths.getSourceVertex();
+    Graph graph = getGraph();
+    int source = getSourceVertex();
+    paths.init(graph, source);
+
     for (Integer vertex : graph.getVertices()) {
       if (paths.hasPathTo(vertex)) {
         StdOut.print(source + " to " + vertex + ": ");

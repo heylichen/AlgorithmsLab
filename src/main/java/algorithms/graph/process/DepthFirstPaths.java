@@ -4,10 +4,12 @@ import java.util.BitSet;
 import java.util.Collection;
 
 import algorithms.graph.Graph;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Chen Li on 2018/5/1.
  */
+@Component
 public class DepthFirstPaths extends AbstractIntPaths {
 
   @Override

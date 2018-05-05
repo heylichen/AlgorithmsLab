@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Deque;
 
 import algorithms.graph.Graph;
-import lombok.Getter;
 
 /**
  * Created by Chen Li on 2018/5/5.
@@ -16,9 +15,8 @@ public abstract class AbstractIntPaths implements Paths {
   protected BitSet bitSet;
   protected int connectedVerticesCount;
   protected int[] edgesTo;
-  @Getter
+
   protected int sourceVertex;
-  @Getter
   protected Graph graph;
 
   @Override

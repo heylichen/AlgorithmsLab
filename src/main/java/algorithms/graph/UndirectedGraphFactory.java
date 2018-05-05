@@ -7,10 +7,12 @@ import com.google.common.base.Splitter;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Chen Li on 2018/4/29.
  */
+@Component
 public class UndirectedGraphFactory {
 
   @Getter

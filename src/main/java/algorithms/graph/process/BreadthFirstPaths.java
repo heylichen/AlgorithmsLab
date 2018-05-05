@@ -6,7 +6,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import algorithms.graph.Graph;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BreadthFirstPaths extends AbstractIntPaths {
 
   @Override

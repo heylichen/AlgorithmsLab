@@ -5,10 +5,12 @@ import java.util.Collection;
 
 import algorithms.graph.Graph;
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Chen Li on 2018/4/30.
  */
+@Component
 public class DepthFirstSearch implements Search {
 
   private BitSet bitSet;

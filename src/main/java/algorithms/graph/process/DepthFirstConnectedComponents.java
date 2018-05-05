@@ -3,10 +3,12 @@ package algorithms.graph.process;
 import java.util.BitSet;
 
 import algorithms.graph.Graph;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Chen Li on 2018/5/5.
  */
+@Component
 public class DepthFirstConnectedComponents implements ConnectedComponents {
 
   private BitSet marked;
