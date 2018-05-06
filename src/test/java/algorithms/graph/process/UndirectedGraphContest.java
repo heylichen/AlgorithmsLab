@@ -1,13 +1,13 @@
 package algorithms.graph.process;
 
-import javax.annotation.Resource;
-
 import algorithms.graph.Graph;
 import algorithms.graph.UndirectedGraphFactory;
+import algorithms.graph.UndirectedGraphImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 /**
  * Created by Chen Li on 2018/5/4.
@@ -31,9 +31,6 @@ public class UndirectedGraphContest {
   @Value("${graph.undirected.data.movies.delimiter.path}")
   private String moviesDelim;
 
-  @Resource(name = "undirectedGraphImpl")
-  private Graph undirectedGraphImpl;
-
   @Autowired
   private UndirectedGraphFactory undirectedGraphFactory;
 
@@ -53,13 +50,26 @@ public class UndirectedGraphContest {
   }
 
   @Bean
+  @Scope(scopeName = "prototype")
   public SymbolGraph routesSymbolGraph() {
-    return createMapSymbolGraph(undirectedGraphImpl, routesPath, delimiter);
+    return createMapSymbolGraph(createEmptyGraph(), routesPath, delimiter);
+  }
+
+  @Bean
+  public DegreesOfSeparation airportDegreesOfSeparation() {
+    DegreesOfSeparation degreesOfSeparation = new DegreesOfSeparation();
+    degreesOfSeparation.setSymbolGraph(routesSymbolGraph());
+    degreesOfSeparation.setSourceVertex("JFK");
+    return degreesOfSeparation;
   }
 
   @Bean
   public SymbolGraph moviesSymbolGraph() {
-    return createMapSymbolGraph(undirectedGraphImpl, moviesPath, moviesDelim);
+    return createMapSymbolGraph(createEmptyGraph(), moviesPath, moviesDelim);
+  }
+
+  private Graph createEmptyGraph(){
+    return new UndirectedGraphImpl();
   }
 
   private SymbolGraph createMapSymbolGraph(Graph graph, String path, String delimiter) {
