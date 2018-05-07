@@ -36,17 +36,21 @@ public class UndirectedGraphContest {
 
   @Bean
   public Graph tinyGraph() {
-    return undirectedGraphFactory.loadGraph(tinyGPath);
+    return undirectedGraphFactory.loadGraph(newUndirectedGraphImpl(), tinyGPath);
   }
 
   @Bean
   public Graph noCycleTinyGraph() {
-    return undirectedGraphFactory.loadGraph(noCycleTinyGPath);
+    return undirectedGraphFactory.loadGraph(newUndirectedGraphImpl(), noCycleTinyGPath);
+  }
+
+  private UndirectedGraphImpl newUndirectedGraphImpl() {
+    return new UndirectedGraphImpl();
   }
 
   @Bean
   public Graph tinyBipartiteGraph() {
-    return undirectedGraphFactory.loadGraph(tinyBipartiteGPath);
+    return undirectedGraphFactory.loadGraph(newUndirectedGraphImpl(), tinyBipartiteGPath);
   }
 
   @Bean
@@ -68,7 +72,7 @@ public class UndirectedGraphContest {
     return createMapSymbolGraph(createEmptyGraph(), moviesPath, moviesDelim);
   }
 
-  private Graph createEmptyGraph(){
+  private Graph createEmptyGraph() {
     return new UndirectedGraphImpl();
   }
 

@@ -7,7 +7,15 @@ import algorithms.graph.Graph;
  */
 public interface Search {
 
+  /**
+   * given a source vertex and a graph instance, init
+   */
   void init(Graph graph, int sourceVertex);
+
+  /**
+   * given a source vertex and a graph instance, init
+   */
+  void init(Graph graph, Iterable<Integer> sources);
 
   /**
    * is given vertex connected to source?

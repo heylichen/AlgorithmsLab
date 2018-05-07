@@ -26,6 +26,18 @@ public class DepthFirstSearch implements Search {
     this.graph = graph;
   }
 
+  @Override
+  public void init(Graph graph, Iterable<Integer> sources) {
+    bitSet = new BitSet(graph.verticesCount());
+    connectedVerticesCount = 0;
+    this.graph = graph;
+    for (Integer source : sources) {
+      if (!bitSet.get(source)) {
+        doInit(graph, source, bitSet);
+      }
+    }
+  }
+
   private void doInit(Graph graph, int vertex, BitSet bitSet) {
     connectedVerticesCount++;
     bitSet.set(vertex);

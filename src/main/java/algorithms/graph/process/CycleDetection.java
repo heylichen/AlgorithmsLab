@@ -11,4 +11,6 @@ public interface CycleDetection {
   void init(Graph graph);
 
   boolean hasCycle();
+
+  Iterable<Integer> cycle();
 }
