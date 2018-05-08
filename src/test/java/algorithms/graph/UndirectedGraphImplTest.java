@@ -14,8 +14,8 @@ public class UndirectedGraphImplTest {
   private Graph graph;
   @Test
   public void createTest() {
-    UndirectedGraphFactory undirectedGraphFactory = new UndirectedGraphFactory();
-    Graph graph = undirectedGraphFactory.loadGraph(new UndirectedGraphImpl(),"algorithms/graph/tinyG.txt");
+    GraphFactory graphFactory = new GraphFactory();
+    Graph graph = graphFactory.loadGraph(new UndirectedGraphImpl(), "algorithms/graph/tinyG.txt");
     Assert.assertEquals(13, graph.verticesCount());
     Assert.assertEquals(13, graph.edgesCount());
     System.out.println(graph.toString());

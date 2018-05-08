@@ -16,14 +16,14 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class UndirectedGraphFactory {
+public class GraphFactory {
 
   @Getter
   @Setter
   private String edgesFilePath;
   private Splitter splitter = Splitter.on(" ").omitEmptyStrings().trimResults();
 
-  public Graph loadGraph(Graph impl,String edgesFilePath) {
+  public <T extends Graph> T loadGraph(T impl,String edgesFilePath) {
     try (FileHeadLinesBatchIterable linesBatchIterable =
              new FileHeadLinesBatchIterable(edgesFilePath, 1000, 2, 1024 * 1024 * 4)) {
       int verticesCount = Integer.parseInt(StringUtils.trim(linesBatchIterable.getHeadline(0)));

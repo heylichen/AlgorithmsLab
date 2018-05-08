@@ -5,9 +5,8 @@ import java.util.BitSet;
 import java.util.Deque;
 
 import algorithms.graph.Graph;
-import org.springframework.stereotype.Component;
 
-@Component
+
 public class DepthFirstDirectedCycleDetection implements CycleDetection {
 
   private BitSet marked;
@@ -59,7 +58,7 @@ public class DepthFirstDirectedCycleDetection implements CycleDetection {
 
   @Override
   public boolean hasCycle() {
-    return cycle!=null;
+    return cycle != null;
   }
 
   @Override

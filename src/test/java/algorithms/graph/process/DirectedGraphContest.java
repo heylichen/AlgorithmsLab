@@ -1,12 +1,13 @@
 package algorithms.graph.process;
 
+import algorithms.graph.Digraph;
 import algorithms.graph.DigraphImpl;
-import algorithms.graph.Graph;
-import algorithms.graph.UndirectedGraphFactory;
+import algorithms.graph.GraphFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 @Configuration
 public class DirectedGraphContest {
@@ -15,17 +16,41 @@ public class DirectedGraphContest {
   private String tinyGPath;
   @Value("${graph.directed.data.no_cycle.tiny.path}")
   private String noCycleTinyGPath;
+  @Value("${graph.directed.data.dag.tiny.path}")
+  private String tinyDAGPath;
+
   @Autowired
-  private UndirectedGraphFactory undirectedGraphFactory;
+  private GraphFactory graphFactory;
 
   @Bean
-  public Graph tinyDirectedCyclicGraph() {
-    return undirectedGraphFactory.loadGraph(newDigraphImpl(), tinyGPath);
+  public Digraph tinyDirectedCyclicGraph() {
+    return graphFactory.loadGraph(newDigraphImpl(), tinyGPath);
+  }
+  @Bean
+  @Scope(scopeName = "prototype")
+  public Digraph tinyDAG(){
+   return graphFactory.loadGraph(new DigraphImpl(), tinyDAGPath);
   }
 
   @Bean
-  public Graph tinyDirectedAcyclicGraph() {
-    return undirectedGraphFactory.loadGraph(newDigraphImpl(), noCycleTinyGPath);
+  @Scope(scopeName = "prototype")
+  public DepthFirstDirectedCycleDetection depthFirstDirectedCycleDetection(){
+    return new DepthFirstDirectedCycleDetection();
+  }
+
+  @Bean
+  @Scope(scopeName = "prototype")
+  public Topological topological(){
+    Topological topological = new Topological();
+    topological.setDirectedCycleDetection(depthFirstDirectedCycleDetection());
+    topological.setDigraph(tinyDAG());
+    topological.init();
+    return topological;
+  }
+
+  @Bean
+  public Digraph tinyDirectedAcyclicGraph() {
+    return graphFactory.loadGraph(newDigraphImpl(), noCycleTinyGPath);
   }
 
   private DigraphImpl newDigraphImpl() {

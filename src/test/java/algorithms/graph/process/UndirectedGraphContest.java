@@ -1,7 +1,7 @@
 package algorithms.graph.process;
 
 import algorithms.graph.Graph;
-import algorithms.graph.UndirectedGraphFactory;
+import algorithms.graph.GraphFactory;
 import algorithms.graph.UndirectedGraphImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,16 +32,16 @@ public class UndirectedGraphContest {
   private String moviesDelim;
 
   @Autowired
-  private UndirectedGraphFactory undirectedGraphFactory;
+  private GraphFactory graphFactory;
 
   @Bean
   public Graph tinyGraph() {
-    return undirectedGraphFactory.loadGraph(newUndirectedGraphImpl(), tinyGPath);
+    return graphFactory.loadGraph(newUndirectedGraphImpl(), tinyGPath);
   }
 
   @Bean
   public Graph noCycleTinyGraph() {
-    return undirectedGraphFactory.loadGraph(newUndirectedGraphImpl(), noCycleTinyGPath);
+    return graphFactory.loadGraph(newUndirectedGraphImpl(), noCycleTinyGPath);
   }
 
   private UndirectedGraphImpl newUndirectedGraphImpl() {
@@ -50,7 +50,7 @@ public class UndirectedGraphContest {
 
   @Bean
   public Graph tinyBipartiteGraph() {
-    return undirectedGraphFactory.loadGraph(newUndirectedGraphImpl(), tinyBipartiteGPath);
+    return graphFactory.loadGraph(newUndirectedGraphImpl(), tinyBipartiteGPath);
   }
 
   @Bean
