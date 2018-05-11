@@ -4,6 +4,8 @@ import java.util.Collection;
 
 public interface EdgeWeightedGraph {
 
+  void init(int verticesCount);
+
   void addEdge(Edge edge);
 
   Collection<Edge> adjacent(int vertex);

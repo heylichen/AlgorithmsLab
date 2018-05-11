@@ -11,3 +11,4 @@ graph.undirected.source.vertex.0=0
 graph.directed.data.tiny.path=algorithms/graph/directed/tinyG.txt
 graph.directed.data.no_cycle.tiny.path=algorithms/graph/directed/noCycleTinyG.txt
 graph.directed.data.dag.tiny.path=algorithms/graph/directed/tinyDAG.txt
+graph.directed.data.edge.weighted.tiny.path=algorithms/graph/directed/tinyEDG.txt

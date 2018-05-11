@@ -2,6 +2,9 @@ package algorithms.graph.process;
 
 import algorithms.graph.Digraph;
 import algorithms.graph.DigraphImpl;
+import algorithms.graph.EdgeWeightedGraph;
+import algorithms.graph.EdgeWeightedGraphFactory;
+import algorithms.graph.EdgeWeightedGraphImpl;
 import algorithms.graph.GraphFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +21,8 @@ public class DirectedGraphContest {
   private String noCycleTinyGPath;
   @Value("${graph.directed.data.dag.tiny.path}")
   private String tinyDAGPath;
-
+  @Value("${graph.directed.data.edge.weighted.tiny.path}")
+  private String tinyEDGPath;
   @Autowired
   private GraphFactory graphFactory;
 
@@ -26,21 +30,22 @@ public class DirectedGraphContest {
   public Digraph tinyDirectedCyclicGraph() {
     return graphFactory.loadGraph(newDigraphImpl(), tinyGPath);
   }
+
   @Bean
   @Scope(scopeName = "prototype")
-  public Digraph tinyDAG(){
-   return graphFactory.loadGraph(new DigraphImpl(), tinyDAGPath);
+  public Digraph tinyDAG() {
+    return graphFactory.loadGraph(new DigraphImpl(), tinyDAGPath);
   }
 
   @Bean
   @Scope(scopeName = "prototype")
-  public DepthFirstDirectedCycleDetection depthFirstDirectedCycleDetection(){
+  public DepthFirstDirectedCycleDetection depthFirstDirectedCycleDetection() {
     return new DepthFirstDirectedCycleDetection();
   }
 
   @Bean
   @Scope(scopeName = "prototype")
-  public Topological topological(){
+  public Topological topological() {
     Topological topological = new Topological();
     topological.setDirectedCycleDetection(depthFirstDirectedCycleDetection());
     topological.setDigraph(tinyDAG());
@@ -49,6 +54,19 @@ public class DirectedGraphContest {
   }
 
   @Bean
+  public EdgeWeightedGraphFactory edgeWeightedGraphFactory() {
+    return new EdgeWeightedGraphFactory();
+  }
+
+  @Bean
+  @Scope(scopeName = "prototype")
+  public EdgeWeightedGraph tinyEDG() {
+    EdgeWeightedGraphFactory factory = edgeWeightedGraphFactory();
+    return factory.loadGraph(new EdgeWeightedGraphImpl(), tinyEDGPath);
+  }
+
+  @Bean
+
   public Digraph tinyDirectedAcyclicGraph() {
     return graphFactory.loadGraph(newDigraphImpl(), noCycleTinyGPath);
   }
