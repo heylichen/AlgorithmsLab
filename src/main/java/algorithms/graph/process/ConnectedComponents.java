@@ -5,9 +5,9 @@ import algorithms.graph.Graph;
 /**
  * Created by Chen Li on 2018/5/5.
  */
-public interface ConnectedComponents {
+public interface ConnectedComponents<T extends Graph> {
 
-  void init(Graph graph);
+  void init(T graph);
 
   /**
    * are v and w connected?
