@@ -92,7 +92,7 @@ public class IndexMinPQ<K extends Comparable<K>>  implements Iterable<Integer> {
     }
   }
 
-  protected boolean contains(int i) {
+  public boolean contains(int i) {
     return qp[i] != -1;
   }
 
