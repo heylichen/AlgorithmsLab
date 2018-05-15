@@ -1,5 +1,7 @@
 package algorithms.graph;
 
+import java.util.Objects;
+
 /**
  * Created by Chen Li on 2018/5/11.
  */
@@ -42,5 +44,24 @@ public class EdgeImpl implements Edge {
 
   public String toString() {
     return String.format("%d-%d %.2f", vertexA, vertexB, weight);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    EdgeImpl edge = (EdgeImpl) o;
+    return Objects.equals(vertexA, edge.vertexA) &&
+           Objects.equals(vertexB, edge.vertexB);
+  }
+
+  @Override
+  public int hashCode() {
+
+    return Objects.hash(vertexA, vertexB);
   }
 }

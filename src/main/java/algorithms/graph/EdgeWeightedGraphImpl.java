@@ -2,6 +2,7 @@ package algorithms.graph;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 public class EdgeWeightedGraphImpl implements EdgeWeightedGraph {
@@ -60,15 +61,10 @@ public class EdgeWeightedGraphImpl implements EdgeWeightedGraph {
 
   @Override
   public Collection<Edge> getEdges() {
-    Collection<Edge> allEdges = new ArrayList<>();
+    Collection<Edge> allEdges = new HashSet<>();
     for (Integer vertex : vertices) {
       LinkedList<Edge> adjacentEdges = adjacentList[vertex];
-      for (Edge edge : adjacentEdges) {
-        int v = edge.either();
-        if (v > edge.theOther(v)) {
-          allEdges.add(edge);
-        }
-      }
+      allEdges.addAll(adjacentEdges);
     }
     return allEdges;
   }
