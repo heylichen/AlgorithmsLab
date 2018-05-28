@@ -38,4 +38,9 @@ public abstract class AbstractIntPaths implements Paths {
     stack.push(v);
     return stack;
   }
+
+  @Override
+  public int from() {
+    return sourceVertex;
+  }
 }

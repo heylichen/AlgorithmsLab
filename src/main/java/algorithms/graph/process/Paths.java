@@ -18,4 +18,6 @@ public interface Paths {
    * find the path from source to the given vertex
    */
   Iterable<Integer> pathTo(int v);
+
+  int from();
 }
