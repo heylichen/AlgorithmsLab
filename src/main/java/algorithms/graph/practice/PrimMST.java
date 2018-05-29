@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import algorithms.graph.Edge;
 import algorithms.graph.EdgeWeightedGraph;
@@ -30,31 +31,41 @@ public class PrimMST implements MST {
     minPq = new PriorityQueueFactory().minPQ(vCount);
 
     //
+    int source = 0;
     weight = 0.0;
-    marked.set(0);
-    for (Edge edge : graph.adjacent(0)) {
-      minPq.insert(edge);
-    }
+    marked.set(source);
+    exploreAdjacent(graph, source);
 
     while (!minPq.isEmpty()) {
       Edge edge = minPq.pop();
-      int v = edge.either();
-      int w = edge.theOther(v);
-
-      int unmarkedV;
-      if (!marked.get(v)) {
-        unmarkedV = v;
-      } else if (!marked.get(w)) {
-        unmarkedV = w;
-      } else {
+      Optional<Integer> optional = getUnmarkedVertex(edge);
+      if(!optional.isPresent()){
         continue;
       }
+      int unmarkedV = optional.get();
+
       weight += edge.weight();
       edges.add(edge);
       marked.set(unmarkedV);
-      for (Edge adjacentEdge : graph.adjacent(unmarkedV)) {
-        minPq.insert(adjacentEdge);
-      }
+      exploreAdjacent(graph, unmarkedV);
+    }
+  }
+
+  private Optional<Integer> getUnmarkedVertex(Edge edge) {
+    int v = edge.either();
+    if (!marked.get(v)) {
+      return Optional.of(v);
+    }
+    int w = edge.theOther(v);
+    if (!marked.get(w)) {
+      return Optional.of(w);
+    }
+    return Optional.empty();
+  }
+
+  private void exploreAdjacent(EdgeWeightedGraph graph, int v) {
+    for (Edge adjacentEdge : graph.adjacent(v)) {
+      minPq.insert(adjacentEdge);
     }
   }
 
