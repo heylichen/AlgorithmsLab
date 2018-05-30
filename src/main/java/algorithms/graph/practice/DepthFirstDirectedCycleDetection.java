@@ -39,7 +39,8 @@ public class DepthFirstDirectedCycleDetection implements CycleDetection {
     marked.set(v);
 
     for (Integer adjacentV : graph.adjacentVertices(v)) {
-      if (marked.get(adjacentV)) {
+      //attention, use marked is bug, only test this connected component
+      if (stack.contains(adjacentV)) {
         //cycle detected!
         cycleVertices = new LinkedList<>();
         Integer current = stack.pop();

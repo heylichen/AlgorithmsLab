@@ -11,6 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 public class PathLogUtil {
 
   public static final String pathToString(Iterable<Integer> vertices) {
+    if (vertices == null) {
+      return StringUtils.EMPTY;
+    }
     List<Integer> collection = new ArrayList<>();
     for (Integer vertex : vertices) {
       collection.add(vertex);

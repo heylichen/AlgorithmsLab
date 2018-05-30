@@ -48,6 +48,16 @@ public abstract class DirectedCycleDetectionTest {
     CycleDetection cycleDetection = getInstance();
     cycleDetection.init(impl);
     Assert.assertEquals(false, cycleDetection.hasCycle());
+  }
 
+  @Test
+  public void noCycleTest2() {
+    DigraphImpl impl = new DigraphImpl();
+    GraphFactory gf = new GraphFactory();
+    gf.loadGraph(impl, "algorithms/graph/directed/orderDigraph.txt");
+    //has cycle
+    CycleDetection cycleDetection = getInstance();
+    cycleDetection.init(impl);
+    Assert.assertEquals(false, cycleDetection.hasCycle());
   }
 }
