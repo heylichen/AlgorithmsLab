@@ -1,7 +1,9 @@
 package algorithms.graph;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -19,5 +21,14 @@ public class PathLogUtil {
       collection.add(vertex);
     }
     return StringUtils.join(collection, "->");
+  }
+
+  public static final String edgesPathToString(Iterable<DirectedEdge> edges) {
+    Set<Integer> set = new LinkedHashSet<>();
+    for (DirectedEdge edge : edges) {
+      set.add(edge.from());
+      set.add(edge.to());
+    }
+    return StringUtils.join(set, "->");
   }
 }
