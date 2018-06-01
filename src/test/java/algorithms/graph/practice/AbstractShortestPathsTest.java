@@ -17,10 +17,19 @@ public abstract class AbstractShortestPathsTest {
   protected abstract ShortestPaths getInstance();
 
   @Test
-  public void iterateAll() {
+  public void testEDGWithCycle() {
+    iterate("algorithms/graph/directed/shortestPathEDG.txt");
+  }
+
+  @Test
+  public void testWeightedDAG() {
+    iterate("algorithms/graph/directed/shortestPathEDAG.txt");
+  }
+
+  private void iterate(String path) {
     EdgeWeightedDigraphFactory factory = new EdgeWeightedDigraphFactory();
     EdgeWeightedDigraph graph = new EdgeWeightedDigraphImpl();
-    factory.loadGraph(graph, "algorithms/graph/directed/shortestPathEDG.txt");
+    factory.loadGraph(graph, path);
 
     ShortestPaths shortestPaths = getInstance();
     shortestPaths.init(graph, 0);
@@ -29,7 +38,6 @@ public abstract class AbstractShortestPathsTest {
     for (int i = 1; i < vCount; i++) {
       log.info("from source to {} : {}", i, PathLogUtil.edgesPathToString(shortestPaths.pathTo(i)));
     }
-
   }
 
 
