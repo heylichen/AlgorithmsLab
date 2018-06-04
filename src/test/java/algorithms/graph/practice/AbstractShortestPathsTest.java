@@ -26,7 +26,7 @@ public abstract class AbstractShortestPathsTest {
     iterate("algorithms/graph/directed/shortestPathEDAG.txt");
   }
 
-  private void iterate(String path) {
+  protected void iterate(String path) {
     EdgeWeightedDigraphFactory factory = new EdgeWeightedDigraphFactory();
     EdgeWeightedDigraph graph = new EdgeWeightedDigraphImpl();
     factory.loadGraph(graph, path);
