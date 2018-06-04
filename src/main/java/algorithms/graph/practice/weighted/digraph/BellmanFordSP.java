@@ -12,16 +12,17 @@ import algorithms.graph.EdgeWeightedDigraphImpl;
 
 /**
  * Created by Chen Li on 2018/6/4.
- * with negative weighted edge allowed, cycle allowed, but negative cycle not allowed.
+ * given an edge weighted digraph, and a source vertex, find the shortest path to any vertex
+ * reachable from source,  with negative weighted edge allowed, cycle allowed, but negative cycle not allowed.
  */
 public class BellmanFordSP {
 
-  private Double[] distTo;
-  private DirectedEdge[] edgeTo;
-  private Queue<Integer> queue;
-  private DepthFirstWeightedDigraphCycleDetection cycle;
-  private int relaxCount;
-  private EdgeWeightedDigraph digraph;
+  private Double[] distTo;   //shortest path weight from source to v
+  private DirectedEdge[] edgeTo; //shortest path, last edge point to v
+  private Queue<Integer> queue;  //task queue
+  private DepthFirstWeightedDigraphCycleDetection cycle; //negative cycle if exist or null
+  private int relaxCount; //times of call to relax()
+  private EdgeWeightedDigraph digraph; //original digraph
 
   public void init(EdgeWeightedDigraph digraph, Integer source) {
     this.digraph = digraph;
