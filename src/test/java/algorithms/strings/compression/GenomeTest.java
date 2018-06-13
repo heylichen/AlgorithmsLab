@@ -1,13 +1,11 @@
 package algorithms.strings.compression;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
-import edu.princeton.cs.algs4.BinaryOut;
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
 
 /**
  * Created by Chen Li on 2018/6/12.
@@ -15,20 +13,24 @@ import org.springframework.core.io.ClassPathResource;
 public class GenomeTest {
 
   @Test
-  public void name() throws Exception{
-
+  public void name() throws Exception {
+    //String text = "AGC";
     String text = "ATAGATGCATAGCGCATAGCTAGATGTGCTAGC";
+    InputStream genomeIn = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+    ByteArrayOutputStream genomeOut = new ByteArrayOutputStream();
+
     Genome genome = new Genome();
-    ClassPathResource classPathResource = new ClassPathResource("algorithms/string/compression/tmp");
-    InputStream in = new FileInputStream(classPathResource.getFile());
-    OutputStream out = new FileOutputStream(classPathResource.getFile());
+    genome.compress(genomeIn, genomeOut);
 
-    BinaryOut bo = new BinaryOut(out);
-    genome.compress(text, bo);
-    bo.close();
+    InputStream compressed = new ByteArrayInputStream(genomeOut.toByteArray());
+    ByteArrayOutputStream expandOs = new ByteArrayOutputStream();
+    genome.expand(compressed, expandOs);
 
-
-    String result = genome.expand(in);
-    System.out.println(result);
+    String expanded = expandOs.toString(StandardCharsets.UTF_8.name());
+    System.out.println(expanded);
+//    BinaryDump binaryDump = new BinaryDump();
+//    Pair<String, Integer> pair = binaryDump.dump(in, 32);
+//    System.out.println(pair.getLeft());
+//    System.out.println(pair.getRight() + " bits");
   }
 }

@@ -26,4 +26,16 @@ public abstract class AbstractAlphabet implements Alphabet {
     return new String(chars);
   }
 
+  @Override
+  public int lgRadix() {
+    int characterCount = radix();
+
+    int bits = 0;
+    while (characterCount > 0) {
+      bits++;
+      characterCount=  characterCount >>> 1;
+    }
+    return bits;
+  }
+
 }

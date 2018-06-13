@@ -1,7 +1,8 @@
 package algorithms.strings.substring;
 
+import algorithms.strings.alphabet.Alphabet;
+import algorithms.strings.alphabet.EnumerateAlphabet;
 import algorithms.strings.alphabet.Lowercase;
-import algorithms.strings.alphabet.NumericAlphabet;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,7 +18,8 @@ public class RabinKarpSearcherTest extends SubstringSearcherTest {
 
   @Test
   public void radix10Test() {
-    SubstringSearcher searcher = new RabinKarpSearcher(new NumericAlphabet(), 1111111111111111111L);
+    Alphabet numericAlphabet = new EnumerateAlphabet("0123456789");
+    SubstringSearcher searcher = new RabinKarpSearcher(numericAlphabet, 1111111111111111111L);
     searcher.compile("26535");
     int index = searcher.search("3141592653589793");
     Assert.assertEquals(6, index);

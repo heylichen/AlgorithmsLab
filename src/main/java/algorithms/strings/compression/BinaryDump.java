@@ -29,6 +29,13 @@ public class BinaryDump {
     return Pair.of(sb.toString(), characters);
   }
 
+  public static final void dumpView(InputStream inputStream, int lineWidth) {
+    BinaryDump binaryDump = new BinaryDump();
+    Pair<String, Integer> pair = binaryDump.dump(inputStream, lineWidth);
+    System.out.println(pair.getLeft());
+    System.out.println(pair.getRight() + " bits");
+  }
+
   public static void main(String[] args) {
     if (args.length == 0) {
       System.err.println("usage: BinaryDump lineWidth");
