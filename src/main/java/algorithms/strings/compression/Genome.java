@@ -13,7 +13,7 @@ import edu.princeton.cs.algs4.BinaryOut;
  */
 public class Genome {
 
-  private Alphabet alphabet = new EnumerateAlphabet("ACGT");
+  private Alphabet alphabet = EnumerateAlphabet.builder().appendString("ACGT").build();
 
   public void compress(InputStream in, OutputStream os) {
     BinaryIn binaryIn = new BinaryIn(in);

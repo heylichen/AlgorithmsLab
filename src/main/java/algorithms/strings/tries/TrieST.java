@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import algorithms.strings.alphabet.Alphabet;
-import algorithms.strings.alphabet.Lowercase;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +16,7 @@ public class TrieST<V> implements StringST<V> {
 
   private Node<V> root;
   private int size = 0;
-  private Alphabet alphabet = new Lowercase();
+  private Alphabet alphabet;
 
   @Override
   public V get(String key) {

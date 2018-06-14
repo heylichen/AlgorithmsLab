@@ -6,25 +6,20 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableMap;
-import org.apache.commons.lang3.StringUtils;
 
 public class EnumerateAlphabet extends AbstractAlphabet {
 
   private final Map<Integer, Character> toCharMap;
   private final Map<Character, Integer> toIndexMap;
 
-  public EnumerateAlphabet(String language) {
-    if (StringUtils.isBlank(language)) {
-      throw new IllegalArgumentException("language must not be empty!");
-    }
-    Set<Character> charset = new HashSet<>();
-    for (int i = 0; i < language.length(); i++) {
-      charset.add(language.charAt(i));
+  private EnumerateAlphabet(Set<Character> characters) {
+    if (characters == null || characters.isEmpty()) {
+      throw new IllegalArgumentException("characters must not be empty!");
     }
     Map<Integer, Character> toCharMap = new HashMap<>();
     Map<Character, Integer> toIndexMap = new HashMap<>();
     int i = 0;
-    for (Character character : charset) {
+    for (Character character : characters) {
       toCharMap.put(i, character);
       toIndexMap.put(character, i);
       i++;
@@ -32,6 +27,35 @@ public class EnumerateAlphabet extends AbstractAlphabet {
 
     this.toCharMap = ImmutableMap.copyOf(toCharMap);
     this.toIndexMap = ImmutableMap.copyOf(toIndexMap);
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  public static class Builder {
+
+    private Set<Character> characters = new HashSet<>();
+
+    public Builder appendCharRange(char begin, char end) {
+      char current = begin;
+      while (current <= end) {
+        characters.add(current);
+        current++;
+      }
+      return this;
+    }
+
+    public Builder appendString(String characters) {
+      for (int i = 0; i < characters.length(); i++) {
+        this.characters.add(characters.charAt(i));
+      }
+      return this;
+    }
+
+    public EnumerateAlphabet build() {
+      return new EnumerateAlphabet(this.characters);
+    }
   }
 
   @Override
