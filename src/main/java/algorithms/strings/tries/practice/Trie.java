@@ -124,7 +124,7 @@ public class Trie<V> {
   }
 
   /**
-   * depth first search, a iterative method
+   * depth first search, a iterative method, 遍历
    */
   private void collectKeysWithPrefix(Node node, String prefix, Collection<String> keys) {
     for (int i = 0; i < node.getLinks().length; i++) {
