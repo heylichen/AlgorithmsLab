@@ -160,11 +160,9 @@ public class Trie<V> {
     return maxIndex > 0 ? key.substring(0, maxIndex) : null;
   }
 
-
   @Getter
   @Setter
   private class Node<V> {
-
     private V value;
     private Node<V>[] links;
   }

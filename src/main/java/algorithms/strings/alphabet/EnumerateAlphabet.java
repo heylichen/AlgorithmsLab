@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableMap;
+import lombok.Getter;
 
 public class EnumerateAlphabet extends AbstractAlphabet {
 
@@ -36,6 +37,10 @@ public class EnumerateAlphabet extends AbstractAlphabet {
   public static class Builder {
 
     private Set<Character> characters = new HashSet<>();
+
+    public Builder appendCharRange(CharRange charRange) {
+      return appendCharRange(charRange.begin, charRange.end);
+    }
 
     public Builder appendCharRange(char begin, char end) {
       char current = begin;
@@ -84,5 +89,17 @@ public class EnumerateAlphabet extends AbstractAlphabet {
   @Override
   public int radix() {
     return toIndexMap.size();
+  }
+
+  @Getter
+  public static class CharRange {
+
+    private final char begin;
+    private final char end;
+
+    public CharRange(char begin, char end) {
+      this.begin = begin;
+      this.end = end;
+    }
   }
 }
