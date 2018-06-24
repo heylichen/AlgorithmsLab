@@ -39,6 +39,7 @@ public class LZWCompressTest {
     doExpand("abcdsdfde");
     doExpand("aaa");
     doExpand("aaabbbaaabbbaaa");
+    doExpand("abababa");
   }
 
   private void doExpand(String text) throws UnsupportedEncodingException {
@@ -48,7 +49,7 @@ public class LZWCompressTest {
     lzwCompress.compress(in, out);
     //dump
 //    ByteArrayInputStream forDump = new ByteArrayInputStream(out.toByteArray());
-//    BinaryDump.dumpView(forDump, 12, 12 * 9);
+//    BinaryDump.dumpView(forDump, 12, 12 * 4);
 
     ByteArrayInputStream compressedIn = new ByteArrayInputStream(out.toByteArray());
     ByteArrayOutputStream expandOut = new ByteArrayOutputStream();

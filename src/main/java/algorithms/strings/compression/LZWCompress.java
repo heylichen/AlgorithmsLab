@@ -97,7 +97,7 @@ public class LZWCompress {
     BinaryOut binaryOut = new BinaryOut(outputStream);
     Map<Integer, List<Integer>> map = initExpandMap();
     List<Integer> lastString = null;
-    int codeWord = 257;
+    int codeWord = 257;//only change this when a new codeword is added, fixed a bug about this
     int lastCodeWord = 4096;
 
     while (!binaryIn.isEmpty()) {
@@ -112,10 +112,11 @@ public class LZWCompress {
         expanded = merge(lastString, lastString.get(0));
         map.put(compressedCode, expanded);
         codeWord = compressedCode;
+        codeWord++;
       } else if (lastString != null) {
         map.put(codeWord, merge(lastString, expanded.get(0)));
+        codeWord++;
       }
-      codeWord++;
       write(binaryOut, expanded);
       lastString = expanded;
     }
