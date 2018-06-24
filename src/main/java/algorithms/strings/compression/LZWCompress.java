@@ -2,7 +2,6 @@ package algorithms.strings.compression;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.princeton.cs.algs4.BinaryIn;
@@ -17,7 +16,6 @@ import lombok.Setter;
  */
 public class LZWCompress {
 
-
   public void compress(InputStream in, OutputStream outputStream) {
     BinaryIn binaryIn = new BinaryIn(in);
     BinaryOut binaryOut = new BinaryOut(outputStream);
@@ -25,47 +23,53 @@ public class LZWCompress {
     int codeWord = 257;
     int lastCodeWord = 4096;
 
-    TSTNode node = root;
-    TSTNode lastEqualNode = null;
-    List<Integer> chars = new ArrayList<>();
-    while (!binaryIn.isEmpty()) {
-      lastEqualNode = null;
-
-      Integer lastCharacter = null;
-      while (!binaryIn.isEmpty() || lastCharacter != null) {
-        int character = 0;
-        if (lastCharacter == null) {
-          character = binaryIn.readInt(8);
-        } else {
-          character = lastCharacter;
-          lastCharacter = null;
-        }
-
-        node = getNode(node, character);
-        if (node != null) {
-          chars.add(character);
-          lastEqualNode = node;
-          node = node.equal;
-        } else {
-          //found longest match key, as chars, next char is character
-          binaryOut.write(lastEqualNode.codeword, 12);
-          if (codeWord < lastCodeWord) {
-            lastEqualNode.equal = putNode(lastEqualNode.equal, character, codeWord);
-            codeWord++;
-          }
-          lastCharacter = character;
-          //refresh
-          node = root;
-          chars.clear();
-        }
+    Integer unmatchedCharacter = null;
+    while (true) {
+      LongestMatch longestMatch = findLongestMatch(root, binaryIn, unmatchedCharacter);
+      if (longestMatch == null) {
+        break;
       }
-    }
-    if (lastEqualNode != null) {
+      TSTNode lastEqualNode = longestMatch.lastMatchedNode;
+      unmatchedCharacter = longestMatch.unmatchedCharacter;
       binaryOut.write(lastEqualNode.codeword, 12);
+      if (codeWord < lastCodeWord && unmatchedCharacter != null) {
+        lastEqualNode.equal = putNode(lastEqualNode.equal, unmatchedCharacter, codeWord);
+        codeWord++;
+      }
     }
     binaryOut.close();
   }
 
+  //found longest match key, as chars, next char is unmatched character
+  private LongestMatch findLongestMatch(TSTNode node, BinaryIn binaryIn, Integer bufferedChar) {
+    if ((binaryIn == null || binaryIn.isEmpty()) && bufferedChar == null) {
+      return null;
+    }
+    TSTNode lastMatchedNode = null;
+    Integer unmatchedCharacter = null;
+    Integer character = bufferedChar == null ? binaryIn.readInt(8) : bufferedChar;
+    while (character != null) {
+      node = getNode(node, character);
+      if (node != null) {
+        //chars.add(character);
+        lastMatchedNode = node;
+        node = node.equal;
+
+        if (binaryIn.isEmpty()) {
+          break;
+        } else {
+          character = binaryIn.readInt(8);
+        }
+      } else {
+        unmatchedCharacter = character;
+        break;
+      }
+    }
+    LongestMatch longestMatch = new LongestMatch();
+    longestMatch.setLastMatchedNode(lastMatchedNode);
+    longestMatch.setUnmatchedCharacter(unmatchedCharacter);
+    return longestMatch;
+  }
 
   private TSTNode getNode(TSTNode node, int ch) {
     if (node == null || ch == node.character) {
@@ -132,5 +136,14 @@ public class LZWCompress {
     private TSTNode greater;
     private Integer codeword;
 
+  }
+
+  @Getter
+  @Setter
+  private static class LongestMatch {
+
+    private TSTNode lastMatchedNode;
+    private Integer unmatchedCharacter;
+    private List<Integer> matchedChars;
   }
 }
