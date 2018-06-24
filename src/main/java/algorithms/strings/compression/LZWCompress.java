@@ -2,12 +2,17 @@ package algorithms.strings.compression;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.princeton.cs.algs4.BinaryIn;
 import edu.princeton.cs.algs4.BinaryOut;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.collections4.CollectionUtils;
 
 /**
  * Created by Chen Li on 2018/6/24.
@@ -37,7 +42,12 @@ public class LZWCompress {
         codeWord++;
       }
     }
+    binaryOut.write(getEOF(), 12);
     binaryOut.close();
+  }
+
+  private int getEOF() {
+    return 256;
   }
 
   //found longest match key, as chars, next char is unmatched character
@@ -83,9 +93,59 @@ public class LZWCompress {
   }
 
   public void expand(InputStream in, OutputStream outputStream) {
+    BinaryIn binaryIn = new BinaryIn(in);
+    BinaryOut binaryOut = new BinaryOut(outputStream);
+    Map<Integer, List<Integer>> map = initExpandMap();
+    List<Integer> lastString = null;
+    int codeWord = 257;
+    int lastCodeWord = 4096;
 
+    while (!binaryIn.isEmpty()) {
+      int compressedCode = binaryIn.readInt(12);
+      if (compressedCode == getEOF()) {
+        break;
+      }
+
+      List<Integer> expanded = map.get(compressedCode);
+      if (expanded == null) {
+        expanded = merge(lastString, lastString.get(0));
+        map.put(compressedCode, expanded);
+        codeWord = compressedCode;
+      } else if (lastString != null) {
+        map.put(codeWord, merge(lastString, expanded.get(0)));
+      }
+      codeWord++;
+      write(binaryOut, expanded);
+      lastString = expanded;
+    }
+
+    binaryOut.close();
   }
 
+  private List<Integer> merge(final List<Integer> string, final Integer ch) {
+    List<Integer> newString = new ArrayList<>();
+    newString.addAll(string);
+    newString.add(ch);
+
+    return newString;
+  }
+
+  private void write(BinaryOut binaryOut, List<Integer> chars) {
+    if (CollectionUtils.isEmpty(chars)) {
+      return;
+    }
+    for (Integer aChar : chars) {
+      binaryOut.write(aChar, 8);
+    }
+  }
+
+  private Map<Integer, List<Integer>> initExpandMap() {
+    Map<Integer, List<Integer>> map = new HashMap<>();
+    for (int i = 0; i < 256; i++) {
+      map.put(i, Arrays.asList(i));
+    }
+    return map;
+  }
 
   private TSTNode initTable() {
     return balancedInit(0, 255, null);
@@ -128,7 +188,7 @@ public class LZWCompress {
 
   @Getter
   @Setter
-  public static class TSTNode {
+  private static class TSTNode {
 
     private int character;
     private TSTNode less;
