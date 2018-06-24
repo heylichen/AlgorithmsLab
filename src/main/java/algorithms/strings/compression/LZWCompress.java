@@ -113,7 +113,7 @@ public class LZWCompress {
         map.put(compressedCode, expanded);
         codeWord = compressedCode;
         codeWord++;
-      } else if (lastString != null) {
+      } else if (lastString != null && codeWord < lastCodeWord) {
         map.put(codeWord, merge(lastString, expanded.get(0)));
         codeWord++;
       }
