@@ -108,6 +108,7 @@ public class LZWCompress {
 
       List<Integer> expanded = map.get(compressedCode);
       if (expanded == null) {
+        //in case "aaa"
         expanded = merge(lastString, lastString.get(0));
         map.put(compressedCode, expanded);
         codeWord = compressedCode;
