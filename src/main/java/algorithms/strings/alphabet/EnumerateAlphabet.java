@@ -1,7 +1,9 @@
 package algorithms.strings.alphabet;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,8 +19,8 @@ public class EnumerateAlphabet extends AbstractAlphabet {
     if (characters == null || characters.isEmpty()) {
       throw new IllegalArgumentException("characters must not be empty!");
     }
-    Map<Integer, Character> toCharMap = new HashMap<>();
-    Map<Character, Integer> toIndexMap = new HashMap<>();
+    Map<Integer, Character> toCharMap = new LinkedHashMap<>();
+    Map<Character, Integer> toIndexMap = new LinkedHashMap<>();
     int i = 0;
     for (Character character : characters) {
       toCharMap.put(i, character);
@@ -28,6 +30,10 @@ public class EnumerateAlphabet extends AbstractAlphabet {
 
     this.toCharMap = ImmutableMap.copyOf(toCharMap);
     this.toIndexMap = ImmutableMap.copyOf(toIndexMap);
+  }
+
+  public List<Character> characters(){
+    return new ArrayList<>(this.toCharMap.values());
   }
 
   public static Builder builder() {
