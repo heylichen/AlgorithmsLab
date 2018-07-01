@@ -10,7 +10,7 @@ public class MatrixLoader {
 
   private Splitter splitter = Splitter.on(",").trimResults();
 
-  public SquareMatrix load(String path) {
+  public Matrix load(String path) {
     FileLinesIterable iterable = new FileLinesIterable(path, 1024 * 1024);
     Iterator<String> lineIterator = iterable.iterator();
     if (!lineIterator.hasNext()) {
@@ -28,7 +28,7 @@ public class MatrixLoader {
       data[i] = parseInts(lineIterator.next());
       i++;
     }
-    return new SquareMatrix(data, rows);
+    return new Matrix(data, rows);
   }
 
   private Integer[] parseInts(String line) {
@@ -42,7 +42,7 @@ public class MatrixLoader {
 
   public static void main(String[] args) {
     MatrixLoader loader = new MatrixLoader();
-    SquareMatrix matrix = loader.load("algorithms/fundamental/divideconquer/a.text");
+    Matrix matrix = loader.load("algorithms/fundamental/divideconquer/a.text");
     System.out.println("ok");
   }
 }

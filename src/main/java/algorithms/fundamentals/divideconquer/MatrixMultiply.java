@@ -2,5 +2,5 @@ package algorithms.fundamentals.divideconquer;
 
 public interface MatrixMultiply {
 
-  SquareMatrix multiply(SquareMatrix a, SquareMatrix b);
+  Matrix multiply(Matrix a, Matrix b);
 }
