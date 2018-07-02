@@ -31,7 +31,12 @@ public class MatrixOperations {
     for (int i = 0; i < rows; i++) {
       for (int i1 = 0; i1 < columns; i1++) {
         sum = operator.apply(a.get(i, i1), b.get(i, i1));
-        c.set(i, i1, sum);
+        try {
+          c.set(i, i1, sum);
+        } catch (ArrayIndexOutOfBoundsException e) {
+          e.printStackTrace();
+        }
+
       }
     }
   }
