@@ -11,6 +11,12 @@ public class MatrixLoader {
   private Splitter splitter = Splitter.on(",").trimResults();
 
   public Matrix load(String path) {
+    FileLinesIterable linesCounter = new FileLinesIterable(path, 1024 * 1024);
+    int rows = 0;
+    for (String s : linesCounter) {
+      rows++;
+    }
+
     FileLinesIterable iterable = new FileLinesIterable(path, 1024 * 1024);
     Iterator<String> lineIterator = iterable.iterator();
     if (!lineIterator.hasNext()) {
@@ -18,9 +24,9 @@ public class MatrixLoader {
     }
     String line = lineIterator.next();
     Integer[] firstLine = parseInts(line);
-    int rows = firstLine.length;
+    int columns = firstLine.length;
 
-    Integer[][] data = new Integer[rows][rows];
+    Integer[][] data = new Integer[rows][columns];
     data[0] = firstLine;
 
     int i = 1;
@@ -28,7 +34,7 @@ public class MatrixLoader {
       data[i] = parseInts(lineIterator.next());
       i++;
     }
-    return new Matrix(data, rows);
+    return new Matrix(data, rows,columns);
   }
 
   private Integer[] parseInts(String line) {

@@ -20,15 +20,15 @@ public class Matrix {
   }
 
   public Matrix(int rows, int columns) {
-    this(new Integer[rows][rows], 0, rows - 1, 0, columns - 1);
+    this(new Integer[rows][columns], 0, rows - 1, 0, columns - 1);
   }
 
   public Matrix(int rows) {
     this(new Integer[rows][rows], 0, rows - 1, 0, rows - 1);
   }
 
-  public Matrix(Integer[][] data, int rows) {
-    this(data, 0, rows - 1, 0, rows - 1);
+  public Matrix(Integer[][] data, int rows, int columns) {
+    this(data, 0, rows - 1, 0, columns - 1);
   }
 
   public Integer get(int i, int j) {
@@ -51,24 +51,29 @@ public class Matrix {
     return new Matrix(data, rowsBegin, rowsEnd, columnsBegin, columnsEnd);
   }
 
-  public static void add(Matrix a, Matrix b, Matrix c) {
-    int rows = a.getEffectiveRows();
-    int sum = 0;
-    for (int i = 0; i < rows; i++) {
-      for (int i1 = 0; i1 < rows; i1++) {
-        sum = a.get(i, i1).intValue() + b.get(i, i1).intValue();
-        c.set(i, i1, sum);
-      }
+  /**
+   * split the original matrix into blockRowSize * blockColumnSize blocks of sub matrices,
+   * return the block at index [i][j], index based on 0
+   */
+  public Matrix blockSubmatrix(int blockRowSize, int blockColumnSize, int i, int j) {
+    if (blockRowSize <= 0 || blockColumnSize <= 0) {
+      throw new IllegalArgumentException("block size must be greater than 0");
     }
+    return submatrix(getRowsBegin() + blockRowSize * i,
+                     getRowsBegin() + blockRowSize * (i + 1) - 1,
+                     getColumnsBegin() + +blockColumnSize * j,
+                     getColumnsBegin() + blockColumnSize * (j + 1) - 1
+    );
   }
 
   public String toString() {
     StringBuilder sb = new StringBuilder();
     int rows = getEffectiveRows();
+    int columns = getEffectiveColumns();
     for (int i = 0; i < rows; i++) {
-      for (int i1 = 0; i1 < rows; i1++) {
+      for (int i1 = 0; i1 < columns; i1++) {
         sb.append(get(i, i1));
-        if (i1 < rows - 1) {
+        if (i1 < columns - 1) {
           sb.append(",");
         }
       }
@@ -76,4 +81,6 @@ public class Matrix {
     }
     return sb.toString();
   }
+
+
 }
