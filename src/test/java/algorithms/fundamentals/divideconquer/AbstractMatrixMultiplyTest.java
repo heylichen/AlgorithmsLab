@@ -69,13 +69,13 @@ public abstract class AbstractMatrixMultiplyTest {
   }
 
 
-  private void runAndVerify(MatrixMultiply matrixMultiply, Matrix a, Matrix b) {
+  protected void runAndVerify(MatrixMultiply matrixMultiply, Matrix a, Matrix b) {
     Matrix result = matrixMultiply.multiply(a, b);
     Matrix expected = simpleMatrixMultiply.multiply(a, b);
     Assert.assertTrue("", matrixEquals(expected, result));
   }
 
-  private Matrix generate(int rows, int columns) {
+  protected Matrix generate(int rows, int columns) {
     Integer[][] data = new Integer[rows][columns];
     for (int i = 0; i < rows; i++) {
       for (int i1 = 0; i1 < columns; i1++) {
@@ -85,7 +85,7 @@ public abstract class AbstractMatrixMultiplyTest {
     return new Matrix(data, rows, columns);
   }
 
-  private boolean matrixEquals(Matrix a, Matrix b) {
+  protected boolean matrixEquals(Matrix a, Matrix b) {
     int rows = a.getEffectiveRows();
     int columns = a.getEffectiveColumns();
     if (rows != b.getEffectiveRows() || columns != b.getEffectiveColumns()) {

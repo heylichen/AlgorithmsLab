@@ -21,27 +21,28 @@ public class WinogradStrassenMM implements MatrixMultiply {
     if (rowsOfA <= cutoffSize) {
       return multiply.multiply(a, b);
     }
-    int columnsOfA = a.getEffectiveColumns();
     int blockRowsOfA = rowsOfA / 2;
-    int blockColumnsOfA = columnsOfA / 2;
-    Matrix a11 = a.blockSubmatrix(blockRowsOfA, blockColumnsOfA, 0, 0);
-    Matrix a12 = a.blockSubmatrix(blockRowsOfA, blockColumnsOfA, 0, 1);
-    Matrix a21 = a.blockSubmatrix(blockRowsOfA, blockColumnsOfA, 1, 0);
-    Matrix a22 = a.blockSubmatrix(blockRowsOfA, blockColumnsOfA, 1, 1);
-    int rowsOfB = b.getEffectiveRows();
-    int columnsOfB = b.getEffectiveColumns();
-    int blockRowsOfB = rowsOfB / 2;
-    int blockColumnsOfB = columnsOfB / 2;
-    Matrix b11 = b.blockSubmatrix(blockRowsOfB, blockColumnsOfB, 0, 0);
-    Matrix b12 = b.blockSubmatrix(blockRowsOfB, blockColumnsOfB, 0, 1);
-    Matrix b21 = b.blockSubmatrix(blockRowsOfB, blockColumnsOfB, 1, 0);
-    Matrix b22 = b.blockSubmatrix(blockRowsOfB, blockColumnsOfB, 1, 1);
+    int blockColumnsOfA = a.getEffectiveColumns() / 2;
+    MatrixBlocks blocksOfA = a.split(blockRowsOfA, blockColumnsOfA);
+    Matrix a11 = blocksOfA.getAt11();
+    Matrix a12 = blocksOfA.getAt12();
+    Matrix a21 = blocksOfA.getAt21();
+    Matrix a22 = blocksOfA.getAt22();
 
-    Matrix result = new Matrix(rowsOfA, columnsOfB);
-    Matrix c11 = result.blockSubmatrix(blockRowsOfA, blockColumnsOfB, 0, 0);
-    Matrix c12 = result.blockSubmatrix(blockRowsOfA, blockColumnsOfB, 0, 1);
-    Matrix c21 = result.blockSubmatrix(blockRowsOfA, blockColumnsOfB, 1, 0);
-    Matrix c22 = result.blockSubmatrix(blockRowsOfA, blockColumnsOfB, 1, 1);
+    int blockRowsOfB = b.getEffectiveRows() / 2;
+    int blockColumnsOfB = b.getEffectiveColumns() / 2;
+    MatrixBlocks blocksOfB = b.split(blockRowsOfB, blockColumnsOfB);
+    Matrix b11 = blocksOfB.getAt11();
+    Matrix b12 = blocksOfB.getAt12();
+    Matrix b21 = blocksOfB.getAt21();
+    Matrix b22 = blocksOfB.getAt22();
+
+    Matrix c = new Matrix(rowsOfA, b.getEffectiveColumns());
+    MatrixBlocks blocksOfC = c.split(blockRowsOfA,blockColumnsOfB);
+    Matrix c11 = blocksOfC.getAt11();
+    Matrix c12 = blocksOfC.getAt12();
+    Matrix c21 = blocksOfC.getAt21();
+    Matrix c22 = blocksOfC.getAt22();
 
     //stage1
     Matrix s1 = MatrixOperations.add(a21, a22);
@@ -84,6 +85,6 @@ public class WinogradStrassenMM implements MatrixMultiply {
     Matrix u7 = c12;
     MatrixOperations.add(u2, p3, u7);
     MatrixOperations.add(u7, p6, u7);
-    return result;
+    return c;
   }
 }

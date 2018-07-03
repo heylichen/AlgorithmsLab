@@ -12,7 +12,7 @@ public class SimpleMatrixMultiply implements MatrixMultiply {
       throw new IllegalArgumentException("matrix not support multiply");
     }
 
-    Matrix c = new Matrix(rows);
+    Matrix c = new Matrix(rows,bColumns);
     for (int i = 0; i < rows; i++) {
       for (int i1 = 0; i1 < bColumns; i1++) {
         int sum = 0;
