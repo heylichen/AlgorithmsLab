@@ -1,6 +1,6 @@
 package algorithms.fundamentals.divideconquer;
 
-public class SimpleMatrixMultiply implements MatrixMultiply {
+public class StandardMatrixMultiply implements MatrixMultiply {
 
   @Override
   public Matrix multiply(Matrix a, Matrix b) {

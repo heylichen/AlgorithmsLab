@@ -1,8 +1,8 @@
 package algorithms.fundamentals.divideconquer;
 
 import java.util.Objects;
-import java.util.Random;
 
+import algorithms.utils.MatrixGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,8 +11,8 @@ import org.junit.Test;
 public abstract class AbstractMatrixMultiplyTest {
 
   protected MatrixLoader matrixLoader = new MatrixLoader();
-  private SimpleMatrixMultiply simpleMatrixMultiply = new SimpleMatrixMultiply();
-  private Random random = new Random();
+  private StandardMatrixMultiply standardMatrixMultiply = new StandardMatrixMultiply();
+  private MatrixGenerator matrixGenerator = MatrixGenerator.instance();
 
   protected abstract MatrixMultiply getInstance();
 
@@ -35,7 +35,7 @@ public abstract class AbstractMatrixMultiplyTest {
     Matrix mb = matrixLoader.load(pathB);
     MatrixMultiply matrixMultiply = getInstance();
     Matrix result = matrixMultiply.multiply(ma, mb);
-    Matrix expected = simpleMatrixMultiply.multiply(ma, mb);
+    Matrix expected = standardMatrixMultiply.multiply(ma, mb);
     Assert.assertTrue("", matrixEquals(expected, result));
     System.out.println(result);
   }
@@ -45,14 +45,14 @@ public abstract class AbstractMatrixMultiplyTest {
     MatrixMultiply matrixMultiply = getInstance();
     for (int i = 1; i <= 64; i = i * 2) {
       log.info("{} squareMatricesFunctionTest, matrix size {} * {}", getClass().getSimpleName(), i, i);
-      Matrix a = generate(i, i);
-      Matrix b = generate(i, i);
+      Matrix a = matrixGenerator.generate(i, i);
+      Matrix b = matrixGenerator.generate(i, i);
       runAndVerify(matrixMultiply, a, b);
     }
   }
 
   protected void performanceCompare(MatrixMultiply a, MatrixMultiply b, int rows, int columns) {
-    Matrix ma = generate(rows, columns);
+    Matrix ma = matrixGenerator.generate(rows, columns);
 
     long aElapsed = runElapsedMs(a, ma, ma);
     long bElapsed = runElapsedMs(b, ma, ma);
@@ -71,19 +71,10 @@ public abstract class AbstractMatrixMultiplyTest {
 
   protected void runAndVerify(MatrixMultiply matrixMultiply, Matrix a, Matrix b) {
     Matrix result = matrixMultiply.multiply(a, b);
-    Matrix expected = simpleMatrixMultiply.multiply(a, b);
+    Matrix expected = standardMatrixMultiply.multiply(a, b);
     Assert.assertTrue("", matrixEquals(expected, result));
   }
-
-  protected Matrix generate(int rows, int columns) {
-    Integer[][] data = new Integer[rows][columns];
-    for (int i = 0; i < rows; i++) {
-      for (int i1 = 0; i1 < columns; i1++) {
-        data[i][i1] = random.nextInt(100) + 1;
-      }
-    }
-    return new Matrix(data, rows, columns);
-  }
+  
 
   protected boolean matrixEquals(Matrix a, Matrix b) {
     int rows = a.getEffectiveRows();

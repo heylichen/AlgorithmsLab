@@ -15,6 +15,6 @@ public class StrassenMatrixMultiplyTest extends AbstractMatrixMultiplyTest {
     int size = 256;
     StrassenMatrixMultiply instance = new StrassenMatrixMultiply();
     instance.setCutoffSize(64);
-    performanceCompare(instance, new SimpleMatrixMultiply(), size, size);
+    performanceCompare(instance, new StandardMatrixMultiply(), size, size);
   }
 }

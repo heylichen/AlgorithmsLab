@@ -13,7 +13,7 @@ public class WinogradStrassenMM implements MatrixMultiply {
   @Getter
   @Setter
   private int cutoffSize = 1;
-  private SimpleMatrixMultiply multiply = new SimpleMatrixMultiply();
+  private StandardMatrixMultiply multiply = new StandardMatrixMultiply();
 
   @Override
   public Matrix multiply(Matrix a, Matrix b) {

@@ -6,7 +6,7 @@ package algorithms.fundamentals.divideconquer;
 public class RecursiveMatrixMultiply implements MatrixMultiply {
 
   private int cutoffSize = 1;
-  private SimpleMatrixMultiply multiply = new SimpleMatrixMultiply();
+  private StandardMatrixMultiply multiply = new StandardMatrixMultiply();
 
   @Override
   public Matrix multiply(Matrix a, Matrix b) {

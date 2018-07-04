@@ -4,23 +4,57 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * standard strassen matrix multiply
- * for square matrices(or rectangular matrices), a * b, size is M*M, where M is power of 2
- * use 7 instead of 8 multiply in each recursive call
+ * strassen matrix multiply for arbitrary sized matrices, using dynamic padding
  */
-public class StrassenMatrixMultiply implements MatrixMultiply {
+public class DynamicPaddingStrassenMM implements MatrixMultiply {
 
   @Getter
   @Setter
-  private int cutoffSize = 1;
+  private int cutoffSize = 1;//do not set default value as 1, or it would cause stack overflow because of padding
   private StandardMatrixMultiply multiply = new StandardMatrixMultiply();
 
   @Override
   public Matrix multiply(Matrix a, Matrix b) {
-    int rowsOfA = a.getEffectiveRows();
-    if (rowsOfA <= cutoffSize) {
+    int rowsA = a.getEffectiveRows();
+    int columnsA = a.getEffectiveColumns();
+    int columnsB = b.getEffectiveColumns();
+    //TODO : simple cutoff logic need fine tuning
+    if (rowsA <= cutoffSize||columnsA<=cutoffSize||columnsB<=cutoffSize) {
       return multiply.multiply(a, b);
     }
+    //do padding and fixing
+
+    boolean rowsAOdd = rowsA % 2 == 1;
+    boolean columnsAOdd = columnsA % 2 == 1;
+    boolean columnsBOdd = columnsB % 2 == 1;
+    //all dimensions even, no padding needed
+    if (!rowsAOdd && !columnsAOdd && !columnsBOdd) {
+      return doMultiply(a, b);
+    }
+    //do padding
+    a = padding(a, rowsAOdd, columnsAOdd);
+    b = padding(b, columnsAOdd, columnsBOdd);
+    Matrix expandedC = doMultiply(a, b);
+    //extract by expected size whatever padding method used
+    return expandedC.submatrix(expandedC.getRowsBegin(), expandedC.getRowsBegin() + rowsA - 1,
+                               expandedC.getColumnsBegin(), expandedC.getColumnsBegin() + columnsB - 1
+    );
+  }
+
+  private Matrix padding(Matrix matrix, boolean rowsOdd, boolean columnsOdd) {
+    if (rowsOdd) {
+      matrix = columnsOdd ? MatrixOperations.padBottomAndRight(matrix) : MatrixOperations.padBottom(matrix);
+    } else if (columnsOdd) {
+      matrix = MatrixOperations.padRight(matrix);
+    }
+    return matrix;
+  }
+
+  private Matrix doMultiply(Matrix a, Matrix b) {
+    //do not check cutoff here, check it before padding
+    int rowsOfA = a.getEffectiveRows();
+    //almost the same as standard strassen algorithm, except recursively calling to another method
+    //instead of itself
     int blockRowsOfA = rowsOfA / 2;
     int blockColumnsOfA = a.getEffectiveColumns() / 2;
     MatrixBlocks blocksOfA = a.split(blockRowsOfA, blockColumnsOfA);
@@ -38,7 +72,7 @@ public class StrassenMatrixMultiply implements MatrixMultiply {
     Matrix b22 = blocksOfB.getAt22();
 
     Matrix c = new Matrix(rowsOfA, b.getEffectiveColumns());
-    MatrixBlocks blocksOfC = c.split(blockRowsOfA,blockColumnsOfB);
+    MatrixBlocks blocksOfC = c.split(blockRowsOfA, blockColumnsOfB);
     Matrix c11 = blocksOfC.getAt11();
     Matrix c12 = blocksOfC.getAt12();
     Matrix c21 = blocksOfC.getAt21();
@@ -77,7 +111,6 @@ public class StrassenMatrixMultiply implements MatrixMultiply {
     MatrixOperations.add(p5, p1, c22);
     MatrixOperations.subtract(c22, p3, c22);
     MatrixOperations.subtract(c22, p7, c22);
-
     return c;
   }
 }

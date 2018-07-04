@@ -4,6 +4,50 @@ import java.util.function.BiFunction;
 
 public class MatrixOperations {
 
+  public static Matrix padBottom(Matrix a) {
+    Matrix result = new Matrix(a.getEffectiveRows() + 1, a.getEffectiveColumns());
+    copy(a, result);
+    for (int i = 0; i < result.getEffectiveColumns(); i++) {
+      result.set(result.getRowsEnd(), result.getColumnsBegin() + i, 0);
+    }
+    return result;
+  }
+
+  public static Matrix padRight(Matrix a) {
+    Matrix result = new Matrix(a.getEffectiveRows(), a.getEffectiveColumns() + 1);
+    copy(a, result);
+    for (int i = 0; i < result.getEffectiveRows(); i++) {
+      result.set(result.getRowsBegin() + i, result.getColumnsEnd(), 0);
+    }
+    return result;
+  }
+
+  public static Matrix padBottomAndRight(Matrix a) {
+    Matrix result = new Matrix(a.getEffectiveRows() + 1, a.getEffectiveColumns() + 1);
+    copy(a, result);
+    for (int i = 0; i < result.getEffectiveColumns(); i++) {
+      result.set(result.getRowsEnd(), result.getColumnsBegin() + i, 0);
+    }
+    for (int i = 0; i < result.getEffectiveRows(); i++) {
+      result.set(result.getRowsBegin() + i, result.getColumnsEnd(), 0);
+    }
+    return result;
+  }
+
+
+  public static void copy(Matrix from, Matrix to) {
+    int rows = from.getEffectiveRows();
+    int columns = from.getEffectiveColumns();
+
+    for (int i = 0; i < rows; i++) {
+      System.arraycopy(from.getData()[from.getRowsBegin() + i],
+                       from.getColumnsBegin(),
+                       to.getData()[to.getRowsBegin() + i],
+                       to.getColumnsBegin(),
+                       columns);
+    }
+  }
+
   public static Matrix add(Matrix a, Matrix b) {
     Matrix c = new Matrix(a.getEffectiveRows(), a.getEffectiveColumns());
     MatrixOperations.add(a, b, c);

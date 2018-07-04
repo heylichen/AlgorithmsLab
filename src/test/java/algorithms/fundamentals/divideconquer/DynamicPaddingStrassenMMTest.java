@@ -3,13 +3,16 @@ package algorithms.fundamentals.divideconquer;
 import algorithms.utils.MatrixGenerator;
 import org.junit.Test;
 
-public class RecursiveMatrixMultiplyTest extends AbstractMatrixMultiplyTest {
+/**
+ * Created by Chen Li on 2018/7/4.
+ */
+public class DynamicPaddingStrassenMMTest extends AbstractMatrixMultiplyTest {
 
   private MatrixGenerator matrixGenerator = MatrixGenerator.instance();
 
   @Override
   protected MatrixMultiply getInstance() {
-    return new RecursiveMatrixMultiply();
+    return new DynamicPaddingStrassenMM();
   }
 
   @Test
@@ -21,6 +24,14 @@ public class RecursiveMatrixMultiplyTest extends AbstractMatrixMultiplyTest {
     a = matrixGenerator.generate(31, 53);
     b = matrixGenerator.generate(53, 73);
     runAndVerify(getInstance(), a, b);
+  }
+
+  @Test
+  public void performanceTest() {
+    int size = 128;
+    DynamicPaddingStrassenMM instance = new DynamicPaddingStrassenMM();
+    instance.setCutoffSize(64);
+    performanceCompare(instance, new StandardMatrixMultiply(), size, size);
   }
 
 }
