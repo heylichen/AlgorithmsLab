@@ -36,14 +36,18 @@ public class MatrixOperations {
 
 
   public static void copy(Matrix from, Matrix to) {
+    copy(from, to, to.getRowsBegin(), to.getColumnsBegin());
+  }
+
+  public static void copy(Matrix from, Matrix to, int rowBegin, int columnBegin) {
     int rows = from.getEffectiveRows();
     int columns = from.getEffectiveColumns();
 
     for (int i = 0; i < rows; i++) {
       System.arraycopy(from.getData()[from.getRowsBegin() + i],
                        from.getColumnsBegin(),
-                       to.getData()[to.getRowsBegin() + i],
-                       to.getColumnsBegin(),
+                       to.getData()[rowBegin + i],
+                       columnBegin,
                        columns);
     }
   }
