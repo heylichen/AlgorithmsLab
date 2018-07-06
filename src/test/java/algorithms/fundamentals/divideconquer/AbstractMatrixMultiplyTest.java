@@ -56,7 +56,7 @@ public abstract class AbstractMatrixMultiplyTest {
 
     long aElapsed = runElapsedMs(a, ma, ma);
     long bElapsed = runElapsedMs(b, ma, ma);
-    log.info("performanceCompare, matrix size {} * {}, {} : {} , {} : {}",
+    log.info("matrix {} * {}, {} : {} , {} : {}",
              rows, columns, a.getClass().getSimpleName(),
              aElapsed, b.getClass().getSimpleName(), bElapsed);
   }
