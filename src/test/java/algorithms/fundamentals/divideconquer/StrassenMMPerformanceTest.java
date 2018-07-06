@@ -13,12 +13,25 @@ public class StrassenMMPerformanceTest extends AbstractMatrixMultiplyTest {
   }
 
   @Test
+  public void strassenVsWinograd() {
+    StrassenMatrixMultiply strassen = new StrassenMatrixMultiply();
+    strassen.setCutoffSize(64);
+    WinogradStrassenMM winograd = new WinogradStrassenMM();
+    winograd.setCutoffSize(64);
+
+    int size = 2048;
+
+    performanceCompare(winograd, strassen, size, size);
+    performanceCompare(strassen, winograd, size, size);
+  }
+
+  @Test
   public void performanceTest() {
     DynamicPeelingStrassenMM dynamicPeeling = new DynamicPeelingStrassenMM();
     dynamicPeeling.setCutoffSize(64);
     DynamicPaddingStrassenMM dynamicPadding = new DynamicPaddingStrassenMM();
     dynamicPadding.setCutoffSize(64);
-    int size = 1023;
+    int size = 1025;
     performanceCompare(dynamicPadding, dynamicPeeling, size, size);
     performanceCompare(dynamicPeeling, dynamicPadding, size, size);
 
