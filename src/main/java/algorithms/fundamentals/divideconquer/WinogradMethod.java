@@ -1,26 +1,18 @@
 package algorithms.fundamentals.divideconquer;
 
-import lombok.Getter;
-import lombok.Setter;
+public class WinogradMethod implements MatrixMultiplyDivideConquer {
 
-/**
- * standard strassen matrix multiply
- * for square matrices, a * b, size is M*M, where M is power of 2
- * use 7 instead of 8 multiply in each recursive call
- */
-public class WinogradStrassenMM implements MatrixMultiply {
-
-  @Getter
-  @Setter
-  private int cutoffSize = 1;
-  private StandardMatrixMultiply multiply = new StandardMatrixMultiply();
-
+  /**
+   * no cut off logic here
+   *
+   * @param a              matrix a
+   * @param b              matrix b
+   * @param matrixMultiply main matrix multiplication entry, should contain cutoff logic
+   * @return the multiplication result
+   */
   @Override
-  public Matrix multiply(Matrix a, Matrix b) {
+  public Matrix divideAndRecursiveCall(Matrix a, Matrix b, MatrixMultiply matrixMultiply) {
     int rowsOfA = a.getEffectiveRows();
-    if (rowsOfA <= cutoffSize) {
-      return multiply.multiply(a, b);
-    }
     int blockRowsOfA = rowsOfA / 2;
     int blockColumnsOfA = a.getEffectiveColumns() / 2;
     MatrixBlocks blocksOfA = a.split(blockRowsOfA, blockColumnsOfA);
@@ -38,7 +30,7 @@ public class WinogradStrassenMM implements MatrixMultiply {
     Matrix b22 = blocksOfB.getAt22();
 
     Matrix c = new Matrix(rowsOfA, b.getEffectiveColumns());
-    MatrixBlocks blocksOfC = c.split(blockRowsOfA,blockColumnsOfB);
+    MatrixBlocks blocksOfC = c.split(blockRowsOfA, blockColumnsOfB);
     Matrix c11 = blocksOfC.getAt11();
     Matrix c12 = blocksOfC.getAt12();
     Matrix c21 = blocksOfC.getAt21();
@@ -55,13 +47,13 @@ public class WinogradStrassenMM implements MatrixMultiply {
     Matrix t3 = MatrixOperations.subtract(b22, b12);
     Matrix t4 = MatrixOperations.subtract(b21, t2);
     //stage3
-    Matrix p1 = multiply(a11, b11);
-    Matrix p2 = multiply(a12, b21);
-    Matrix p3 = multiply(s1, t1);
-    Matrix p4 = multiply(s2, t2);
-    Matrix p5 = multiply(s3, t3);
-    Matrix p6 = multiply(s4, b22);
-    Matrix p7 = multiply(a22, t4);
+    Matrix p1 = matrixMultiply.multiply(a11, b11);
+    Matrix p2 = matrixMultiply.multiply(a12, b21);
+    Matrix p3 = matrixMultiply.multiply(s1, t1);
+    Matrix p4 = matrixMultiply.multiply(s2, t2);
+    Matrix p5 = matrixMultiply.multiply(s3, t3);
+    Matrix p6 = matrixMultiply.multiply(s4, b22);
+    Matrix p7 = matrixMultiply.multiply(a22, t4);
     //stage4
     /*
      U1 = P1 + P2;

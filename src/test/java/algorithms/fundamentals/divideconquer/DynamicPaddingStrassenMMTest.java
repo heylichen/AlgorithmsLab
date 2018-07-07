@@ -1,5 +1,7 @@
 package algorithms.fundamentals.divideconquer;
 
+import javax.annotation.Resource;
+
 import algorithms.utils.MatrixGenerator;
 import org.junit.Test;
 
@@ -8,11 +10,13 @@ import org.junit.Test;
  */
 public class DynamicPaddingStrassenMMTest extends AbstractMatrixMultiplyTest {
 
+  @Resource(name = "dynamicPaddingStrassenMM")
+  private MatrixMultiply dynamicPaddingStrassenMM;
   private MatrixGenerator matrixGenerator = MatrixGenerator.instance();
 
   @Override
   protected MatrixMultiply getInstance() {
-    return new DynamicPaddingStrassenMM();
+    return dynamicPaddingStrassenMM;
   }
 
   @Test
@@ -25,13 +29,4 @@ public class DynamicPaddingStrassenMMTest extends AbstractMatrixMultiplyTest {
     b = matrixGenerator.generate(53, 73);
     runAndVerify(getInstance(), a, b);
   }
-
-  @Test
-  public void performanceTest() {
-    int size = 128;
-    DynamicPaddingStrassenMM instance = new DynamicPaddingStrassenMM();
-    instance.setCutoffSize(64);
-    performanceCompare(instance, new StandardMatrixMultiply(), size, size);
-  }
-
 }

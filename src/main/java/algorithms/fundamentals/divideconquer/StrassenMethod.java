@@ -1,26 +1,21 @@
 package algorithms.fundamentals.divideconquer;
 
-import lombok.Getter;
-import lombok.Setter;
+public class StrassenMethod implements MatrixMultiplyDivideConquer {
 
-/**
- * standard strassen matrix multiply
- * for square matrices(or rectangular matrices), a * b, size is M*M, where M is power of 2
- * use 7 instead of 8 multiply in each recursive call
- */
-public class StrassenMatrixMultiply implements MatrixMultiply {
-
-  @Getter
-  @Setter
-  private int cutoffSize = 1;
-  private StandardMatrixMultiply multiply = new StandardMatrixMultiply();
-
+  /**
+   * no cut off logic here
+   *
+   * @param a              matrix a
+   * @param b              matrix b
+   * @param matrixMultiply main matrix multiplication entry, should contain cutoff logic
+   * @return the multiplication result
+   */
   @Override
-  public Matrix multiply(Matrix a, Matrix b) {
+  public Matrix divideAndRecursiveCall(Matrix a, Matrix b, MatrixMultiply matrixMultiply) {
+    //do not check cutoff here, check it before padding
     int rowsOfA = a.getEffectiveRows();
-    if (rowsOfA <= cutoffSize) {
-      return multiply.multiply(a, b);
-    }
+    //almost the same as standard strassen algorithm, except recursively calling to another method
+    //instead of itself
     int blockRowsOfA = rowsOfA / 2;
     int blockColumnsOfA = a.getEffectiveColumns() / 2;
     MatrixBlocks blocksOfA = a.split(blockRowsOfA, blockColumnsOfA);
@@ -38,7 +33,7 @@ public class StrassenMatrixMultiply implements MatrixMultiply {
     Matrix b22 = blocksOfB.getAt22();
 
     Matrix c = new Matrix(rowsOfA, b.getEffectiveColumns());
-    MatrixBlocks blocksOfC = c.split(blockRowsOfA,blockColumnsOfB);
+    MatrixBlocks blocksOfC = c.split(blockRowsOfA, blockColumnsOfB);
     Matrix c11 = blocksOfC.getAt11();
     Matrix c12 = blocksOfC.getAt12();
     Matrix c21 = blocksOfC.getAt21();
@@ -57,13 +52,13 @@ public class StrassenMatrixMultiply implements MatrixMultiply {
     Matrix s10 = MatrixOperations.add(b11, b12);
 
     //7 Ps
-    Matrix p1 = multiply(a11, s1);
-    Matrix p2 = multiply(s2, b22);
-    Matrix p3 = multiply(s3, b11);
-    Matrix p4 = multiply(a22, s4);
-    Matrix p5 = multiply(s5, s6);
-    Matrix p6 = multiply(s7, s8);
-    Matrix p7 = multiply(s9, s10);
+    Matrix p1 = matrixMultiply.multiply(a11, s1);
+    Matrix p2 = matrixMultiply.multiply(s2, b22);
+    Matrix p3 = matrixMultiply.multiply(s3, b11);
+    Matrix p4 = matrixMultiply.multiply(a22, s4);
+    Matrix p5 = matrixMultiply.multiply(s5, s6);
+    Matrix p6 = matrixMultiply.multiply(s7, s8);
+    Matrix p7 = matrixMultiply.multiply(s9, s10);
 
     //c11 = p5 + p4 - p2 + p6
     MatrixOperations.add(p5, p4, c11);
@@ -77,7 +72,6 @@ public class StrassenMatrixMultiply implements MatrixMultiply {
     MatrixOperations.add(p5, p1, c22);
     MatrixOperations.subtract(c22, p3, c22);
     MatrixOperations.subtract(c22, p7, c22);
-
     return c;
   }
 }

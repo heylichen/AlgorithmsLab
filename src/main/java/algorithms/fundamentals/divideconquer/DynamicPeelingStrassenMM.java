@@ -4,12 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class DynamicPeelingStrassenMM implements MatrixMultiply {
+@Getter
+@Setter
+public class DynamicPeelingStrassenMM extends CutoffMatrixMultiply {
 
-
-  @Getter
-  @Setter
-  private int cutoffSize = 1;//do not set default value as 1, or it would cause stack overflow because of padding
+  private MatrixMultiplyDivideConquer matrixMultiplyDivideConquer;
   private StandardMatrixMultiply multiply = new StandardMatrixMultiply();
 
   @Override
@@ -18,6 +17,7 @@ public class DynamicPeelingStrassenMM implements MatrixMultiply {
     int columnsA = a.getEffectiveColumns();
     int columnsB = b.getEffectiveColumns();
     //TODO : simple cutoff logic need fine tuning
+    int cutoffSize = getCutoffSize();
     if (rowsA <= cutoffSize || columnsA <= cutoffSize || columnsB <= cutoffSize) {
       return multiply.multiply(a, b);
     }
@@ -27,13 +27,13 @@ public class DynamicPeelingStrassenMM implements MatrixMultiply {
     boolean columnsBOdd = columnsB % 2 == 1;
     //all dimensions even, no padding needed
     if (!rowsAOdd && !columnsAOdd && !columnsBOdd) {
-      return doMultiply(a, b);
+      return matrixMultiplyDivideConquer.divideAndRecursiveCall(a, b, this);
     }
     //do peeling, use three bits to represent odd of three dimensions of M,N,P
     //1. 1 0 0
     if (rowsAOdd && !columnsAOdd && !columnsBOdd) {
       Pair<Matrix, Matrix> partsOfA = verticalSplit(a);
-      Matrix upperC = doMultiply(partsOfA.getLeft(), b);
+      Matrix upperC = matrixMultiplyDivideConquer.divideAndRecursiveCall(partsOfA.getLeft(), b, this);
       Matrix bottomC = multiply.multiply(partsOfA.getRight(), b);
       Matrix c = new Matrix(rowsA, columnsB);
       MatrixOperations.copy(upperC, c, c.getRowsBegin(), c.getColumnsBegin());
@@ -45,7 +45,7 @@ public class DynamicPeelingStrassenMM implements MatrixMultiply {
       Pair<Matrix, Matrix> partsOfA = horizontalSplit(a);
       Pair<Matrix, Matrix> partsOfB = verticalSplit(b);
 
-      Matrix c1 = doMultiply(partsOfA.getLeft(), partsOfB.getLeft());
+      Matrix c1 = matrixMultiplyDivideConquer.divideAndRecursiveCall(partsOfA.getLeft(), partsOfB.getLeft(), this);
       Matrix c2 = multiply.multiply(partsOfA.getRight(), partsOfB.getRight());
       MatrixOperations.add(c1, c2, c2);
       return c2;
@@ -54,7 +54,7 @@ public class DynamicPeelingStrassenMM implements MatrixMultiply {
     if (!rowsAOdd && !columnsAOdd && columnsBOdd) {
       Pair<Matrix, Matrix> partsOfB = horizontalSplit(b);
       Matrix c = new Matrix(rowsA, columnsB);
-      Matrix leftC = doMultiply(a, partsOfB.getLeft());
+      Matrix leftC = matrixMultiplyDivideConquer.divideAndRecursiveCall(a, partsOfB.getLeft(), this);
       Matrix rightC = multiply.multiply(a, partsOfB.getRight());
       MatrixOperations.copy(leftC, c, c.getRowsBegin(), c.getColumnsBegin());
       MatrixOperations.copy(rightC, c, c.getRowsEnd(), c.getColumnsEnd());
@@ -65,7 +65,7 @@ public class DynamicPeelingStrassenMM implements MatrixMultiply {
     if (rowsAOdd && columnsAOdd && !columnsBOdd) {
       MatrixBlocks blocksOfA = split(a);
       Pair<Matrix, Matrix> partsOfB = verticalSplit(b);
-      Matrix t1 = doMultiply(blocksOfA.getAt11(), partsOfB.getLeft());
+      Matrix t1 = matrixMultiplyDivideConquer.divideAndRecursiveCall(blocksOfA.getAt11(), partsOfB.getLeft(), this);
       Matrix t2 = multiply.multiply(blocksOfA.getAt12(), partsOfB.getRight());
       MatrixOperations.add(t1, t2, t2);
       Matrix t3 = multiply.multiply(blocksOfA.getAt21(), partsOfB.getLeft());
@@ -81,7 +81,7 @@ public class DynamicPeelingStrassenMM implements MatrixMultiply {
     if (!rowsAOdd && columnsAOdd && columnsBOdd) {
       Pair<Matrix, Matrix> partsOfA = horizontalSplit(b);
       MatrixBlocks blocksOfB = split(b);
-      Matrix t1 = doMultiply(partsOfA.getLeft(), blocksOfB.getAt11());
+      Matrix t1 = matrixMultiplyDivideConquer.divideAndRecursiveCall(partsOfA.getLeft(), blocksOfB.getAt11(), this);
       Matrix t2 = multiply.multiply(partsOfA.getRight(), blocksOfB.getAt21());
       MatrixOperations.add(t1, t2, t2);
       Matrix t3 = multiply.multiply(partsOfA.getLeft(), blocksOfB.getAt12());
@@ -98,7 +98,7 @@ public class DynamicPeelingStrassenMM implements MatrixMultiply {
     if (rowsAOdd && !columnsAOdd && columnsBOdd) {
       Pair<Matrix, Matrix> partsOfA = verticalSplit(a);
       Pair<Matrix, Matrix> partsOfB = horizontalSplit(b);
-      Matrix c11 = doMultiply(partsOfA.getLeft(), partsOfB.getLeft());
+      Matrix c11 = matrixMultiplyDivideConquer.divideAndRecursiveCall(partsOfA.getLeft(), partsOfB.getLeft(), this);
       Matrix c12 = multiply.multiply(partsOfA.getLeft(), partsOfB.getRight());
       Matrix c21 = multiply.multiply(partsOfA.getRight(), partsOfB.getLeft());
       Matrix c22 = multiply.multiply(partsOfA.getRight(), partsOfB.getRight());
@@ -123,7 +123,7 @@ public class DynamicPeelingStrassenMM implements MatrixMultiply {
 
       MatrixBlocks blocksOfA = split(a);
       MatrixBlocks blocksOfB = split(b);
-      Matrix t1 = doMultiply(blocksOfA.getAt11(), blocksOfB.getAt11());
+      Matrix t1 = matrixMultiplyDivideConquer.divideAndRecursiveCall(blocksOfA.getAt11(), blocksOfB.getAt11(), this);
       Matrix t2 = multiply.multiply(blocksOfA.getAt12(), blocksOfB.getAt21());
       MatrixOperations.add(t1, t2, c11);
 
@@ -174,70 +174,5 @@ public class DynamicPeelingStrassenMM implements MatrixMultiply {
     Matrix a22 = matrix.submatrix(matrix.getRowsEnd(), matrix.getRowsEnd(),
                                   matrix.getColumnsEnd(), matrix.getColumnsEnd());
     return new MatrixBlocks(a11, a12, a21, a22);
-  }
-
-
-  private Matrix doMultiply(Matrix a, Matrix b) {
-    //do not check cutoff here, check it before padding
-    int rowsOfA = a.getEffectiveRows();
-    //almost the same as standard strassen algorithm, except recursively calling to another method
-    //instead of itself
-    int blockRowsOfA = rowsOfA / 2;
-    int blockColumnsOfA = a.getEffectiveColumns() / 2;
-    MatrixBlocks blocksOfA = a.split(blockRowsOfA, blockColumnsOfA);
-    Matrix a11 = blocksOfA.getAt11();
-    Matrix a12 = blocksOfA.getAt12();
-    Matrix a21 = blocksOfA.getAt21();
-    Matrix a22 = blocksOfA.getAt22();
-
-    int blockRowsOfB = b.getEffectiveRows() / 2;
-    int blockColumnsOfB = b.getEffectiveColumns() / 2;
-    MatrixBlocks blocksOfB = b.split(blockRowsOfB, blockColumnsOfB);
-    Matrix b11 = blocksOfB.getAt11();
-    Matrix b12 = blocksOfB.getAt12();
-    Matrix b21 = blocksOfB.getAt21();
-    Matrix b22 = blocksOfB.getAt22();
-
-    Matrix c = new Matrix(rowsOfA, b.getEffectiveColumns());
-    MatrixBlocks blocksOfC = c.split(blockRowsOfA, blockColumnsOfB);
-    Matrix c11 = blocksOfC.getAt11();
-    Matrix c12 = blocksOfC.getAt12();
-    Matrix c21 = blocksOfC.getAt21();
-    Matrix c22 = blocksOfC.getAt22();
-
-    //10 Ss
-    Matrix s1 = MatrixOperations.subtract(b12, b22);
-    Matrix s2 = MatrixOperations.add(a11, a12);
-    Matrix s3 = MatrixOperations.add(a21, a22);
-    Matrix s4 = MatrixOperations.subtract(b21, b11);
-    Matrix s5 = MatrixOperations.add(a11, a22);
-    Matrix s6 = MatrixOperations.add(b11, b22);
-    Matrix s7 = MatrixOperations.subtract(a12, a22);
-    Matrix s8 = MatrixOperations.add(b21, b22);
-    Matrix s9 = MatrixOperations.subtract(a11, a21);
-    Matrix s10 = MatrixOperations.add(b11, b12);
-
-    //7 Ps
-    Matrix p1 = multiply(a11, s1);
-    Matrix p2 = multiply(s2, b22);
-    Matrix p3 = multiply(s3, b11);
-    Matrix p4 = multiply(a22, s4);
-    Matrix p5 = multiply(s5, s6);
-    Matrix p6 = multiply(s7, s8);
-    Matrix p7 = multiply(s9, s10);
-
-    //c11 = p5 + p4 - p2 + p6
-    MatrixOperations.add(p5, p4, c11);
-    MatrixOperations.subtract(c11, p2, c11);
-    MatrixOperations.add(c11, p6, c11);
-    //c12 = p1 + p2
-    MatrixOperations.add(p1, p2, c12);
-    //c21 = p3 + p4
-    MatrixOperations.add(p3, p4, c21);
-    //c22 = p5 + p1 - p3 - p7
-    MatrixOperations.add(p5, p1, c22);
-    MatrixOperations.subtract(c22, p3, c22);
-    MatrixOperations.subtract(c22, p7, c22);
-    return c;
   }
 }

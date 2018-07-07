@@ -2,19 +2,20 @@ package algorithms.fundamentals.divideconquer;
 
 import java.util.Objects;
 
+import algorithms.context.AbstractContextTest;
 import algorithms.utils.MatrixGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 
 @Slf4j
-public abstract class AbstractMatrixMultiplyTest {
+public abstract class AbstractMatrixMultiplyTest extends AbstractContextTest {
 
   protected MatrixLoader matrixLoader = new MatrixLoader();
   private StandardMatrixMultiply standardMatrixMultiply = new StandardMatrixMultiply();
-  private MatrixGenerator matrixGenerator = MatrixGenerator.instance();
+  private static MatrixGenerator matrixGenerator = MatrixGenerator.instance();
 
-  protected abstract MatrixMultiply getInstance();
+  protected abstract <T extends MatrixMultiply> T getInstance();
 
   @Test
   public void smallSquareMatrixTest() {
@@ -51,18 +52,17 @@ public abstract class AbstractMatrixMultiplyTest {
     }
   }
 
-  protected void performanceCompare(MatrixMultiply a, MatrixMultiply b, int rows, int columns) {
+  public static void performanceCompare(MatrixMultiply a, MatrixMultiply b, int rows, int columns) {
     Matrix ma = matrixGenerator.generate(rows, columns);
 
     long aElapsed = runElapsedMs(a, ma, ma);
     long bElapsed = runElapsedMs(b, ma, ma);
     log.info("matrix {} * {}, {} : {} , {} : {}",
-             rows, columns, a.getClass().getSimpleName(),
-             aElapsed, b.getClass().getSimpleName(), bElapsed);
+             rows, columns, a.toString(), aElapsed, b.toString(), bElapsed);
   }
 
 
-  protected long runElapsedMs(MatrixMultiply matrixMultiply, Matrix a, Matrix b) {
+  protected static long runElapsedMs(MatrixMultiply matrixMultiply, Matrix a, Matrix b) {
     long start = System.currentTimeMillis();
     matrixMultiply.multiply(a, b);
     return System.currentTimeMillis() - start;
@@ -74,7 +74,7 @@ public abstract class AbstractMatrixMultiplyTest {
     Matrix expected = standardMatrixMultiply.multiply(a, b);
     Assert.assertTrue("", matrixEquals(expected, result));
   }
-  
+
 
   protected boolean matrixEquals(Matrix a, Matrix b) {
     int rows = a.getEffectiveRows();
