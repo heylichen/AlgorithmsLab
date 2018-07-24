@@ -78,7 +78,5 @@ public class BestBinarySearchTree {
       this.cost = cost;
       this.splitIndexTable = splitIndexTable;
     }
-
-
   }
 }
