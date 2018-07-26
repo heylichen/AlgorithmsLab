@@ -1,4 +1,4 @@
-package algorithms.dynamicprog;
+package algorithms.sorting.heap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +13,15 @@ public class FibonacciHeap<K extends Comparable<K>> {
   private int size = 0;
   private FibonacciHeapNode<K> rootTree;
   private FibonacciHeapNode<K> minRoot;
+  private K infinityMin;
 
+  public FibonacciHeap(K infinityMin) {
+    this.infinityMin = infinityMin;
+  }
 
-  public void insert(K key) {
+  public FibonacciHeapNode<K> insert(K key) {
     if (key == null) {
-      return;
+      return null;
     }
     FibonacciHeapNode<K> node = new FibonacciHeapNode<>(key);
     this.size++;
@@ -25,7 +29,7 @@ public class FibonacciHeap<K extends Comparable<K>> {
     if (minRoot == null) {
       rootTree = node;
       this.minRoot = node;
-      return;
+      return node;
     }
 
     rootTree.merge(node);
@@ -33,6 +37,7 @@ public class FibonacciHeap<K extends Comparable<K>> {
     if (node.compareTo(minRoot) < 0) {
       minRoot = node;
     }
+    return node;
   }
 
   public boolean isEmpty() {
@@ -43,7 +48,7 @@ public class FibonacciHeap<K extends Comparable<K>> {
     if (another == null || another.isEmpty()) {
       return this;
     }
-    FibonacciHeap h = new FibonacciHeap();
+    FibonacciHeap h = new FibonacciHeap(this.infinityMin);
     h.size = this.size + another.size;
     h.rootTree = this.rootTree;
     h.rootTree.merge(another.rootTree);
@@ -55,6 +60,59 @@ public class FibonacciHeap<K extends Comparable<K>> {
     return h;
   }
 
+  public void decreaseKey(FibonacciHeapNode<K> x, K toKey) {
+    int delta = toKey.compareTo(x.getKey());
+    if (toKey == null || delta == 0) {
+      return;
+    }
+    if (delta > 0) {
+      throw new IllegalArgumentException("toKey must not be greater than key");
+    }
+    x.setKey(toKey);
+    FibonacciHeapNode<K> y = x.getParent();
+    if (y != null && x.compareTo(y) < 0) {
+      cut(x, y);
+      cascadeCut(y);
+    }
+    if (x.compareTo(minRoot) < 0) {
+      this.minRoot = x;
+    }
+  }
+
+  public void deleteNode(FibonacciHeapNode<K> x) {
+    decreaseKey(x, this.infinityMin);
+    deleteMin();
+  }
+
+  /**
+   * remove x from the child list of y, decrementing y:degree
+   * add x to the root list of H
+   */
+  private void cut(FibonacciHeapNode<K> x, FibonacciHeapNode<K> y) {
+    y.setChild(x.getLeft());
+    x.deleteMySelf();
+    x.setLeft(x);
+    x.setRight(x);
+    x.setParent(null);
+    x.setMarked(false);
+    rootTree.merge(x);
+    y.addDegree(-1);
+  }
+
+  private void cascadeCut(FibonacciHeapNode<K> y) {
+    FibonacciHeapNode<K> z = y.getParent();
+    if (z == null) {
+      return;
+    }
+    if (!y.isMarked()) {
+      y.setMarked(true);
+    } else {
+      cut(y, z);
+      cascadeCut(z);
+    }
+  }
+
+
   public FibonacciHeapNode<K> deleteMin() {
     FibonacciHeapNode result = minRoot;
     if (result == null) {
@@ -63,6 +121,7 @@ public class FibonacciHeap<K extends Comparable<K>> {
     FibonacciHeapNode<K> child = result.getChild();
     if (child != null) {
       for (FibonacciHeapNode fibonacciHeapNode : child.siblings()) {
+        fibonacciHeapNode.setParent(null);
         rootTree.merge(fibonacciHeapNode);
       }
     }
@@ -123,6 +182,7 @@ public class FibonacciHeap<K extends Comparable<K>> {
     y.deleteMySelf();
     y.setLeft(y);
     y.setRight(y);
+    y.setParent(x);
     if (x.getChild() == null) {
       x.setChild(y);
       x.setDegree(1);

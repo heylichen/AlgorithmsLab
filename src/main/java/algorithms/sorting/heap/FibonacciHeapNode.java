@@ -1,4 +1,4 @@
-package algorithms.dynamicprog;
+package algorithms.sorting.heap;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -25,6 +25,8 @@ public class FibonacciHeapNode<K extends Comparable<K>> {
     this.key = key;
     this.left = this;
     this.right = this;
+    this.parent = null;
+    this.child = null;
   }
 
   public boolean noSibling() {
@@ -106,6 +108,10 @@ public class FibonacciHeapNode<K extends Comparable<K>> {
     rightOfA.left = b;
     b.left = a;
     b.right = rightOfA;
+  }
+
+  public void addDegree(int delta) {
+    this.degree += delta;
   }
 
   public int compareTo(FibonacciHeapNode<K> another) {
