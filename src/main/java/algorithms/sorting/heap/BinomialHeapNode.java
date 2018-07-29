@@ -1,5 +1,8 @@
 package algorithms.sorting.heap;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -48,5 +51,15 @@ public class BinomialHeapNode<K extends Comparable<K>> {
 
   public void addDegree(int delta) {
     this.degree += delta;
+  }
+
+  public Collection<BinomialHeapNode<K>> siblings(){
+    Collection<BinomialHeapNode<K>> set = new HashSet<>();
+    BinomialHeapNode<K> node = this;
+    while (node != null) {
+      set.add(node);
+      node = node.getRightSibling();
+    }
+    return set;
   }
 }
