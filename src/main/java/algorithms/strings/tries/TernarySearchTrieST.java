@@ -4,19 +4,16 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Created by Chen Li on 2018/4/8.
  */
 public class TernarySearchTrieST<V> implements StringST<V> {
 
-  private Node<V> root;
+  private TSTNode<V> root;
   private int size = 0;
 
   public V get(String key) {
-    Node<V> node = getNode(root, key, 0);
+    TSTNode<V> node = getNode(root, key, 0);
     if (node != null) {
       return node.getValue();
     } else {
@@ -24,7 +21,7 @@ public class TernarySearchTrieST<V> implements StringST<V> {
     }
   }
 
-  private Node<V> getNode(Node<V> node, String key, int d) {
+  private TSTNode<V> getNode(TSTNode<V> node, String key, int d) {
     if (node == null || d == key.length()) {
       return null;
     }
@@ -45,20 +42,20 @@ public class TernarySearchTrieST<V> implements StringST<V> {
     root = putNode(root, key, 0, value);
   }
 
-  private Node<V> putNode(Node<V> node, String key, int d, V value) {
+  private TSTNode<V> putNode(TSTNode<V> node, String key, int d, V value) {
     char c = key.charAt(d);
     boolean add = false;
     if (node == null) {
       add = true;
-      node = new Node<>(c);
+      node = new TSTNode<>(c);
     }
     int compare = c - node.getCharacter();
     if (compare > 0) {
-      Node<V> child = node.getGreater();
+      TSTNode<V> child = node.getGreater();
       child = putNode(child, key, d, value);
       node.setGreater(child);
     } else if (compare < 0) {
-      Node<V> child = node.getLess();
+      TSTNode<V> child = node.getLess();
       child = putNode(child, key, d, value);
       node.setLess(child);
     } else if (d == key.length() - 1) {
@@ -68,7 +65,7 @@ public class TernarySearchTrieST<V> implements StringST<V> {
       }
       return node;
     } else {
-      Node<V> child = node.getEqual();
+      TSTNode<V> child = node.getEqual();
       child = putNode(child, key, d + 1, value);
       node.setEqual(child);
     }
@@ -86,7 +83,7 @@ public class TernarySearchTrieST<V> implements StringST<V> {
       return q;
     }
 
-    Node<V> node = getNode(root, s, 0);
+    TSTNode<V> node = getNode(root, s, 0);
 
     if (node == null) {
       return q;
@@ -94,12 +91,12 @@ public class TernarySearchTrieST<V> implements StringST<V> {
     if (node.getValue() != null) {
       q.add(s);
     }
-    Node<V> fromNode = node.getEqual();
+    TSTNode<V> fromNode = node.getEqual();
     collect(fromNode, s, q);
     return q;
   }
 
-  private void collect(Node<V> node, String pre, Queue<String> queue) {
+  private void collect(TSTNode<V> node, String pre, Queue<String> queue) {
     if (node == null) {
       return;
     }
@@ -119,7 +116,7 @@ public class TernarySearchTrieST<V> implements StringST<V> {
     return s.substring(0, index);
   }
 
-  private int search(Node<V> node, String key, int d, int length) {
+  private int search(TSTNode<V> node, String key, int d, int length) {
     if (node == null) {
       return length;
     }
@@ -149,7 +146,7 @@ public class TernarySearchTrieST<V> implements StringST<V> {
     return q;
   }
 
-  private void collect(Node<V> node, String pre, String pattern, Queue<String> queue) {
+  private void collect(TSTNode<V> node, String pre, String pattern, Queue<String> queue) {
     if (node == null) {
       return;
     }
@@ -184,22 +181,22 @@ public class TernarySearchTrieST<V> implements StringST<V> {
     root = deleteNode(root, key, 0);
   }
 
-  private Node<V> deleteNode(Node<V> node, String key, int d) {
+  private TSTNode<V> deleteNode(TSTNode<V> node, String key, int d) {
     if (node == null) {
       return null;
     }
     int compare = key.charAt(d) - node.getCharacter();
 
     if (compare < 0) {
-      Node<V> child = node.getLess();
+      TSTNode<V> child = node.getLess();
       child = deleteNode(child, key, d);
       node.setLess(child);
     } else if (compare > 0) {
-      Node<V> child = node.getGreater();
+      TSTNode<V> child = node.getGreater();
       child = deleteNode(child, key, d);
       node.setGreater(child);
     } else if (d < key.length() - 1) {
-      Node<V> child = node.getEqual();
+      TSTNode<V> child = node.getEqual();
       child = deleteNode(child, key, d + 1);
       node.setEqual(child);
     } else {
@@ -214,8 +211,8 @@ public class TernarySearchTrieST<V> implements StringST<V> {
       boolean hasGreater = node.getGreater() != null;
 
       if (hasLess && hasGreater) {
-        Node<V> less = node.getLess();
-        Node<V> great = node.getGreater();
+        TSTNode<V> less = node.getLess();
+        TSTNode<V> great = node.getGreater();
         reorganize(less, great);
         return less;
       } else if (hasLess) {
@@ -229,9 +226,9 @@ public class TernarySearchTrieST<V> implements StringST<V> {
     return checkNode(node);
   }
 
-  private void reorganize(Node<V> less, Node<V> great) {
+  private void reorganize(TSTNode<V> less, TSTNode<V> great) {
     char greatChar = great.getCharacter();
-    Node<V> current = less;
+    TSTNode<V> current = less;
     while (true) {
       if (greatChar > current.getCharacter()) {
         if (current.getGreater() == null) {
@@ -251,7 +248,7 @@ public class TernarySearchTrieST<V> implements StringST<V> {
     }
   }
 
-  private Node<V> checkNode(Node<V> node) {
+  private TSTNode<V> checkNode(TSTNode<V> node) {
     if (node.getValue() != null || node.getLess() != null || node.getGreater() != null || node.getEqual() != null) {
       return node;
     } else {
@@ -263,18 +260,4 @@ public class TernarySearchTrieST<V> implements StringST<V> {
     return get(key) != null;
   }
 
-  @Getter
-  @Setter
-  private static class Node<V> {
-
-    private V value;
-    private char character;
-    private Node<V> less;
-    private Node<V> equal;
-    private Node<V> greater;
-
-    public Node(char character) {
-      this.character = character;
-    }
-  }
 }

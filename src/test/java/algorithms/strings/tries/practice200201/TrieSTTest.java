@@ -29,6 +29,12 @@ public class TrieSTTest   {
     System.out.println(trieST.get("shellsa"));
 
 
+
+  }
+
+  @Test
+  public void testKeys() {
+    TrieST<Integer> trieST = newSt();
     for (String key : trieST.keys()) {
       System.out.println(key);
     }
