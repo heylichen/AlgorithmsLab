@@ -43,7 +43,7 @@ public class KMPSearcher implements SubstringSearcher {
     int patternLength = pattern.length();
     int radix = getRadix();
     int[][] dfa = new int[radix][patternLength];
-    int x = 0;
+    int x = 0;//restart state
     dfa[toIndex(pattern.charAt(0))][0] = 1;
     for (int i = 1; i < patternLength; i++) {
       char patternChar = pattern.charAt(i);

@@ -47,7 +47,7 @@ public class GeneralSortCompareTest extends AbstractSortCompareTest {
   @Test
   public void mergeVsCopyOnceTest() throws Exception {
     SortCompareContext context = randomSortCompareContext.load(new CopyOnceMergeSort(), new MergeSort(),
-                                                               SortSizeConfigs.slow1SizeAndTimesList
+                                                               SortSizeConfigs.middleSizeAndTimesList
     );
     compareTest(context);
   }
@@ -75,7 +75,7 @@ public class GeneralSortCompareTest extends AbstractSortCompareTest {
     QuickSortFactory factory = new QuickSortFactory();
 
     SortCompareContext context = randomSortCompareContext.load(new CopyOnceMergeSort(), factory.median3QuickSort(),
-                                                               SortSizeConfigs.slow1SizeAndTimesList
+                                                               SortSizeConfigs.largeSizeConfig
     );
     compareTest(context);
   }
