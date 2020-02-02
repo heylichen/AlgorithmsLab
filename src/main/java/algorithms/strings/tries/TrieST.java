@@ -14,13 +14,13 @@ import lombok.Setter;
 @Setter
 public class TrieST<V> implements StringST<V> {
 
-  private Node<V> root;
+  private TrieNode<V> root;
   private int size = 0;
   private Alphabet alphabet;
 
   @Override
   public V get(String key) {
-    Node<V> node = getNode(root, key, 0);
+    TrieNode<V> node = getNode(root, key, 0);
     if (node != null) {
       return node.getValue();
     } else {
@@ -28,7 +28,7 @@ public class TrieST<V> implements StringST<V> {
     }
   }
 
-  private Node<V> getNode(Node<V> node, String key, int d) {
+  private TrieNode<V> getNode(TrieNode<V> node, String key, int d) {
     if (node == null) {
       return null;
     }
@@ -44,10 +44,10 @@ public class TrieST<V> implements StringST<V> {
     root = putNode(root, key, 0, value);
   }
 
-  private Node<V> putNode(Node<V> node, String key, int d, V value) {
+  private TrieNode<V> putNode(TrieNode<V> node, String key, int d, V value) {
     boolean add = false;
     if (node == null) {
-      node = new Node<>(getRadix());
+      node = new TrieNode<>(getRadix());
       add = true;
     }
     if (d == key.length()) {
@@ -58,7 +58,7 @@ public class TrieST<V> implements StringST<V> {
       return node;
     }
     int index = toIndex(key, d);
-    Node<V> child = putNode(node.next(index), key, d + 1, value);
+    TrieNode<V> child = putNode(node.next(index), key, d + 1, value);
     node.setNext(index, child);
     return node;
   }
@@ -77,7 +77,7 @@ public class TrieST<V> implements StringST<V> {
     root = doDelete(root, key, 0);
   }
 
-  private Node<V> doDelete(Node<V> node, String key, int d) {
+  private TrieNode<V> doDelete(TrieNode<V> node, String key, int d) {
     if (node == null) {
       return null;
     }
@@ -88,22 +88,19 @@ public class TrieST<V> implements StringST<V> {
       node.setValue(null);
     } else {
       int index = toIndex(key, d);
-      Node<V> child = node.next(index);
+      TrieNode<V> child = node.next(index);
       child = doDelete(child, key, d + 1);
       node.setNext(index, child);
     }
     return checkNode(node);
   }
 
-  private Node<V> checkNode(Node node) {
+  private TrieNode<V> checkNode(TrieNode node) {
     if (node.getValue() != null) {
       return node;
     }
-    if (node.next == null || node.next.length == 0) {
-      return null;
-    }
 
-    for (Node node1 : node.next) {
+    for (TrieNode node1 : node.getNext()) {
       if (node1 != null) {
         return node;
       }
@@ -132,7 +129,7 @@ public class TrieST<V> implements StringST<V> {
     return s.substring(0, index);
   }
 
-  private int search(Node<V> node, String key, int d, int length) {
+  private int search(TrieNode<V> node, String key, int d, int length) {
     if (node == null) {
       return length;
     }
@@ -153,7 +150,7 @@ public class TrieST<V> implements StringST<V> {
     return q;
   }
 
-  private void collect(Node<V> node, String pre, Queue<String> queue) {
+  private void collect(TrieNode<V> node, String pre, Queue<String> queue) {
     if (node == null) {
       return;
     }
@@ -172,7 +169,7 @@ public class TrieST<V> implements StringST<V> {
     return q;
   }
 
-  private void collect(Node<V> node, String pre, String pattern, Queue<String> queue) {
+  private void collect(TrieNode<V> node, String pre, String pattern, Queue<String> queue) {
     if (node == null) {
       return;
     }
@@ -201,23 +198,4 @@ public class TrieST<V> implements StringST<V> {
     return alphabet.toChar(i);
   }
 
-  @Getter
-  @Setter
-  private static class Node<V> {
-
-    private V value;
-    private Node<V>[] next;
-
-    public Node(int r) {
-      next = new Node[r];
-    }
-
-    public Node<V> next(int index) {
-      return next[index];
-    }
-
-    public void setNext(int index, Node<V> node) {
-      next[index] = node;
-    }
-  }
 }
