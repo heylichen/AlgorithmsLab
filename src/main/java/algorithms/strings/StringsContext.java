@@ -19,6 +19,12 @@ public class StringsContext {
   }
 
   @Bean
+  public Alphabet uppercaseAlphabet() {
+    return EnumerateAlphabet.builder().appendCharRange(UPPER_CASE).build();
+  }
+
+
+  @Bean
   public Alphabet abcAlphabet() {
     return EnumerateAlphabet.builder().appendString("ABC").build();
   }

@@ -5,7 +5,10 @@
     <groupId>heylichen</groupId>
     <artifactId>algorithmslab</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>practice</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <name>AlgorithmsLab</name>
     <url>http://maven.apache.org</url>
