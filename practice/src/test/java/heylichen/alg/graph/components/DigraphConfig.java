@@ -13,13 +13,20 @@ public class DigraphConfig {
 
     @Bean
     public Digraph tinyDirectedGraph() {
-        GraphSource<Edge> gs = new ClasspathGraphSource("alg/graph/digraph/tinyDG.txt");
+        return createSimpleDigraph("alg/graph/digraph/tinyDG.txt");
+    }
+
+    @Bean
+    public Digraph tinyDAG() {
+        return createSimpleDigraph("alg/graph/digraph/tinyDAG.txt");
+    }
+
+    private Digraph createSimpleDigraph(String path) {
+        GraphSource<Edge> gs = new ClasspathGraphSource(path);
         SimpleDigraph simpleDigraph = new SimpleDigraph(gs.getVertexCount());
         for (Edge edge : gs.getEdges()) {
             simpleDigraph.addEdge(edge.getLeft(), edge.getRight());
         }
         return simpleDigraph;
     }
-
-
 }
