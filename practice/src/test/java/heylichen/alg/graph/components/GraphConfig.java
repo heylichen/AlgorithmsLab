@@ -4,20 +4,23 @@ import heylichen.alg.graph.structure.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.IOException;
+
 @Configuration
 public class GraphConfig {
 
     @Bean
-    public Graph tinyUndirectedGraph() {
-        GraphSource<Edge> gs = new ClasspathGraphSource("/alg/graph/tinyG.txt");
+    public Graph tinyUndirectedGraph() throws IOException {
+        GraphSource<Edge> gs = ClasspathGraphSource.create("/alg/graph/tinyG.txt");
         return new UndirectedGraph(gs);
     }
 
     @Bean
-    public Graph mediumUndirectedGraph() {
-        GraphSource<Edge> gs = new ClasspathGraphSource("alg/graph/mediumG.txt");
+    public Graph mediumUndirectedGraph() throws IOException {
+        GraphSource<Edge> gs = ClasspathGraphSource.create("alg/graph/mediumG.txt");
         return new UndirectedGraph(gs);
     }
+
 
     @Bean
     public SymbolGraph routesSymbolGraph() {
