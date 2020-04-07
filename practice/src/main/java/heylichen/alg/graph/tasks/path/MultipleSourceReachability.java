@@ -1,8 +1,10 @@
 package heylichen.alg.graph.tasks.path;
 
+import java.util.Collection;
+
 public interface MultipleSourceReachability {
 
     boolean marked(int v);
 
-    Iterable<Integer> getReachableVertices();
+    Collection<Integer> getReachableVertices();
 }

@@ -3,16 +3,16 @@ package heylichen.alg.graph.tasks.path;
 import heylichen.alg.graph.structure.Graph;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 public class DFSMultipleSourceReachability implements MultipleSourceReachability {
     private Graph graph;
-    private Set<Integer> sourceVertices;
+    private Collection<Integer> sourceVertices;
     private boolean[] marked;
     private List<Integer> reachableVertices;
 
-    public DFSMultipleSourceReachability(Graph graph, Set<Integer> sourceVertices) {
+    public DFSMultipleSourceReachability(Graph graph, Collection<Integer> sourceVertices) {
         this.graph = graph;
         this.sourceVertices = sourceVertices;
         init();
@@ -45,7 +45,7 @@ public class DFSMultipleSourceReachability implements MultipleSourceReachability
     }
 
     @Override
-    public Iterable<Integer> getReachableVertices() {
+    public Collection<Integer> getReachableVertices() {
         return reachableVertices;
     }
 }
