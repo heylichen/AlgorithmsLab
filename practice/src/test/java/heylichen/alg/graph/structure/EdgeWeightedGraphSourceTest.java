@@ -1,7 +1,6 @@
 package heylichen.alg.graph.structure;
 
 import heylichen.alg.graph.structure.weighted.EdgeWeightedGraph;
-import heylichen.alg.graph.structure.weighted.WeightedEdge;
 import org.junit.Test;
 
 import java.io.IOException;
