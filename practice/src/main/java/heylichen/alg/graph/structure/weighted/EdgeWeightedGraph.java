@@ -1,6 +1,5 @@
 package heylichen.alg.graph.structure.weighted;
 
-import heylichen.alg.graph.structure.Edge;
 import heylichen.alg.graph.structure.GraphSource;
 
 import java.util.ArrayList;
