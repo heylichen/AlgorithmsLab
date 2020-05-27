@@ -15,4 +15,17 @@ public class EWGConfig {
         return new EdgeWeightedDigraph(gs);
     }
 
+    @Bean
+    public EdgeWeightedDigraph mediumEWD() throws IOException {
+        EdgeWeightedDigraphSource gs = EdgeWeightedDigraphSource.create("alg/graph/ewd/mediumEWD.txt");
+        return new EdgeWeightedDigraph(gs);
+    }
+
+
+    @Bean
+    public EdgeWeightedDigraph ewd1000() throws IOException {
+        EdgeWeightedDigraphSource gs = EdgeWeightedDigraphSource.create("alg/graph/ewd/1000EWD.txt");
+        return new EdgeWeightedDigraph(gs);
+    }
+
 }

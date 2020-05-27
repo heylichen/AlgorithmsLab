@@ -5,7 +5,7 @@ import heylichen.test.AppTestContext;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class SimpleSPTest extends AppTestContext {
+public class IndexedPqSPTest extends AppTestContext {
     @Autowired
     private EdgeWeightedDigraph tinyEWD;
     @Autowired
@@ -15,11 +15,10 @@ public class SimpleSPTest extends AppTestContext {
 
     @Test
     public void name() {
-        SimpleSP simpleSP = new SimpleSP(tinyEWD, 0);
+        IndexedPqSP simpleSP = new IndexedPqSP(tinyEWD, 0);
         simpleSP.init();
         System.out.println(simpleSP.distTo(6));
     }
-
 
     @Test
     public void testMedium() {
@@ -30,7 +29,7 @@ public class SimpleSPTest extends AppTestContext {
 
     @Test
     public void testewd1000() {
-        IndexedPqSP simpleSP = new IndexedPqSP(ewd1000, 2);
+        IndexedPqSP simpleSP = new IndexedPqSP(ewd1000, 0);
         simpleSP.init();
         System.out.println(simpleSP.distTo(6));
     }

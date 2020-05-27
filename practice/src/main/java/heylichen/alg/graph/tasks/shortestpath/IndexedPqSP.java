@@ -2,20 +2,21 @@ package heylichen.alg.graph.tasks.shortestpath;
 
 import heylichen.alg.graph.structure.directed.DirectedEdge;
 import heylichen.alg.graph.structure.directed.EdgeWeightedDigraph;
+import heylichen.sort.pq.IndexedPriorityQueue;
+import heylichen.sort.pq.MinDoublePriorityComparator;
 import heylichen.utils.DoubleUtils;
 
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
 
-public class SimpleSP implements ShortestPath {
+public class IndexedPqSP implements ShortestPath {
     private double distTo[];
     private DirectedEdge edgeTo[];
     private final EdgeWeightedDigraph graph;
     private final int sourceVertex;
 
-    public SimpleSP(EdgeWeightedDigraph graph, int sourceVertex) {
+    public IndexedPqSP(EdgeWeightedDigraph graph, int sourceVertex) {
         this.graph = graph;
         this.sourceVertex = sourceVertex;
     }
@@ -27,17 +28,24 @@ public class SimpleSP implements ShortestPath {
     }
 
     private void relaxAll() {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(sourceVertex);
+        IndexedPriorityQueue<Double> indexedPq = new IndexedPriorityQueue<>(new MinDoublePriorityComparator(), graph.getVertexCount());
+        indexedPq.insert(sourceVertex, 0d);
 
-        int count = 0;
-        while (!queue.isEmpty()) {
-            Integer vertex = queue.remove();
+        int count=0;
+        while (!indexedPq.isEmpty()) {
             count++;
+            Integer vertex = indexedPq.delMin();
             for (DirectedEdge directedEdge : graph.getAdjacent(vertex)) {
                 boolean relaxed = relax(directedEdge);
-                if (relaxed) {
-                    queue.add(directedEdge.getTo());
+                if (!relaxed) {
+                    continue;
+                }
+                int w = directedEdge.getTo();
+                double dist = distTo[w];
+                if (indexedPq.contains(w)) {
+                    indexedPq.change(w, dist);
+                } else {
+                    indexedPq.insert(w, dist);
                 }
             }
         }
@@ -48,7 +56,7 @@ public class SimpleSP implements ShortestPath {
         int from = edge.getFrom();
         int to = edge.getTo();
         if (distTo[to] > distTo[from] + edge.getWeight()) {
-            distTo[to] = DoubleUtils.add(distTo[from], edge.getWeight());
+            distTo[to] =  DoubleUtils.add(distTo[from], edge.getWeight());
             edgeTo[to] = edge;
             return true;
         } else {
