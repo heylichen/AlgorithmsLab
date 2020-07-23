@@ -1,10 +1,8 @@
 package heylichen.searching.bst.rb.standard;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public class RBTree<K extends Comparable<K>, V> {
-    private T<K, V> t = new T();
+    public static final RBNode NULL = new RBNode(RBColor.BLACK);
+    private RBNode<K, V> root = NULL;
     private int size;
 
     public RBTree() {
@@ -297,7 +295,7 @@ public class RBTree<K extends Comparable<K>, V> {
         RBNode p = x.getParent();
         y.setParent(p);
         if (isNull(p)) {
-            t.setRoot(y);
+            setRoot(y);
         } else if (x == p.getLeft()) {
             p.setLeft(y);
         } else {
@@ -317,7 +315,7 @@ public class RBTree<K extends Comparable<K>, V> {
         RBNode p = y.getParent();
         x.setParent(p);
         if (isNull(p)) {
-            t.setRoot(x);
+            setRoot(x);
         } else if (y == p.getLeft()) {
             p.setLeft(x);
         } else {
@@ -329,29 +327,22 @@ public class RBTree<K extends Comparable<K>, V> {
     }
 
     public boolean isNull(RBNode node) {
-        return node == T.NULL;
+        return node == NULL;
     }
 
     public RBNode<K, V> getNull() {
-        return T.NULL;
+        return NULL;
     }
 
     private void setRoot(RBNode<K, V> node) {
-        t.setRoot(node);
+        this.root = node;
     }
 
     private boolean isRoot(RBNode<K, V> node) {
-        return t.getRoot() == node;
+        return this.root == node;
     }
 
     public RBNode<K, V> getRoot() {
-        return t.getRoot();
-    }
-
-    @Getter
-    @Setter
-    private static class T<K extends Comparable<K>, V> {
-        private RBNode<K, V> root = NULL;
-        public static final RBNode NULL = new RBNode(RBColor.BLACK);
+        return root;
     }
 }
