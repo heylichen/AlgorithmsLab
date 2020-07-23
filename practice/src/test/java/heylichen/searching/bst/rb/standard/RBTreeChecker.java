@@ -53,6 +53,9 @@ public class RBTreeChecker<K extends Comparable<K>, V> {
     }
 
     private void checkBlackBalance(RBNode<K, V> node, int baseBlackHeight, Map<K, Integer> blackHeightMap) {
+        if (tree.isNull(node)) {
+            return;
+        }
         int bh = node.isBlack() ? baseBlackHeight + 1 : baseBlackHeight;
         if (tree.isNull(node.getLeft())) {
             blackHeightMap.put(node.getKey(), bh);

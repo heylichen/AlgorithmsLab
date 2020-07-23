@@ -31,6 +31,10 @@ public class RBNode<K extends Comparable<K>, V> {
         this.color = color;
     }
 
+    public RBNode(RBColor color) {
+        this.color = color;
+    }
+
     public void clearLinks() {
         parent = null;
         left = null;
