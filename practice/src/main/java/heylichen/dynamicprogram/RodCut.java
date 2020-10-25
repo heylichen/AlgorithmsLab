@@ -84,9 +84,8 @@ public class RodCut {
     public RodCutSolution recursiveCutWithSolution(int len) {
         Map<Integer, List<Integer>> cutsMap = new HashMap<>();
         cutsMap.put(0, Collections.emptyList());
-        RodCutSolution solution = new RodCutSolution(0, cutsMap);
-        Integer maxRevenue = recursiveCutWithSolution(len, new HashMap<>(), solution);
-        solution.setMaxRevenue(maxRevenue);
+        RodCutSolution solution = new RodCutSolution(new HashMap<>(), cutsMap);
+        recursiveCutWithSolution(len, new HashMap<>(), solution);
         return solution;
     }
 
@@ -109,6 +108,7 @@ public class RodCut {
 
         if (!solution.getCutsMap().containsKey(len)) {
             computeBestCutsForLength(solution.getCutsMap(), len, bestFirstCutLen);
+            solution.getMaxRevenues().put(len, maxR);
         }//else won't happen
         return maxR;
     }
@@ -116,7 +116,7 @@ public class RodCut {
     public RodCutSolution nonRecursiveCutWithSolution(int len) {
         Map<Integer, List<Integer>> cutsMap = new HashMap<>();
         cutsMap.put(0, Collections.emptyList());
-        RodCutSolution solution = new RodCutSolution(0, cutsMap);
+        RodCutSolution solution = new RodCutSolution(new HashMap<>(), cutsMap);
 
         Map<Integer, Integer> maxRevenueMap = new HashMap();
         maxRevenueMap.put(0, 0);
@@ -133,9 +133,9 @@ public class RodCut {
                 }
             }
             maxRevenueMap.put(i, max);
+            solution.getMaxRevenues().put(i, max);
             computeBestCutsForLength(solution.getCutsMap(), i, bestLeftCutLen);
         }
-        solution.setMaxRevenue(max);
         return solution;
     }
 
@@ -148,19 +148,61 @@ public class RodCut {
     }
 
 
+    public RodCutLazySolution recursiveCutWithLazySolution(int len) {
+        int arrSize = len + 1;
+        RodCutLazySolution solution = new RodCutLazySolution(new int[arrSize], new int[arrSize]);
+        recursiveCutWithLazySolution(len, solution);
+        return solution;
+    }
+
+    private int recursiveCutWithLazySolution(int len, RodCutLazySolution solution) {
+        if (len == 0) {
+            return 0;
+        }
+
+        int maxR = 0;
+        int bestFirstCutLen = 0;
+        for (int i = 1; i <= len; i++) {
+            final int leftLen = len - i;
+            int bestLeftLenR = solution.getMaxRevenue(leftLen);
+            if (bestLeftLenR == RodCutLazySolution.NOT_INITIALIZED) {
+                bestLeftLenR = recursiveCutWithLazySolution(leftLen, solution);
+            }
+            int tmpR = prices.get(i) + bestLeftLenR;
+            if (tmpR > maxR) {
+                maxR = tmpR;
+                bestFirstCutLen = i;
+            }
+        }
+        solution.setMaxRevenue(len, maxR);
+        solution.setBestFirstCut(len, bestFirstCutLen);
+        return maxR;
+    }
+
     public static void main(String[] args) {
         RodCut rodCut = new RodCut();
 //        test(rodCut::simpleRecursiveCut);
 //        test(rodCut::recursiveCut);
 //        test(rodCut::nonRecursiveCut);
 
-        testWithSolution(rodCut::recursiveCutWithSolution);
-        testWithSolution(rodCut::nonRecursiveCutWithSolution);
+//        testWithSolution(rodCut::recursiveCutWithSolution);
+//        testWithSolution(rodCut::nonRecursiveCutWithSolution);
+
+        testWithLazySolution(rodCut::recursiveCutWithLazySolution);
     }
 
     private static void testWithSolution(Function<Integer, RodCutSolution> func) {
-        RodCutSolution solution = func.apply(9);
-        System.out.println("max revenue: " + solution.getMaxRevenue() + " cut solution in lengths: " + solution.getCutsMap().get(9));
+        int len = 9;
+        RodCutSolution solution = func.apply(len);
+        System.out.println("max revenue: " + solution.getMaxRevenues().get(len) + " cut solution in lengths: " + solution.getCutsMap().get(len));
+    }
+
+    private static void testWithLazySolution(Function<Integer, RodCutLazySolution> func) {
+        int len = 9;
+        RodCutLazySolution solution = func.apply(len);
+        System.out.println("max revenue: " + solution.getMaxRevenue(len) + " cut solution in lengths: " + solution.getBestCuts(len));
+
+        solution.printAll();
     }
 
     private static void test(Function<Integer, Integer> func) {
@@ -174,7 +216,61 @@ public class RodCut {
     @Setter
     @AllArgsConstructor
     public static class RodCutSolution {
-        private Integer maxRevenue;
+        private Map<Integer, Integer> maxRevenues;
         private Map<Integer, List<Integer>> cutsMap;
+    }
+
+    @Getter
+    @Setter
+    public static class RodCutLazySolution {
+        public static final int NOT_INITIALIZED = -1;
+        private int[] maxRevenues;
+        private int[] bestFirstCuts;
+
+        public RodCutLazySolution(int[] maxRevenues, int[] bestFirstCuts) {
+            this.maxRevenues = maxRevenues;
+            this.bestFirstCuts = bestFirstCuts;
+            maxRevenues[0] = 0;
+            bestFirstCuts[0] = 0;
+            for (int i = 1; i < maxRevenues.length; i++) {
+                maxRevenues[i] = NOT_INITIALIZED;
+            }
+
+            for (int i = 1; i < bestFirstCuts.length; i++) {
+                bestFirstCuts[i] = NOT_INITIALIZED;
+            }
+        }
+
+        public int getMaxRevenue(int i) {
+            return maxRevenues[i];
+        }
+
+        public void setMaxRevenue(int i, int r) {
+            maxRevenues[i] = r;
+        }
+
+        public void setBestFirstCut(int len, int firstCutLen) {
+            bestFirstCuts[len] = firstCutLen;
+        }
+
+        public List<Integer> getBestCuts(int len) {
+            List<Integer> cuts = new ArrayList<>(len);
+            int cut = 0;
+            int leftCut = len;
+            while (leftCut > 0) {
+                cut = bestFirstCuts[leftCut];
+                cuts.add(cut);
+                leftCut = leftCut - cut;
+            }
+            return cuts;
+        }
+
+        private void printAll() {
+            int length = bestFirstCuts.length;
+            for (int i = 0; i < length; i++) {
+                System.out.println(maxRevenues[i] + " " + bestFirstCuts[i]);
+            }
+
+        }
     }
 }
