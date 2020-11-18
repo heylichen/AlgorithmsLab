@@ -70,7 +70,7 @@ public class FibonacciHeap<K extends Comparable<K>, V> {
             }
             z.addSibling(child);
         }
-        z.exitSiblings();
+        z.cutInwardLinks();
         if (z == z.getRight()) {
             min = null;
         } else {
@@ -88,8 +88,12 @@ public class FibonacciHeap<K extends Comparable<K>, V> {
         int d;
         //attention to get all root nodes
         for (FibonacciNode<K, V> x : min.getAllSiblings()) {
+            //attention, what if didn't do this step?
+            x.cutAllLinks();
+            //x and y are root node
             d = x.getDegree();
             y = newRoots[d];
+            //why stop when y!=null? no newRoot to link. no duplicate node in newRoots
             while (y != null) {
                 if (x.compareTo(y) > 0) {
                     FibonacciNode<K, V> t = x;
@@ -99,14 +103,8 @@ public class FibonacciHeap<K extends Comparable<K>, V> {
                 link(x, y);
                 newRoots[d] = null;
                 d++;
-                if (d >= maxD) {//don't need
-                    d--;
-                    break;
-                }
                 y = newRoots[d];
             }
-            //root node has no sibling
-            x.setAsNoSibling();
             newRoots[d] = x;
         }
 
@@ -130,19 +128,14 @@ public class FibonacciHeap<K extends Comparable<K>, V> {
     }
 
     private void link(FibonacciNode<K, V> x, FibonacciNode<K, V> y) {
-        //root must contain other node than y
-        y.exitSiblings();
-
         if (x.getChild() == null) {
             x.setChild(y);
-            //attention
-            y.setAsNoSibling();
-            y.setP(x);
         } else {
             x.getChild().addSibling(y);
         }
-        y.setMarked(false);
         x.incrementDegree();
+        y.setP(x);
+        y.setMarked(false);
     }
 
     public void decreaseKey(FibonacciNode<K, V> x, K key) {
@@ -191,7 +184,7 @@ public class FibonacciHeap<K extends Comparable<K>, V> {
         if (x == y.getChild()) {
             y.setChild(x.getRight());
         }
-        x.exitSiblings();
+        x.cutInwardLinks();
     }
 
     private int getMaxDegree() {

@@ -44,7 +44,12 @@ public class FibonacciNode<K extends Comparable<K>, V> {
         anotherLeftEnd.setRight(rightEnd);
     }
 
-    public void exitSiblings() {
+    public void cutAllLinks() {
+        cutInwardLinks();
+        cutOutwardLinks();
+    }
+
+    public void cutInwardLinks() {
         if (hasNoSibling()) {
             return;
         }
@@ -52,6 +57,11 @@ public class FibonacciNode<K extends Comparable<K>, V> {
         FibonacciNode<K, V> right = this.right;
         left.right = right;
         right.left = left;
+    }
+
+
+    private void cutOutwardLinks() {
+        this.left = this.right = this;
     }
 
     public int compareTo(FibonacciNode<K, V> another) {
@@ -84,7 +94,4 @@ public class FibonacciNode<K extends Comparable<K>, V> {
         return list;
     }
 
-    public void setAsNoSibling() {
-        this.left = this.right = this;
-    }
 }
