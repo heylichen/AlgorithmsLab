@@ -4,6 +4,7 @@ package heylichen.leetcode;
  * problem description :https://blog.csdn.net/Jas000/article/details/117399858
  * leetcode no: 25
  * 本题的目标非常清晰易懂，不涉及复杂的算法，但是实现过程中需要考虑的细节比较多，容易写出冗长的代码。主要考查面试者设计的能力。
+ *
  * @param <T>
  */
 public class KReverseLinkedList<T> {
@@ -66,7 +67,11 @@ public class KReverseLinkedList<T> {
                 current = next;
             }
         }
-        previousKTail.setNext(kHead);
+        if (previousKTail == null) {
+            newHead = kHead;
+        } else {
+            previousKTail.setNext(kHead);
+        }
         return newHead;
     }
 }
