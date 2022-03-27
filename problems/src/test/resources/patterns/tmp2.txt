@@ -1,0 +1,2 @@
+A step ri(x) is transformed into a step ri(xk), where xk is the version of x
+that carries the largest timestamp ≤ ts(ti) and was written by tk, k = i.

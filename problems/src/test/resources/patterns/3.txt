@@ -1,0 +1,1 @@
+r1(x)w2( y)r1( y)w1(x)c1r3( y)r3(z)w3(z)w2(x)c2w4(z)c4c3
