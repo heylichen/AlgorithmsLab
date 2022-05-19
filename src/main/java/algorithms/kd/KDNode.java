@@ -1,6 +1,5 @@
 package algorithms.kd;
 
-import algorithms.kd.dist.SquareEuclidDistance;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -125,9 +124,9 @@ public class KDNode<T> {
       }
     }
 
-    // check if the further rectangle within distance of minDist of target, if not ,no need to search
-    // further rectangle or this node
-    if (furtherRectangle.getDistance(targetKey, SquareEuclidDistance.INSTANCE) < minDist) {
+    // check if the further rectangle within distance of minDist of target, if not ,
+    // no need to search further rectangle or this node
+    if (furtherRectangle.getDistance(targetKey, targetDistance.getDistance()) < minDist) {
       // first check this node
       double thisDistance = targetDistance.getDistance(this.point.getCoordinates(), targetKey);
       if (thisDistance < minDist) {
@@ -137,7 +136,8 @@ public class KDNode<T> {
 
       //then further rectangle
       if (furtherNode != null) {
-        NNResult<T> tmp = furtherNode.getNearestNeighbor(targetDistance, furtherRectangle, minDist);
+        NNResult<T> tmp = furtherNode.
+                              getNearestNeighbor(targetDistance, furtherRectangle, minDist);
         if (tmp != null && tmp.getDist() < minDist) {
           minDist = tmp.getDist();
           nearestNode = tmp.getNode();
