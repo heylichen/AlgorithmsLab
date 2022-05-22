@@ -1,13 +1,13 @@
 package algorithms.kd;
 
+import algorithms.kd.dist.Distance;
 import algorithms.kd.dist.SquareEuclidDistance;
 import com.heylichen.algorithm.util.visualize.SquareTreePrinter;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class KDTreeTest {
   private SquareTreePrinter<KDNode> printer =
@@ -62,6 +62,28 @@ public class KDTreeTest {
   }
 
   @Test
+  public void testKNNWithSampleData() {
+    int dimensions = 2;
+    KDTree<Long> tree = new KDTree<Long>(dimensions);
+    List<double[]> sampleData = sampleData();
+    long i = 0;
+    for (double[] doubles : sampleData) {
+      tree.insert(new Point(doubles), ++i);
+    }
+
+    printer.print(tree.getRoot());
+
+    List<Entry<Long>> knnList;
+//    knnList = tree.getNearestNeighbor(new double[]{1.5, 0.5}, SquareEuclidDistance.INSTANCE, 3);
+    knnList = tree.getNearestNeighbor(new double[]{0.8, 3.8}, SquareEuclidDistance.INSTANCE, 3);
+//    nbrs = tree.getNearestNeighbor(new double[]{1.5, 3});
+//    nbrs = tree.getNearestNeighbor(new double[]{0.5, 1});
+//    nbrs = tree.getNearestNeighbor(new double[]{0.8, 3.8}, SquareEuclidDistance.INSTANCE);
+    System.out.println();
+  }
+
+
+  @Test
   public void testNearestNeighbor() {
     for (int i = 0; i < 10; i++) {
       doTestRandomNearestNeighbor(3, 300);
@@ -88,6 +110,39 @@ public class KDTreeTest {
     Entry<Integer> result = kt.getNearestNeighbor(target, SquareEuclidDistance.INSTANCE);
     Assert.assertEquals(result.getValue().intValue(), min_index);
   }
+
+  @Test
+  public void testKNearestNeighbor() {
+    for (int i = 0; i < 10; i++) {
+      doTestRandomKNearestNeighbor(3, 300);
+    }
+  }
+
+  private void doTestRandomKNearestNeighbor(int dimensions, int points) {
+    Distance distance = SquareEuclidDistance.INSTANCE;
+
+    KDTree<Integer> kt = new KDTree<>(dimensions);
+    double[] target = makeSample(dimensions);
+
+    int count = 10;
+    PriorityQueue<Entry<Integer>> pq = new PriorityQueue<>(count, Comparator.comparingDouble(a -> distance.getDistance(a.getKey().getCoordinates(), target)));
+    for (int i = 0; i < points; ++i) {
+      double[] keys = makeSample(dimensions);
+      Point key = new Point(keys);
+      Integer value = i;
+      Entry<Integer> entry = new Entry<>(key, value);
+      kt.insert(key, value);
+      pq.add(entry);
+    }
+
+    List<Integer> expected = new ArrayList<>(count);
+    while (!pq.isEmpty() && expected.size() < count) {
+      expected.add(pq.poll().getValue());
+    }
+    List<Entry<Integer>> result = kt.getNearestNeighbor(target, SquareEuclidDistance.INSTANCE, count);
+    Assert.assertEquals(expected, result.stream().map(Entry::getValue).collect(Collectors.toList()));
+  }
+
 
   @Test
   public void testBuild() {
@@ -143,7 +198,7 @@ public class KDTreeTest {
     list = tree.getByRange(new HyperRectangle(new double[]{0.6, 3.1}, new double[]{1.1, 3.6}));
     System.out.println(list);
 
-    list = tree.getByRange(new HyperRectangle(new double[]{1.1, 0}, new double[]{2,4}));
+    list = tree.getByRange(new HyperRectangle(new double[]{1.1, 0}, new double[]{2, 4}));
     System.out.println(list);
     //partial range
     list = tree.getByRange(new HyperRectangle(new double[]{1, Double.MIN_VALUE}, new double[]{1, Double.MAX_VALUE}));

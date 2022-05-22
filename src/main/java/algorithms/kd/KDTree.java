@@ -1,6 +1,9 @@
 package algorithms.kd;
 
 import algorithms.kd.dist.Distance;
+import algorithms.kd.nn.NNKTargetDistance;
+import algorithms.kd.nn.NNResult;
+import algorithms.kd.nn.NNTargetDistance;
 import algorithms.kd.pivot.PivotSelector;
 import algorithms.kd.pivot.RandomSamplePivotSelector;
 import lombok.Getter;
@@ -22,7 +25,7 @@ public class KDTree<T> {
   private final HyperRectangle INFINITE_RECT;
 
   public KDTree(int k) {
-    this(k,new RandomSamplePivotSelector());
+    this(k, new RandomSamplePivotSelector());
   }
 
   public KDTree(int k, PivotSelector pivotSelector) {
@@ -60,6 +63,7 @@ public class KDTree<T> {
    * if some dimension range is full range, it's a partial range query.
    * if some dimension range is an exact value, it's a partial match query.
    * if all dimensions range is exact value, it's an exact match query.
+   *
    * @param range
    * @return
    */
@@ -82,6 +86,8 @@ public class KDTree<T> {
   /**
    * get the nearest neighbor point in this kd tree to target
    * target may not exist in this kd tree.
+   * note: getNearestNeighbor can be implemented by direct calling getNearestNeighbor(target, distance, 1)
+   * but I leave the implementation here for learning purpose. A learner can read this method first.
    *
    * @param target   the coordinates of the target key point
    * @param distance the distance calculation method suitable for your need
@@ -91,9 +97,26 @@ public class KDTree<T> {
     if (root == null) {
       return null;
     }
-    NN1TargetDistance targetDistance = new NN1TargetDistance(target, distance);
+    NNTargetDistance targetDistance = new NNTargetDistance(target, distance);
     NNResult<T> r = root.getNearestNeighbor(targetDistance, INFINITE_RECT, Double.MAX_VALUE);
-    return r.getNode() == null ? null : new Entry<>(r.getNode().getPoint(), r.getNode().getData());
+    return r == null ? null : r.getEntry();
+  }
+
+  /**
+   * get the k nearest neighbor points in this kd tree to target
+   * target may not exist in this kd tree.
+   * @param target the coordinates of the target key point
+   * @param distance the distance calculation method suitable for your need
+   * @param count count of the nearest neighbor points
+   * @return
+   */
+  public List<Entry<T>> getNearestNeighbor(double[] target, Distance distance, int count) {
+    if (root == null) {
+      return null;
+    }
+    NNKTargetDistance<T> targetDistance = new NNKTargetDistance<>(target, distance, count);
+    root.getKNearestNeighbor(targetDistance, INFINITE_RECT);
+    return targetDistance.getEntryList();
   }
 
   private KDNode<T> insert(KDNode<T> newNode, KDNode<T> node, int d) {

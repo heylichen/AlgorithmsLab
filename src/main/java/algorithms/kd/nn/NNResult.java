@@ -1,11 +1,13 @@
-package algorithms.kd;
+package algorithms.kd.nn;
 
+import algorithms.kd.Entry;
+import algorithms.kd.KDNode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-class NNResult<T> {
+public class NNResult<T> {
   private KDNode<T> node;
   private double dist;
 
@@ -21,5 +23,9 @@ class NNResult<T> {
 
   public static <T> NNResult<T> getNone() {
     return NONE;
+  }
+
+  public Entry<T> getEntry() {
+    return node == null ? null : new Entry<>(node.getPoint(), node.getData());
   }
 }
