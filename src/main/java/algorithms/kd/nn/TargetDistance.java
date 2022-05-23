@@ -4,12 +4,12 @@ import algorithms.kd.dist.Distance;
 import lombok.Getter;
 
 @Getter
-public class NNTargetDistance {
-  private final double[] keyVector;
+public class TargetDistance {
+  private final double[] target;
   private final Distance distance;
 
-  public NNTargetDistance(double[] keyVector, Distance distance) {
-    this.keyVector = keyVector;
+  public TargetDistance(double[] target, Distance distance) {
+    this.target = target;
     this.distance = distance;
   }
 

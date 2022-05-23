@@ -1,9 +1,10 @@
 package algorithms.kd;
 
 import algorithms.kd.dist.Distance;
-import algorithms.kd.nn.NNKTargetDistance;
+import algorithms.kd.nn.KTargetDistance;
 import algorithms.kd.nn.NNResult;
-import algorithms.kd.nn.NNTargetDistance;
+import algorithms.kd.nn.TargetDistance;
+import algorithms.kd.nn.WithinRadius;
 import algorithms.kd.pivot.PivotSelector;
 import algorithms.kd.pivot.RandomSamplePivotSelector;
 import lombok.Getter;
@@ -97,7 +98,7 @@ public class KDTree<T> {
     if (root == null) {
       return null;
     }
-    NNTargetDistance targetDistance = new NNTargetDistance(target, distance);
+    TargetDistance targetDistance = new TargetDistance(target, distance);
     NNResult<T> r = root.getNearestNeighbor(targetDistance, INFINITE_RECT, Double.MAX_VALUE);
     return r == null ? null : r.getEntry();
   }
@@ -114,8 +115,24 @@ public class KDTree<T> {
     if (root == null) {
       return null;
     }
-    NNKTargetDistance<T> targetDistance = new NNKTargetDistance<>(target, distance, count);
+    KTargetDistance<T> targetDistance = new KTargetDistance<>(target, distance, count);
     root.getKNearestNeighbor(targetDistance, INFINITE_RECT);
+    return targetDistance.getEntryList();
+  }
+
+  /**
+   * find all nodes in radius to target
+   * @param target
+   * @param distance
+   * @param radius
+   * @return
+   */
+  public List<Entry<T>> getWithinRadius(double[] target, Distance distance, double radius) {
+    if (root == null) {
+      return null;
+    }
+    WithinRadius<T> targetDistance = new WithinRadius<>(target, distance, radius);
+    root.getWithinRadius(targetDistance, INFINITE_RECT);
     return targetDistance.getEntryList();
   }
 

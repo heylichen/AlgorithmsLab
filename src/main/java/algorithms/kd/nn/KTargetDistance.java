@@ -10,9 +10,7 @@ import java.util.*;
  * constant param of top k nearest neighbor algorithm
  */
 @Getter
-public class NNKTargetDistance<T> {
-  private final double[] target;
-  private final Distance distance;
+public class KTargetDistance<T> extends TargetDistance {
   private final Integer count;
   // 优先级队列，存距离target最近的点集合。队列内按距离target大小倒序作为优先级。即离最远的target放在head.
   // a PriorityQueue, ordered by node distance to target, reversed (furthest node in head). This pq is used
@@ -24,10 +22,10 @@ public class NNKTargetDistance<T> {
   // we remove the head and add the new node if the pq is full (size >= count).
   private PriorityQueue<NNResult<T>> maxPq;
 
-  public NNKTargetDistance(double[] target, Distance distance, Integer count) {
-    this.target = target;
+  public KTargetDistance(double[] target, Distance distance, Integer count) {
+    super(target, distance);
     this.count = count;
-    this.distance = distance;
+
 
     Comparator<NNResult<T>> maxComparator = (a, b) -> -Double.compare(a.getDist(), b.getDist());
     this.maxPq = new PriorityQueue<>(count, maxComparator);
@@ -38,10 +36,6 @@ public class NNKTargetDistance<T> {
       return Double.MAX_VALUE;
     }
     return maxPq.peek().getDist();
-  }
-
-  public double getDistance(double[] from, double[] to) {
-    return distance.getDistance(from, to);
   }
 
   public boolean gotEnough() {

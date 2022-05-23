@@ -84,6 +84,22 @@ public class KDTreeTest {
 
 
   @Test
+  public void testWithinRadius() {
+    int dimensions = 2;
+    KDTree<Long> tree = new KDTree<>(dimensions);
+    List<double[]> sampleData = sampleData();
+    long i = 0;
+    for (double[] doubles : sampleData) {
+      tree.insert(new Point(doubles), ++i);
+    }
+
+    printer.print(tree.getRoot());
+
+    List<Entry<Long>> knnList = tree.getWithinRadius(new double[]{0.75, 3.75}, SquareEuclidDistance.INSTANCE, 0.125);
+    System.out.println();
+  }
+
+  @Test
   public void testNearestNeighbor() {
     for (int i = 0; i < 10; i++) {
       doTestRandomNearestNeighbor(3, 300);

@@ -1,5 +1,7 @@
 package algorithms.kd.dist;
 
+import java.math.BigDecimal;
+
 /**
  * only need relative distance, so don't calculate the square root
  */
@@ -14,12 +16,12 @@ public class SquareEuclidDistance implements Distance {
     if (from.length != to.length) {
       throw new IllegalArgumentException("non-compatible dimensions");
     }
-    double dist = 0;
+    BigDecimal bd = BigDecimal.ZERO;
     int d = from.length;
     for (int i = 0; i < d; i++) {
-      double diff = from[i] - to[i];
-      dist += diff * diff;
+      BigDecimal diff = BigDecimal.valueOf(from[i]).subtract(BigDecimal.valueOf(to[i]));
+      bd = bd.add(diff.multiply(diff));
     }
-    return dist;
+    return bd.doubleValue();
   }
 }

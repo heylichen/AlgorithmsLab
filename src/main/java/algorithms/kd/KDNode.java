@@ -1,8 +1,9 @@
 package algorithms.kd;
 
-import algorithms.kd.nn.NNKTargetDistance;
-import algorithms.kd.nn.NNTargetDistance;
+import algorithms.kd.nn.KTargetDistance;
+import algorithms.kd.nn.TargetDistance;
 import algorithms.kd.nn.NNResult;
+import algorithms.kd.nn.WithinRadius;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -87,10 +88,10 @@ public class KDNode<T> {
     return new Entry<>(point, data);
   }
 
-  public NNResult<T> getNearestNeighbor(NNTargetDistance targetDistance,
+  public NNResult<T> getNearestNeighbor(TargetDistance targetDistance,
                                         HyperRectangle rectangle,
                                         double currentMinDist) {
-    double[] targetKey = targetDistance.getKeyVector();
+    double[] targetKey = targetDistance.getTarget();
     int currentDimension = getDimension();
     double pivot = this.point.getInDimension(currentDimension);
     List<HyperRectangle> subRectangles = rectangle.cutByPivot(currentDimension, pivot);
@@ -153,10 +154,11 @@ public class KDNode<T> {
 
   /**
    * nearest nodes are stored in NNKTargetDistance.maxPq
+   *
    * @param targetDistance
    * @param rectangle
    */
-  public void getKNearestNeighbor(NNKTargetDistance<T> targetDistance,
+  public void getKNearestNeighbor(KTargetDistance<T> targetDistance,
                                   HyperRectangle rectangle) {
     double[] targetKey = targetDistance.getTarget();
     int currentDimension = getDimension();
@@ -203,6 +205,62 @@ public class KDNode<T> {
       //then further rectangle
       if (furtherNode != null) {
         furtherNode.getKNearestNeighbor(targetDistance, furtherRectangle);
+      }
+    }
+  }
+
+  /**
+   *  find all nodes in radius to target
+   *
+   * @param targetDistance
+   * @param rectangle
+   */
+  public void getWithinRadius(WithinRadius<T> targetDistance,
+                              HyperRectangle rectangle) {
+    double[] targetKey = targetDistance.getTarget();
+    int currentDimension = getDimension();
+    double pivot = this.point.getInDimension(currentDimension);
+    List<HyperRectangle> subRectangles = rectangle.cutByPivot(currentDimension, pivot);
+    HyperRectangle leftRectangle = subRectangles.get(0);
+    HyperRectangle rightRectangle = subRectangles.get(1);
+    //assume the node contain target is nearer to target, try it first
+    double targetV = targetKey[currentDimension];
+    boolean targetInLeft = targetV < pivot;
+
+    KDNode<T> nearerNode;
+    HyperRectangle nearerRectangle;
+    KDNode<T> furtherNode;
+    HyperRectangle furtherRectangle;
+    if (targetInLeft) {
+      nearerNode = left;
+      nearerRectangle = leftRectangle;
+      furtherNode = right;
+      furtherRectangle = rightRectangle;
+    } else {
+      nearerNode = right;
+      nearerRectangle = rightRectangle;
+      furtherNode = left;
+      furtherRectangle = leftRectangle;
+    }
+
+    //first check nearer node
+    if (nearerNode != null) {
+      nearerNode.getWithinRadius(targetDistance, nearerRectangle);
+    }
+
+    double minDist = targetDistance.getRadius();
+    // check if the further rectangle within distance of minDist of target, if not ,
+    // no need to search further rectangle or this node
+    if (furtherRectangle.getDistance(targetKey, targetDistance.getDistance()) <= minDist) {
+      // first check this node
+      double thisDistance = targetDistance.getDistance(this.point.getCoordinates(), targetKey);
+      if (thisDistance <= minDist) {
+        targetDistance.addNode(new NNResult<>(this, thisDistance));
+      }
+
+      //then further rectangle
+      if (furtherNode != null) {
+        furtherNode.getWithinRadius(targetDistance, furtherRectangle);
       }
     }
   }
