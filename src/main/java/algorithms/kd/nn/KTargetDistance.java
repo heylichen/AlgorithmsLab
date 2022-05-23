@@ -20,14 +20,14 @@ public class KTargetDistance<T> extends TargetDistance {
   // simply by maxPq.peek().
   // to make sure nodes left in pq are the nearest to target of all nodes,
   // we remove the head and add the new node if the pq is full (size >= count).
-  private PriorityQueue<NNResult<T>> maxPq;
+  private PriorityQueue<NodeDistance<T>> maxPq;
 
   public KTargetDistance(double[] target, Distance distance, Integer count) {
     super(target, distance);
     this.count = count;
 
 
-    Comparator<NNResult<T>> maxComparator = (a, b) -> -Double.compare(a.getDist(), b.getDist());
+    Comparator<NodeDistance<T>> maxComparator = (a, b) -> -Double.compare(a.getDist(), b.getDist());
     this.maxPq = new PriorityQueue<>(count, maxComparator);
   }
 
@@ -42,7 +42,7 @@ public class KTargetDistance<T> extends TargetDistance {
     return maxPq.size() >= count;
   }
 
-  public void addNode(NNResult<T> node) {
+  public void addNode(NodeDistance<T> node) {
     if (gotEnough()) {
       // although maxPq is a max distance PriorityQueue, head is the node which is the furthest node to target
       // by removing the furthest node from head, we can keep nearest nodes in queue.

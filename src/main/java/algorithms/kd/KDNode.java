@@ -2,7 +2,7 @@ package algorithms.kd;
 
 import algorithms.kd.nn.KTargetDistance;
 import algorithms.kd.nn.TargetDistance;
-import algorithms.kd.nn.NNResult;
+import algorithms.kd.nn.NodeDistance;
 import algorithms.kd.nn.WithinRadius;
 import lombok.Getter;
 import lombok.Setter;
@@ -88,9 +88,9 @@ public class KDNode<T> {
     return new Entry<>(point, data);
   }
 
-  public NNResult<T> getNearestNeighbor(TargetDistance targetDistance,
-                                        HyperRectangle rectangle,
-                                        double currentMinDist) {
+  public NodeDistance<T> getNearestNeighbor(TargetDistance targetDistance,
+                                            HyperRectangle rectangle,
+                                            double currentMinDist) {
     double[] targetKey = targetDistance.getTarget();
     int currentDimension = getDimension();
     double pivot = this.point.getInDimension(currentDimension);
@@ -121,7 +121,7 @@ public class KDNode<T> {
     double minDist = currentMinDist;
     //first check nearer node
     if (nearerNode != null) {
-      NNResult<T> tmp = nearerNode.getNearestNeighbor(targetDistance, nearerRectangle, minDist);
+      NodeDistance<T> tmp = nearerNode.getNearestNeighbor(targetDistance, nearerRectangle, minDist);
       if (tmp != null && tmp.getDist() < minDist) {
         minDist = tmp.getDist();
         nearestNode = tmp.getNode();
@@ -140,7 +140,7 @@ public class KDNode<T> {
 
       //then further rectangle
       if (furtherNode != null) {
-        NNResult<T> tmp = furtherNode.
+        NodeDistance<T> tmp = furtherNode.
             getNearestNeighbor(targetDistance, furtherRectangle, minDist);
         if (tmp != null && tmp.getDist() < minDist) {
           minDist = tmp.getDist();
@@ -149,7 +149,7 @@ public class KDNode<T> {
       }
     }
 
-    return nearestNode == null ? null : new NNResult<>(nearestNode, minDist);
+    return nearestNode == null ? null : new NodeDistance<>(nearestNode, minDist);
   }
 
   /**
@@ -199,7 +199,7 @@ public class KDNode<T> {
       // first check this node
       double thisDistance = targetDistance.getDistance(this.point.getCoordinates(), targetKey);
       if (!targetDistance.gotEnough() || thisDistance < minDist) {
-        targetDistance.addNode(new NNResult<>(this, thisDistance));
+        targetDistance.addNode(new NodeDistance<>(this, thisDistance));
       }
 
       //then further rectangle
@@ -255,7 +255,7 @@ public class KDNode<T> {
       // first check this node
       double thisDistance = targetDistance.getDistance(this.point.getCoordinates(), targetKey);
       if (thisDistance <= minDist) {
-        targetDistance.addNode(new NNResult<>(this, thisDistance));
+        targetDistance.addNode(new NodeDistance<>(this, thisDistance));
       }
 
       //then further rectangle

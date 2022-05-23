@@ -7,21 +7,21 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class NNResult<T> {
+public class NodeDistance<T> {
   private KDNode<T> node;
   private double dist;
 
-  public NNResult(KDNode<T> node, double dist) {
+  public NodeDistance(KDNode<T> node, double dist) {
     this.node = node;
     this.dist = dist;
   }
 
-  public NNResult() {
+  public NodeDistance() {
   }
 
-  private static final NNResult NONE = new NNResult<>(null, Double.MAX_VALUE);
+  private static final NodeDistance NONE = new NodeDistance<>(null, Double.MAX_VALUE);
 
-  public static <T> NNResult<T> getNone() {
+  public static <T> NodeDistance<T> getNone() {
     return NONE;
   }
 

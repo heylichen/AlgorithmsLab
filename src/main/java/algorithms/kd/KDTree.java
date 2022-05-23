@@ -2,7 +2,7 @@ package algorithms.kd;
 
 import algorithms.kd.dist.Distance;
 import algorithms.kd.nn.KTargetDistance;
-import algorithms.kd.nn.NNResult;
+import algorithms.kd.nn.NodeDistance;
 import algorithms.kd.nn.TargetDistance;
 import algorithms.kd.nn.WithinRadius;
 import algorithms.kd.pivot.PivotSelector;
@@ -99,7 +99,7 @@ public class KDTree<T> {
       return null;
     }
     TargetDistance targetDistance = new TargetDistance(target, distance);
-    NNResult<T> r = root.getNearestNeighbor(targetDistance, INFINITE_RECT, Double.MAX_VALUE);
+    NodeDistance<T> r = root.getNearestNeighbor(targetDistance, INFINITE_RECT, Double.MAX_VALUE);
     return r == null ? null : r.getEntry();
   }
 

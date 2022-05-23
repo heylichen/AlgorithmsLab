@@ -9,16 +9,16 @@ import java.util.*;
 @Getter
 public class WithinRadius<T> extends TargetDistance {
   private final double radius;
-  private final PriorityQueue<NNResult<T>> minPq;
+  private final PriorityQueue<NodeDistance<T>> minPq;
 
   public WithinRadius(double[] target, Distance distance, double radius) {
     super(target, distance);
     this.radius = radius;
-    Comparator<NNResult<T>> maxComparator = Comparator.comparingDouble(NNResult::getDist);
+    Comparator<NodeDistance<T>> maxComparator = Comparator.comparingDouble(NodeDistance::getDist);
     this.minPq = new PriorityQueue<>(maxComparator);
   }
 
-  public void addNode(NNResult<T> result) {
+  public void addNode(NodeDistance<T> result) {
     minPq.add(result);
   }
 
@@ -27,7 +27,7 @@ public class WithinRadius<T> extends TargetDistance {
       return Collections.emptyList();
     }
     List<Entry<T>> result = new ArrayList<>(minPq.size());
-    for (NNResult<T> tnnResult : minPq) {
+    for (NodeDistance<T> tnnResult : minPq) {
       result.add(tnnResult.getEntry());
     }
     return result;
