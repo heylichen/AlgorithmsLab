@@ -48,14 +48,14 @@ public class KDTree<T> {
   /**
    * exact search
    *
-   * @param keyVector
+   * @param target
    * @return
    */
-  public T get(double[] keyVector) {
+  public T get(Point target) {
     if (root == null) {
       return null;
     }
-    KDNode<T> node = root.get(keyVector);
+    KDNode<T> node = root.get(target);
     return node == null ? null : node.getData();
   }
 
@@ -94,7 +94,7 @@ public class KDTree<T> {
    * @param distance the distance calculation method suitable for your need
    * @return
    */
-  public Entry<T> getNearestNeighbor(double[] target, Distance distance) {
+  public Entry<T> getNearestNeighbor(Point target, Distance distance) {
     if (root == null) {
       return null;
     }
@@ -106,12 +106,13 @@ public class KDTree<T> {
   /**
    * get the k nearest neighbor points in this kd tree to target
    * target may not exist in this kd tree.
-   * @param target the coordinates of the target key point
+   *
+   * @param target   the coordinates of the target key point
    * @param distance the distance calculation method suitable for your need
-   * @param count count of the nearest neighbor points
+   * @param count    count of the nearest neighbor points
    * @return
    */
-  public List<Entry<T>> getNearestNeighbor(double[] target, Distance distance, int count) {
+  public List<Entry<T>> getNearestNeighbor(Point target, Distance distance, int count) {
     if (root == null) {
       return null;
     }
@@ -122,12 +123,13 @@ public class KDTree<T> {
 
   /**
    * find all nodes in radius to target
+   *
    * @param target
    * @param distance
    * @param radius
    * @return
    */
-  public List<Entry<T>> getWithinRadius(double[] target, Distance distance, double radius) {
+  public List<Entry<T>> getWithinRadius(Point target, Distance distance, double radius) {
     if (root == null) {
       return null;
     }

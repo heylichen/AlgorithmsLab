@@ -1,6 +1,7 @@
 package algorithms.kd.nn;
 
 import algorithms.kd.Entry;
+import algorithms.kd.Point;
 import algorithms.kd.dist.Distance;
 import lombok.Getter;
 
@@ -11,7 +12,7 @@ public class WithinRadius<T> extends TargetDistance {
   private final double radius;
   private final PriorityQueue<NodeDistance<T>> minPq;
 
-  public WithinRadius(double[] target, Distance distance, double radius) {
+  public WithinRadius(Point target, Distance distance, double radius) {
     super(target, distance);
     this.radius = radius;
     Comparator<NodeDistance<T>> maxComparator = Comparator.comparingDouble(NodeDistance::getDist);

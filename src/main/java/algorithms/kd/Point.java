@@ -42,6 +42,10 @@ public class Point {
         return coordinates[k];
     }
 
+    public int getDimensions() {
+        return coordinates.length;
+    }
+
     @Override
     public String toString() {
         return string;

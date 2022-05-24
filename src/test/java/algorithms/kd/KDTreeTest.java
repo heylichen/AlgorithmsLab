@@ -57,7 +57,7 @@ public class KDTreeTest {
 //    nbrs = tree.getNearestNeighbor(new double[]{1.5, 0.5});
 //    nbrs = tree.getNearestNeighbor(new double[]{1.5, 3});
 //    nbrs = tree.getNearestNeighbor(new double[]{0.5, 1});
-    nbrs = tree.getNearestNeighbor(new double[]{0.8, 3.8}, SquareEuclidDistance.INSTANCE);
+    nbrs = tree.getNearestNeighbor(new Point(new double[]{0.8, 3.8}), SquareEuclidDistance.INSTANCE);
     System.out.println();
   }
 
@@ -75,7 +75,7 @@ public class KDTreeTest {
 
     List<Entry<Long>> knnList;
 //    knnList = tree.getNearestNeighbor(new double[]{1.5, 0.5}, SquareEuclidDistance.INSTANCE, 3);
-    knnList = tree.getNearestNeighbor(new double[]{0.8, 3.8}, SquareEuclidDistance.INSTANCE, 3);
+    knnList = tree.getNearestNeighbor(new Point(new double[]{0.8, 3.8}), SquareEuclidDistance.INSTANCE, 3);
 //    nbrs = tree.getNearestNeighbor(new double[]{1.5, 3});
 //    nbrs = tree.getNearestNeighbor(new double[]{0.5, 1});
 //    nbrs = tree.getNearestNeighbor(new double[]{0.8, 3.8}, SquareEuclidDistance.INSTANCE);
@@ -95,7 +95,7 @@ public class KDTreeTest {
 
     printer.print(tree.getRoot());
 
-    List<Entry<Long>> knnList = tree.getWithinRadius(new double[]{0.75, 3.75}, SquareEuclidDistance.INSTANCE, 0.125);
+    List<Entry<Long>> knnList = tree.getWithinRadius(new Point(new double[]{0.75, 3.75}), SquareEuclidDistance.INSTANCE, 0.125);
     System.out.println();
   }
 
@@ -123,7 +123,7 @@ public class KDTreeTest {
       }
     }
 
-    Entry<Integer> result = kt.getNearestNeighbor(target, SquareEuclidDistance.INSTANCE);
+    Entry<Integer> result = kt.getNearestNeighbor(new Point(target), SquareEuclidDistance.INSTANCE);
     Assert.assertEquals(result.getValue().intValue(), min_index);
   }
 
@@ -155,10 +155,9 @@ public class KDTreeTest {
     while (!pq.isEmpty() && expected.size() < count) {
       expected.add(pq.poll().getValue());
     }
-    List<Entry<Integer>> result = kt.getNearestNeighbor(target, SquareEuclidDistance.INSTANCE, count);
+    List<Entry<Integer>> result = kt.getNearestNeighbor(new Point(target), SquareEuclidDistance.INSTANCE, count);
     Assert.assertEquals(expected, result.stream().map(Entry::getValue).collect(Collectors.toList()));
   }
-
 
   @Test
   public void testBuild() {
@@ -171,10 +170,10 @@ public class KDTreeTest {
   public void testGet() {
     KDTree<Integer> t = buildKdTree();
     String view = printer.printAsString(t.getRoot());
-    Integer pData = t.get(new double[]{50, 50});
+    Integer pData = t.get(new Point(new double[]{50, 50}));
     Assert.assertEquals(50, pData.intValue());
 
-    pData = t.get(new double[]{60, 80});
+    pData = t.get(new Point(new double[]{60, 80}));
     Assert.assertEquals(60, pData.intValue());
     System.out.println(view);
   }
@@ -183,13 +182,13 @@ public class KDTreeTest {
   public void testInsert() {
     Point p = new Point(new double[]{65, 65});
     KDTree<Integer> t = buildKdTree();
-    Integer pData = t.get(p.getCoordinates());
+    Integer pData = t.get(p);
     Assert.assertTrue(pData == null);
 
 //    printer.print(t.getRoot());
 
     t.insert(p, -65);
-    pData = t.get(p.getCoordinates());
+    pData = t.get(p);
     Assert.assertTrue(pData != null);
     Assert.assertTrue(pData.equals(-65));
 

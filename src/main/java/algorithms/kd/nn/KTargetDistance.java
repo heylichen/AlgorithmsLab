@@ -1,6 +1,7 @@
 package algorithms.kd.nn;
 
 import algorithms.kd.Entry;
+import algorithms.kd.Point;
 import algorithms.kd.dist.Distance;
 import lombok.Getter;
 
@@ -22,10 +23,9 @@ public class KTargetDistance<T> extends TargetDistance {
   // we remove the head and add the new node if the pq is full (size >= count).
   private PriorityQueue<NodeDistance<T>> maxPq;
 
-  public KTargetDistance(double[] target, Distance distance, Integer count) {
+  public KTargetDistance(Point target, Distance distance, Integer count) {
     super(target, distance);
     this.count = count;
-
 
     Comparator<NodeDistance<T>> maxComparator = (a, b) -> -Double.compare(a.getDist(), b.getDist());
     this.maxPq = new PriorityQueue<>(count, maxComparator);
