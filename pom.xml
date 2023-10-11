@@ -11,6 +11,7 @@
         <module>database</module>
         <module>network</module>
         <module>algorithm-util</module>
+        <module>algorithms-lab</module>
     </modules>
     <packaging>pom</packaging>
 
